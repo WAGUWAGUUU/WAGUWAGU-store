@@ -1,8 +1,12 @@
 package com.example.store.global.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -33,4 +37,8 @@ public class Menu {
     @JoinColumn(name = "MENU_CATEGORY_ID")
     @ManyToOne
     private MenuCategory menuCategory;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OptionList> optionLists;
 }
