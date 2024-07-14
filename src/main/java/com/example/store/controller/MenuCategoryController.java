@@ -15,6 +15,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MenuCategoryController {
     private final MenuCategoryService menuCategoryService;
+
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createMenuCategory(@RequestBody MenuCategoryRequestDto menuCategoryRequestDto) {
