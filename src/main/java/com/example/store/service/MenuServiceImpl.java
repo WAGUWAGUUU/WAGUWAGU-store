@@ -18,4 +18,6 @@ public class MenuServiceImpl implements MenuService {
         Menu entity = menuRequestDto.toEntity();
         menuRepository.save(entity);
     }
+
+
 }

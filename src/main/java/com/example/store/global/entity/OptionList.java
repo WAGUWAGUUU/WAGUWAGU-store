@@ -24,8 +24,12 @@ public class OptionList {
     @Column(name = "LIST_NAME")
     private String listName;
 
+//    @JsonManagedReference
+//    @OneToMany(mappedBy = "addOnList", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Option> options;
+
     @JsonManagedReference
-    @OneToMany(mappedBy = "addOnList", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "optionList")
     private List<Option> options;
 
     @JsonBackReference

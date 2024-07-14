@@ -1,10 +1,14 @@
 package com.example.store.controller;
 import com.example.store.dto.request.MenuCategoryRequestDto;
 import com.example.store.dto.request.OwnerRequestDto;
+import com.example.store.dto.request.UpdateMenuCategoryRequestDto;
+import com.example.store.global.entity.MenuCategory;
 import com.example.store.service.MenuCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/menu-category")
@@ -15,5 +19,25 @@ public class MenuCategoryController {
     @ResponseStatus(HttpStatus.CREATED)
     public void createMenuCategory(@RequestBody MenuCategoryRequestDto menuCategoryRequestDto) {
         menuCategoryService.createMenuCategory(menuCategoryRequestDto);
+    }
+
+    @GetMapping("/{menuCategoryId}")
+    public MenuCategory getMenuCategoryById(@PathVariable(name = "menuCategoryId") Long menuCategoryId) {
+        return menuCategoryService.getMenuCategoryById(menuCategoryId);
+    }
+
+    @GetMapping
+    public List<MenuCategory> getAllMenuCategory() {
+        return menuCategoryService.getAllMenuCategory();
+    }
+
+    @PutMapping("/{menuCategoryId}")
+    public void updateMenuCategoryName(@PathVariable(name = "menuCategoryId") Long menuCategoryId, @RequestBody UpdateMenuCategoryRequestDto updateMenuCategoryRequestDto) {
+        menuCategoryService.updateMenuCategoryName(menuCategoryId, updateMenuCategoryRequestDto);
+    }
+
+    @DeleteMapping("/{menuCategoryId}")
+    public void deleteMenuCategory(@PathVariable(name = "menuCategoryId") Long menuCategoryId) {
+        menuCategoryService.deleteMenuCategory(menuCategoryId);
     }
 }

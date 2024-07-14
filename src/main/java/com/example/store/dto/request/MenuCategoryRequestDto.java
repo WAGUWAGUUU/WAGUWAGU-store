@@ -10,6 +10,7 @@ public record MenuCategoryRequestDto(
         return MenuCategory.builder()
                 .menuCategoryName(menuCategoryName)
                 .store(store)
+                .menuCategoryIsDeleted(false)
                 .build();
     }
 }

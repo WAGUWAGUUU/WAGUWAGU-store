@@ -59,11 +59,11 @@ public class Store {
     private Owner owner;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "store")
     private List<MenuCategory> menuCategories;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "store")
     private List<StoreDeliveryInfo> storeDeliveryInfos;
 
     public void update(UpdateStoreType updateStoreType, UpdateStoreRequestDto updateStoreRequestDto) {
