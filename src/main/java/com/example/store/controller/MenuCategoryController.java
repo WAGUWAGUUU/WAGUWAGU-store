@@ -33,7 +33,7 @@ public class MenuCategoryController {
         return menuCategoryService.getAllMenuCategory();
     }
 
-    @PutMapping("/{menuCategoryId}")
+    @PutMapping("/{menuCategoryId}/menu-category-name")
     public void updateMenuCategoryName(@PathVariable(name = "menuCategoryId") Long menuCategoryId, @RequestBody UpdateMenuCategoryRequestDto updateMenuCategoryRequestDto) {
         menuCategoryService.updateMenuCategoryName(menuCategoryId, updateMenuCategoryRequestDto);
     }
