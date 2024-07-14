@@ -32,7 +32,7 @@ public class MenuCategory {
     private Store store;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "menuCategory", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "menuCategory")
     private List<Menu> menus;
 
     public void updateMenuCategoryName(UpdateMenuCategoryRequestDto updateMenuCategoryRequestDto) {

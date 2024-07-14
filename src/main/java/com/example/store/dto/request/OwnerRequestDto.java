@@ -10,7 +10,6 @@ public record OwnerRequestDto(
                 .ownerName(ownerName)
                 .ownerBusinessNumber(ownerBusinessNumber)
                 .ownerIsDeleted(false)
-//                .store(null)
                 .build();
     }
 }
