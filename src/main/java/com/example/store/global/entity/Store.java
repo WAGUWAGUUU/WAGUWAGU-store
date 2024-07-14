@@ -19,7 +19,6 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name ="STORES")
 @Builder
-@Setter
 public class Store {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "STORE_ID")
