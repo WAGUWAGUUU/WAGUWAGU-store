@@ -35,5 +35,13 @@ public class OptionListServiceImpl implements OptionListService {
         optionListRepository.deleteById(id);
     }
 
+    @Override
+    public void updateOptionList(Long id, OptionList optionList) {
+        Optional<OptionList> byId = optionListRepository.findById(id);
+        if (byId.isPresent()) {
+            optionListRepository.save(optionList);
+        }
+    }
+
 
 }

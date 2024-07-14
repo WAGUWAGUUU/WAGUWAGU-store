@@ -9,5 +9,5 @@ public interface OptionListService {
     public Optional<OptionList> getOptionListById(Long id);
     public OptionList saveOptionList(OptionList optionList);
     public void deleteOptionList(Long id);
-
+    public void updateOptionList(Long id, OptionList optionList);
 }
