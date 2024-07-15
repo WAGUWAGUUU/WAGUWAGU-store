@@ -10,10 +10,14 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MenuRepository extends JpaRepository<Menu, Long> {
-    Optional<Menu> findByMenuCategoryAndMenuName(MenuCategory menuCategory, String menuName);
+    Optional<Menu> findByMenuCategory_MenuCategoryIdAndMenuNameAndMenuIsDeletedFalse(Long menuCategoryId, String menuName);
 
-    List<Menu> findAllByMenuCategory_MenuCategoryId(Long menuCategoryId);
+    List<Menu> findAllByMenuCategory_MenuCategoryIdAndMenuIsDeletedFalse(Long menuCategoryId);
 
-//    @Modifying
+    Optional<Menu> findByMenuIdAndMenuIsDeletedFalse(Long menuId);
+
+    List<Menu> findAllByMenuIsDeletedFalse();
+
+    //    @Modifying
 //    @Query("update table set isDel =true where")
 }

@@ -37,14 +37,12 @@ public class Menu {
     @Column(name = "MENU_IS_DELETED")
     private boolean menuIsDeleted;
 
-    @JsonBackReference
     @JoinColumn(name = "MENU_CATEGORY_ID")
     @ManyToOne
     private MenuCategory menuCategory;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "menu")
-    private List<OptionList> optionLists;
+//    @OneToMany(mappedBy = "menu")
+//    private List<OptionList> optionLists;
 
     public void update(UpdateMenuType updateMenuType, UpdateMenuRequestDto updateMenuRequestDto) {
         switch (updateMenuType) {

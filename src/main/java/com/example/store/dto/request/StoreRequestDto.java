@@ -8,9 +8,10 @@ import java.time.LocalTime;
 
 public record StoreRequestDto(
         String storeName, String storeAddress, LocalTime storeOpenAt, LocalTime storeCloseAt, String storePhone, int storeMinimumOrderAmount, String storeIntroduction, StoreCategory storeCategory,
-        Owner owner
+        Long ownerId
 ) {
     public Store toEntity() {
+        Owner owner = Owner.builder().ownerId(ownerId).build();
         return Store.builder()
                 .storeName(storeName)
                 .storeAddress(storeAddress)
@@ -21,8 +22,6 @@ public record StoreRequestDto(
                 .storeIntroduction(storeIntroduction)
                 .storeCategory(storeCategory)
                 .owner(owner)
-//                .menuCategories(null)
-//                .storeDeliveryInfos(null)
                 .build();
     }
 }

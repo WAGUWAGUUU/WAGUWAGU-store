@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Getter
 @AllArgsConstructor
@@ -27,10 +29,8 @@ public class Owner {
     @Column(name = "OWNER_IS_DELETED")
     private boolean ownerIsDeleted;
 
-
-    @JsonManagedReference
-    @OneToOne(mappedBy = "owner")
-    private Store store;
+//    @OneToMany(mappedBy = "owner")
+//    private List<Store> store;
 
 
 

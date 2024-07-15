@@ -28,7 +28,6 @@ public class StoreDeliveryInfo {
     @Column(name = "STORE_DELIVERY_INFO_DISTANCE_END")
     private Double storeDeliveryInfoDistanceEnd;
 
-    @JsonBackReference
     @JoinColumn (name = "STORE_ID")
     @ManyToOne
     private Store store;

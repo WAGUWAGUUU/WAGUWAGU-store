@@ -2,6 +2,7 @@ package com.example.store.controller;
 import com.example.store.dto.request.MenuCategoryRequestDto;
 import com.example.store.dto.request.OwnerRequestDto;
 import com.example.store.dto.request.UpdateMenuCategoryRequestDto;
+import com.example.store.dto.response.MenuCategoryResponseDto;
 import com.example.store.global.entity.MenuCategory;
 import com.example.store.service.MenuCategoryService;
 import lombok.RequiredArgsConstructor;
@@ -24,12 +25,12 @@ public class MenuCategoryController {
     }
 
     @GetMapping("/{menuCategoryId}")
-    public MenuCategory getMenuCategoryById(@PathVariable(name = "menuCategoryId") Long menuCategoryId) {
+    public MenuCategoryResponseDto getMenuCategoryById(@PathVariable(name = "menuCategoryId") Long menuCategoryId) {
         return menuCategoryService.getMenuCategoryById(menuCategoryId);
     }
 
     @GetMapping
-    public List<MenuCategory> getAllMenuCategory() {
+    public List<MenuCategoryResponseDto> getAllMenuCategory() {
         return menuCategoryService.getAllMenuCategory();
     }
 
