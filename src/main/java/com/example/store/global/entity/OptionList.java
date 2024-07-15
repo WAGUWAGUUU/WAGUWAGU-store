@@ -25,7 +25,7 @@ public class OptionList {
     private String listName;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "addOnList", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "optionList", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Option> options;
 
     @JsonBackReference
