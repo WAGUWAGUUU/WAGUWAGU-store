@@ -19,7 +19,6 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name ="STORES")
 @Builder
-@Setter
 public class Store {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "STORE_ID")
@@ -53,18 +52,15 @@ public class Store {
     @Column(name = "STORE_IS_DELETED")
     private boolean storeIsDeleted;
 
-    @JsonBackReference
     @JoinColumn (name = "OWNER_ID")
-    @OneToOne
+    @ManyToOne
     private Owner owner;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
-    private List<MenuCategory> menuCategories;
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
-    private List<StoreDeliveryInfo> storeDeliveryInfos;
+//    @OneToMany(mappedBy = "store")
+//    private List<MenuCategory> menuCategories;
+//
+//    @OneToMany(mappedBy = "store")
+//    private List<StoreDeliveryInfo> storeDeliveryInfos;
 
     public void update(UpdateStoreType updateStoreType, UpdateStoreRequestDto updateStoreRequestDto) {
         switch (updateStoreType) {

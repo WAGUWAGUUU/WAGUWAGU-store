@@ -9,7 +9,11 @@ import java.util.Optional;
 public interface OwnerRepository extends JpaRepository<Owner, Long> {
 //    Optional<Owner> findByOwnerId(Long ownerId);
 
-    Optional<Owner> findByOwnerBusinessNumber(String ownerBusinessNumber);
+    Optional<Owner> findByOwnerBusinessNumberAndOwnerIsDeletedFalse(String ownerBusinessNumber);
 
-//    List<Owner> findAllByOwnerIsDeletedFalse();
+    Optional<Owner> findByOwnerIsDeletedFalseAndOwnerId(Long ownerId);
+
+    List<Owner> findAllByOwnerIsDeletedFalse();
+
+    //    List<Owner> findAllByOwnerIsDeletedFalse();
 }
