@@ -13,8 +13,7 @@ public class OptionServiceImpl implements OptionService {
 
     @Autowired
     private OptionRepository optionRepository;
-    @Autowired
-    private OptionListRepository optionListRepository;
+
 
     @Override
     public Optional<Option> getAllOptionsbyListId(Long listId) {
