@@ -3,7 +3,7 @@ package com.example.store.dto.response;
 import com.example.store.global.entity.StoreDeliveryInfo;
 
 public record StoreDeliveryInfoResponseDto(
-        int storeDeliveryInfoState,  int storeDeliveryInfoFee, Double storeDeliveryInfoDistanceEnd
+        int storeDeliveryInfoState,  int storeDeliveryInfoFee, double storeDeliveryInfoDistanceEnd
 ) {
     public static StoreDeliveryInfoResponseDto from(StoreDeliveryInfo storeDeliveryInfo) {
         return new StoreDeliveryInfoResponseDto(storeDeliveryInfo.getStoreDeliveryInfoState(), storeDeliveryInfo.getStoreDeliveryInfoFee(), storeDeliveryInfo.getStoreDeliveryInfoDistanceEnd());

@@ -48,7 +48,7 @@ public class StoreController {
     @PutMapping("/{storeId}/store-address")
     @ResponseStatus(HttpStatus.OK)
     public void updateStoreAddress(@PathVariable(name = "storeId") Long storeId, @RequestBody UpdateStoreRequestDto updateStoreRequestDto) {
-        storeService.updateStore(storeId, UpdateStoreType.STORE_ADDRESS, updateStoreRequestDto);
+        storeService.updateStore(storeId, UpdateStoreType.STORE_ADDRESS_STRING, updateStoreRequestDto);
     }
 
     @PutMapping("/{storeId}/store-open-at")
