@@ -6,11 +6,18 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface MenuRepository extends JpaRepository<Menu, Long> {
-    Optional<Menu> findByMenuCategoryAndMenuName(MenuCategory menuCategory, String menuName);
+    Optional<Menu> findByMenuCategory_MenuCategoryIdAndMenuNameAndMenuIsDeletedFalse(Long menuCategoryId, String menuName);
 
-//    @Modifying
+    List<Menu> findAllByMenuCategory_MenuCategoryIdAndMenuIsDeletedFalse(Long menuCategoryId);
+
+    Optional<Menu> findByMenuIdAndMenuIsDeletedFalse(Long menuId);
+
+    List<Menu> findAllByMenuIsDeletedFalse();
+
+    //    @Modifying
 //    @Query("update table set isDel =true where")
 }

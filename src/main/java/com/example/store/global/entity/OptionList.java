@@ -1,12 +1,9 @@
 package com.example.store.global.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -18,22 +15,17 @@ import java.util.Set;
 public class OptionList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "LIST_ID")
-    private Long optionId;
+    @Column(name = "OPTION_LIST_ID")
+    private Long listId;
 
-    @Column(name = "LIST_NAME")
+    @Column(name = "OPTION_LIST_NAME")
     private String listName;
 
-//    @JsonManagedReference
-//    @OneToMany(mappedBy = "addOnList", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Option> options;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "optionList")
+    @OneToMany(mappedBy = "optionList", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Option> options;
 
-    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MENU_ID")
-    @ManyToOne
     private Menu menu;
 }

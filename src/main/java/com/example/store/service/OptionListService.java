@@ -1,13 +1,18 @@
 package com.example.store.service;
 
+import com.example.store.dto.request.OptionListRequestDTO;
+import com.example.store.dto.response.OptionListResponseDTO;
 import com.example.store.global.entity.OptionList;
 
+import java.util.List;
 import java.util.Optional;
 
+//OPTIONAL 반환 X DAO에서처리
 public interface OptionListService {
-    public Optional<OptionList> getOptionListsByMenuId(Long menuId);
-    public Optional<OptionList> getOptionListById(Long id);
-    public OptionList saveOptionList(OptionList optionList);
-    public void deleteOptionList(Long id);
-    public void updateOptionList(Long id, OptionList optionList);
+     List<OptionListResponseDTO> getOptionListsByMenuId(Long menuId);
+     OptionListResponseDTO getOptionListById(Long id);
+     void createOptionList(OptionListRequestDTO optionList);
+     void deleteOptionList(Long id);
+     void updateOptionList(Long id, OptionListRequestDTO optionList);
+
 }

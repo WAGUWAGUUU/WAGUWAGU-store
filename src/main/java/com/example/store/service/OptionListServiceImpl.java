@@ -1,47 +1,82 @@
 package com.example.store.service;
 
+import com.example.store.dao.OptionListDAOImpl;
+import com.example.store.dto.request.OptionListRequestDTO;
+import com.example.store.dto.response.OptionListResponseDTO;
+import com.example.store.dto.response.OptionResponseDTO;
+import com.example.store.global.entity.Menu;
 import com.example.store.global.entity.OptionList;
-import com.example.store.global.repository.OptionListRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class OptionListServiceImpl implements OptionListService {
 
-    @Autowired
-    private OptionListRepository optionListRepository;
+
+
+    private final OptionListDAOImpl optionListDAO;
+
 
     @Override
-    public Optional<OptionList> getOptionListsByMenuId(Long menuId) {
+    public List<OptionListResponseDTO> getOptionListsByMenuId(Long menuId) {
+        List<OptionListResponseDTO> byId = optionListDAO.findByMenuId(menuId);
+        if (byId.isEmpty()) {
+            throw  new IllegalArgumentException("not found");
 
-        return optionListRepository.findById(menuId);
+        }
+        return byId;
     }
 
     @Override
-    public Optional<OptionList> getOptionListById(Long id) {
-        return optionListRepository.findById(id);
+    public OptionListResponseDTO getOptionListById(Long id) {
+
+        OptionListResponseDTO byId = optionListDAO.findById(id);
+        if (byId == null) {
+            throw  new IllegalArgumentException("not found");
+        }
+
+        return byId;
     }
 
     @Override
-    public OptionList saveOptionList(OptionList optionList) {
-        return optionListRepository.save(optionList);
+    public void createOptionList( OptionListRequestDTO optionList) {
+        Menu menuById = optionListDAO.findMenuById(optionList.menuId());
+        if (menuById == null) {
+            throw  new IllegalArgumentException("menu not found");
+        }
+
+
+
+        optionListDAO.save(optionList);
+
     }
 
     @Override
     public void deleteOptionList(Long id) {
-        optionListRepository.deleteById(id);
+        OptionListResponseDTO byId = optionListDAO.findById(id);
+        if (byId == null) {
+            throw  new IllegalArgumentException("not found");
+        }
+
+        optionListDAO.deleteById(id);
+
     }
 
     @Override
-    public void updateOptionList(Long id, OptionList optionList) {
-        Optional<OptionList> byId = optionListRepository.findById(id);
-        if (byId.isPresent()) {
-            optionListRepository.save(optionList);
+    public void updateOptionList(Long id, OptionListRequestDTO optionList) {
+        OptionListResponseDTO byId = optionListDAO.findById(id);
+        if (byId == null) {
+            throw  new IllegalArgumentException("Option List not found");
         }
+        optionListDAO.save(optionList);
+
     }
+
+
 
 
 }

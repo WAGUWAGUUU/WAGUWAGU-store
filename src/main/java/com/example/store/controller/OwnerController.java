@@ -1,6 +1,7 @@
 package com.example.store.controller;
 import com.example.store.dto.request.OwnerRequestDto;
 import com.example.store.dto.request.UpdateOwnerRequestDto;
+import com.example.store.dto.response.OwnerResponseDto;
 import com.example.store.global.entity.Owner;
 import com.example.store.global.type.UpdateOwnerType;
 import com.example.store.service.OwnerService;
@@ -23,13 +24,13 @@ public class OwnerController {
 
     @GetMapping("/{ownerId}")
     @ResponseStatus(HttpStatus.OK)
-    public Owner getOwnerByOwnerId(@PathVariable(name = "ownerId") Long ownerId) {
+    public OwnerResponseDto getOwnerByOwnerId(@PathVariable(name = "ownerId") Long ownerId) {
         return ownerService.getOwnerByOwnerId(ownerId);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Owner> getAllOwner() {
+    public List<OwnerResponseDto> getAllOwner() {
         return ownerService.getAllOwner();
     }
 

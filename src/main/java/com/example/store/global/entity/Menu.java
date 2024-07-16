@@ -1,5 +1,7 @@
 package com.example.store.global.entity;
 
+import com.example.store.dto.request.UpdateMenuRequestDto;
+import com.example.store.global.type.UpdateMenuType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -14,7 +16,6 @@ import java.util.Set;
 @NoArgsConstructor
 @Table(name ="MENUS")
 @Builder
-@Setter
 public class Menu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,12 +34,35 @@ public class Menu {
     @Column(name = "MENU_POSSIBLE")
     private boolean menuPossible;
 
-    @JsonBackReference
+    @Column(name = "MENU_IS_DELETED")
+    private boolean menuIsDeleted;
+
     @JoinColumn(name = "MENU_CATEGORY_ID")
     @ManyToOne
     private MenuCategory menuCategory;
 
-//    @JsonManagedReference
-//    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<OptionList> optionLists;
+    @OneToMany(mappedBy = "menu",cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OptionList> optionLists;
+
+    public void update(UpdateMenuType updateMenuType, UpdateMenuRequestDto updateMenuRequestDto) {
+        switch (updateMenuType) {
+            case MENU_NAME -> this.menuName = updateMenuRequestDto.value();
+            case MENU_INTRODUCTION -> this.menuIntroduction = updateMenuRequestDto.value();
+            case MENU_PRICE -> {
+                try {
+                    this.menuPrice = Integer.parseInt(updateMenuRequestDto.value());
+                } catch (NumberFormatException e) {
+                    throw new IllegalArgumentException();
+                }
+            }
+        }
+    }
+
+    public void changeMenuPossible() {
+        this.menuPossible = !menuPossible;
+    }
+
+    public void setMenuIsDeleted() {
+        this.menuIsDeleted = true;
+    }
 }

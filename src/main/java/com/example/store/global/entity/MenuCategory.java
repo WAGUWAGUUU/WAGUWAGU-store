@@ -26,14 +26,13 @@ public class MenuCategory {
     @Column(name = "MENU_CATEGORY_IS_DELETED")
     private boolean menuCategoryIsDeleted;
 
-    @JsonBackReference
+
     @JoinColumn(name = "STORE_ID")
     @ManyToOne
     private Store store;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "menuCategory", cascade = CascadeType.ALL)
-    private List<Menu> menus;
+//    @OneToMany(mappedBy = "menuCategory")
+//    private List<Menu> menus;
 
     public void updateMenuCategoryName(UpdateMenuCategoryRequestDto updateMenuCategoryRequestDto) {
         this.menuCategoryName = updateMenuCategoryRequestDto.value();

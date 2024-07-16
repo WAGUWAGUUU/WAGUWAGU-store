@@ -1,5 +1,7 @@
 package com.example.store.global.entity;
 
+import com.example.store.dto.request.UpdateStoreDeliveryInfoRequestDto;
+import com.example.store.global.type.UpdateStoreDeliveryInfoType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,16 +20,34 @@ public class StoreDeliveryInfo {
     private Long storeDeliveryInfoId;
 
     @Column(name = "STORE_DELIVERY_INFO_STATE")
-    private Long storeDeliveryInfoState;
+    private int storeDeliveryInfoState;
 
     @Column(name = "STORE_DELIVERY_INFO_FEE")
-    private Long storeDeliveryInfoFee;
+    private int storeDeliveryInfoFee;
 
     @Column(name = "STORE_DELIVERY_INFO_DISTANCE_END")
-    private Long storeDeliveryInfoDistanceEnd;
+    private double storeDeliveryInfoDistanceEnd;
 
-    @JsonBackReference
     @JoinColumn (name = "STORE_ID")
     @ManyToOne
     private Store store;
+
+    public void update(UpdateStoreDeliveryInfoType updateStoreDeliveryInfoType, UpdateStoreDeliveryInfoRequestDto updateStoreDeliveryInfoRequestDto) {
+        switch (updateStoreDeliveryInfoType) {
+            case STORE_DELIVERY_INFO_FEE -> {
+                try {
+                    this.storeDeliveryInfoFee = Integer.parseInt(updateStoreDeliveryInfoRequestDto.value());
+                } catch (NumberFormatException e) {
+                    throw new IllegalArgumentException();
+                }
+            } case STORE_DELIVERY_INFO_DISTANCE_END -> {
+                try {
+                    this.storeDeliveryInfoDistanceEnd = Double.parseDouble(updateStoreDeliveryInfoRequestDto.value());
+                } catch (NumberFormatException e) {
+                    System.out.println("hi");
+                    throw new IllegalArgumentException();
+                }
+            }
+        }
+    }
 }
