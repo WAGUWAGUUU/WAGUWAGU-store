@@ -2,7 +2,10 @@ package com.example.store.service;
 
 import com.example.store.dto.kafka.KafkaDistanceDto;
 import com.example.store.dto.request.DistanceTimeRequestDto;
+import com.example.store.dto.request.StoreNearUserRequest;
 import com.example.store.dto.request.UserLocation;
+import com.example.store.dto.response.StoreNearUserResponse;
+import com.example.store.dto.response.StoreResponseDto;
 import com.example.store.dto.response.UserLocationReponse;
 import com.example.store.global.entity.DistanceProducer;
 import com.example.store.global.entity.DistanceUtility;
@@ -10,6 +13,8 @@ import com.example.store.global.entity.Store;
 import com.example.store.global.entity.StoreDeliveryInfo;
 import com.example.store.global.repository.StoreDeliveryInfoRepository;
 import com.example.store.global.repository.StoreRepository;
+import com.example.store.global.type.StoreCategory;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +30,7 @@ public class DistanceCalServiceImpl implements DistanceCalService{
     private final StoreDeliveryInfoRepository storeDeliveryInfoRepository;
     private final DistanceProducer producer;
     @Override
+    @Transactional
     public UserLocationReponse acceptOrder(Long storeId, UserLocation userLocation, DistanceTimeRequestDto distanceTimeRequestDto) {
         int cost= 0;
         Store store = storeRepository.findById(storeId).orElseThrow();
@@ -48,4 +54,11 @@ public class DistanceCalServiceImpl implements DistanceCalService{
         producer.sendToRider(kafkaDistanceDto,"assign");
         return new UserLocationReponse(distance, cost, due);
     }
+
+    @Override
+    @Transactional
+    public List<StoreNearUserResponse> userNearStore(StoreNearUserRequest storeNearUserRequest) {
+        return storeRepository.findStoreAllNearUser(storeNearUserRequest.x(), storeNearUserRequest.y(), storeNearUserRequest.category());
+    }
+
 }

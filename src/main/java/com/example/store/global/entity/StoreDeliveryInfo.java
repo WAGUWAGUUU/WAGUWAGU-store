@@ -42,7 +42,7 @@ public class StoreDeliveryInfo {
                 }
             } case STORE_DELIVERY_INFO_DISTANCE_END -> {
                 try {
-                    this.storeDeliveryInfoDistanceEnd = double.valueOf(updateStoreDeliveryInfoRequestDto.value());
+                    this.storeDeliveryInfoDistanceEnd = Double.parseDouble(updateStoreDeliveryInfoRequestDto.value());
                 } catch (NumberFormatException e) {
                     System.out.println("hi");
                     throw new IllegalArgumentException();
