@@ -26,6 +26,6 @@ public class Option {
 
 
     @JoinColumn(name = "OPTION_LIST_ID")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private OptionList optionList;
 }

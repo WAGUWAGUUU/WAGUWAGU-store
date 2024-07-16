@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OptionListDAOImpl implements OptionListDAO {
 
+
     private final OptionListRepository optionListRepository;
     private final MenuRepository menuRepository;
 
@@ -33,10 +34,16 @@ public class OptionListDAOImpl implements OptionListDAO {
     };
 
 
-
     public void save(OptionListRequestDTO optionList) {
-       optionListRepository.save(optionList.toEntity(Menu.builder().build()));
+        Menu menu = menuRepository.findById(optionList.menuId())
+                .orElseThrow(() -> new IllegalArgumentException("Menu not found"));
+
+        OptionList optionList1 = optionList.toEntity(menu);
+
+
+        optionListRepository.save(optionList1);
     }
+
 
     public void deleteById(Long id) {
         optionListRepository.deleteById(id);
@@ -53,8 +60,7 @@ public class OptionListDAOImpl implements OptionListDAO {
 
     @Override
     public Menu findMenuById(Long id) {
-        Menu byID = menuRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Menu not found"));
 
-        return byID;
+        return menuRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Menu not found"));
     }
 }

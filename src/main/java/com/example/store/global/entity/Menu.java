@@ -41,7 +41,7 @@ public class Menu {
     @ManyToOne
     private MenuCategory menuCategory;
 
-    @OneToMany(mappedBy = "menu")
+    @OneToMany(mappedBy = "menu",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OptionList> optionLists;
 
     public void update(UpdateMenuType updateMenuType, UpdateMenuRequestDto updateMenuRequestDto) {

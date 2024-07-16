@@ -48,10 +48,6 @@ public class OptionListServiceImpl implements OptionListService {
         if (menuById == null) {
             throw  new IllegalArgumentException("menu not found");
         }
-        OptionListResponseDTO byId = optionListDAO.findById(optionList.listId());
-        if (byId ==null) {
-            throw  new IllegalArgumentException("LIST ID not found");
-        }
 
 
 

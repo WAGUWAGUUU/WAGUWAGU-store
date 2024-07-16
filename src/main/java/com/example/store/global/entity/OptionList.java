@@ -22,7 +22,7 @@ public class OptionList {
     private String listName;
 
 
-    @OneToMany(mappedBy = "optionList")
+    @OneToMany(mappedBy = "optionList", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Option> options;
 
     @ManyToOne(fetch = FetchType.LAZY)
