@@ -26,7 +26,7 @@ public class StoreDeliveryInfo {
     private int storeDeliveryInfoFee;
 
     @Column(name = "STORE_DELIVERY_INFO_DISTANCE_END")
-    private Double storeDeliveryInfoDistanceEnd;
+    private double storeDeliveryInfoDistanceEnd;
 
     @JoinColumn (name = "STORE_ID")
     @ManyToOne
@@ -42,7 +42,7 @@ public class StoreDeliveryInfo {
                 }
             } case STORE_DELIVERY_INFO_DISTANCE_END -> {
                 try {
-                    this.storeDeliveryInfoDistanceEnd = Double.valueOf(updateStoreDeliveryInfoRequestDto.value());
+                    this.storeDeliveryInfoDistanceEnd = double.valueOf(updateStoreDeliveryInfoRequestDto.value());
                 } catch (NumberFormatException e) {
                     System.out.println("hi");
                     throw new IllegalArgumentException();

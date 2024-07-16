@@ -16,7 +16,7 @@ import java.util.List;
 @Builder
 public class Owner {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "OWNER_ID")
     private Long ownerId;
 
