@@ -3,7 +3,6 @@ package com.example.store.dao;
 
 import com.example.store.dto.request.OptionListRequestDTO;
 import com.example.store.dto.request.UpdateOptionListRequestDTO;
-import com.example.store.dto.response.OptionListResponseDTO;
 import com.example.store.global.entity.Menu;
 import com.example.store.global.entity.Option;
 import com.example.store.global.entity.OptionList;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 @Repository

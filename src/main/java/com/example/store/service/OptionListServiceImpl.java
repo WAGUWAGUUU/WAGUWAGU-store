@@ -3,16 +3,13 @@ package com.example.store.service;
 import com.example.store.dao.OptionListDAOImpl;
 import com.example.store.dto.request.OptionListRequestDTO;
 import com.example.store.dto.request.UpdateOptionListRequestDTO;
-import com.example.store.dto.response.OptionListResponseDTO;
-import com.example.store.dto.response.OptionResponseDTO;
+import com.example.store.dto.response.OptionListResponse;
 import com.example.store.global.entity.Menu;
 import com.example.store.global.entity.OptionList;
-import com.example.store.global.repository.OptionListRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,7 +23,7 @@ public class OptionListServiceImpl implements OptionListService {
 
 
     @Override
-    public List<OptionListResponseDTO> getOptionListsByMenuId(Long menuId) {
+    public List<OptionListResponse> getOptionListsByMenuId(Long menuId) {
         List<OptionList> byId = optionListDAO.findByMenuId(menuId);
         if (byId.isEmpty()) {
             throw  new IllegalArgumentException("not found");
@@ -34,19 +31,19 @@ public class OptionListServiceImpl implements OptionListService {
         }
 
           return byId.stream()
-                .map(OptionListResponseDTO::from)
+                .map(OptionListResponse::from)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public OptionListResponseDTO getOptionListById(Long id) {
+    public OptionListResponse getOptionListById(Long id) {
 
         OptionList list  = optionListDAO.findById(id);
         if (list == null) {
             throw  new IllegalArgumentException("not found");
         }
 
-        return OptionListResponseDTO.from(list);
+        return OptionListResponse.from(list);
     }
 
     @Override

@@ -2,7 +2,7 @@ package com.example.store.service;
 
 import com.example.store.dto.request.MenuCategoryRequestDto;
 import com.example.store.dto.request.UpdateMenuCategoryRequestDto;
-import com.example.store.dto.response.MenuCategoryResponseDto;
+import com.example.store.dto.response.MenuCategoryResponse;
 import com.example.store.global.entity.MenuCategory;
 import com.example.store.global.repository.MenuCategoryRepository;
 import jakarta.transaction.Transactional;
@@ -27,16 +27,16 @@ public class MenuCategoryServiceImpl implements MenuCategoryService{
 
     @Override
     @Transactional
-    public MenuCategoryResponseDto getMenuCategoryById(Long menuCategoryId) {
+    public MenuCategoryResponse getMenuCategoryById(Long menuCategoryId) {
         MenuCategory menuCategory = menuCategoryRepository.findByMenuCategoryIdAndMenuCategoryIsDeletedFalse(menuCategoryId).orElseThrow();
-        return MenuCategoryResponseDto.from(menuCategory);
+        return MenuCategoryResponse.from(menuCategory);
     }
 
     @Override
     @Transactional
-    public List<MenuCategoryResponseDto> getAllMenuCategory() {
+    public List<MenuCategoryResponse> getAllMenuCategory() {
         List<MenuCategory> allByMenuCategoryIsDeletedFalse = menuCategoryRepository.findAllByMenuCategoryIsDeletedFalse();
-        return allByMenuCategoryIsDeletedFalse.stream().map(MenuCategoryResponseDto::from).toList();
+        return allByMenuCategoryIsDeletedFalse.stream().map(MenuCategoryResponse::from).toList();
     }
 
     @Override

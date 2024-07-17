@@ -3,7 +3,7 @@ package com.example.store.service;
 import com.example.store.dao.OptionDAO;
 import com.example.store.dto.request.OptionRequestDTO;
 import com.example.store.dto.request.UpdateOptionRequestDTO;
-import com.example.store.dto.response.OptionResponseDTO;
+import com.example.store.dto.response.OptionResponse;
 import com.example.store.global.entity.Option;
 import com.example.store.global.repository.OptionRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,18 +21,18 @@ public class OptionServiceImpl implements OptionService {
     private final OptionDAO optionDAO;
 
     @Override
-    public OptionResponseDTO getOptionById(Long id) {
+    public OptionResponse getOptionById(Long id) {
         Option optionById = optionDAO.getOptionById(id);
-        return  OptionResponseDTO.from(optionById);
+        return  OptionResponse.from(optionById);
 
     }
 
     @Override
-    public List<OptionResponseDTO> getAllOptionsbyListID(Long id) {
+    public List<OptionResponse> getAllOptionsbyListID(Long id) {
         List<Option> options = optionDAO.getAllOptionsByListId(id);
 
         return options.stream()
-                .map(OptionResponseDTO::from)
+                .map(OptionResponse::from)
                 .collect(Collectors.toList());
     }
 

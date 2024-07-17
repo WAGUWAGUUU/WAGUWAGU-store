@@ -1,7 +1,7 @@
 package com.example.store.service;
 import com.example.store.dto.request.StoreDeliveryInfoRequestDto;
 import com.example.store.dto.request.UpdateStoreDeliveryInfoRequestDto;
-import com.example.store.dto.response.StoreDeliveryInfoResponseDto;
+import com.example.store.dto.response.StoreDeliveryInfoResponse;
 import com.example.store.global.entity.Store;
 import com.example.store.global.entity.StoreDeliveryInfo;
 import com.example.store.global.repository.StoreDeliveryInfoRepository;
@@ -32,9 +32,9 @@ public class StoreDeliveryInfoServiceImpl implements StoreDeliveryInfoService {
 
     @Override
     @Transactional
-    public List<StoreDeliveryInfoResponseDto> getStoreDeliveryInfoAllByStoreId(Long storeId) {
+    public List<StoreDeliveryInfoResponse> getStoreDeliveryInfoAllByStoreId(Long storeId) {
         List<StoreDeliveryInfo> allByStoreStoreId = storeDeliveryInfoRepository.findAllByStore_StoreId(storeId);
-        return allByStoreStoreId.stream().map(StoreDeliveryInfoResponseDto::from).toList();
+        return allByStoreStoreId.stream().map(StoreDeliveryInfoResponse::from).toList();
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.example.store.service;
 import com.example.store.dto.request.MenuRequestDto;
 import com.example.store.dto.request.UpdateMenuRequestDto;
-import com.example.store.dto.response.MenuResponseDto;
+import com.example.store.dto.response.MenuResponse;
 import com.example.store.global.entity.Menu;
 import com.example.store.global.repository.MenuRepository;
 import com.example.store.global.type.UpdateMenuType;
@@ -27,24 +27,24 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     @Transactional
-    public List<MenuResponseDto> getAllMenuByMenuCategory(Long menuCategoryId) {
+    public List<MenuResponse> getAllMenuByMenuCategory(Long menuCategoryId) {
         List<Menu> byAllByMenuCategoryMenuCategoryId = menuRepository.findAllByMenuCategory_MenuCategoryIdAndMenuIsDeletedFalse(menuCategoryId);
-        return byAllByMenuCategoryMenuCategoryId.stream().map(MenuResponseDto::from).toList();
+        return byAllByMenuCategoryMenuCategoryId.stream().map(MenuResponse::from).toList();
     }
 
     @Override
     @Transactional
-    public MenuResponseDto getMenuById(Long menuId) {
+    public MenuResponse getMenuById(Long menuId) {
         Menu menu = menuRepository.findByMenuIdAndMenuIsDeletedFalse(menuId).orElseThrow();
-        return MenuResponseDto.from(menu);
+        return MenuResponse.from(menu);
     }
 
     @Override
     @Transactional
-    public List<MenuResponseDto> getAllMenu() {
+    public List<MenuResponse> getAllMenu() {
         List<Menu> all = menuRepository.findAllByMenuIsDeletedFalse();
         if(all.isEmpty()) throw new IllegalArgumentException();
-        return all.stream().map(MenuResponseDto::from).toList();
+        return all.stream().map(MenuResponse::from).toList();
     }
 
     @Override

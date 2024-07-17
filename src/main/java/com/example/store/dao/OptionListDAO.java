@@ -1,7 +1,6 @@
 package com.example.store.dao;
 import com.example.store.dto.request.OptionListRequestDTO;
 import com.example.store.dto.request.UpdateOptionListRequestDTO;
-import com.example.store.dto.response.OptionListResponseDTO;
 import com.example.store.global.entity.Menu;
 import com.example.store.global.entity.OptionList;
 

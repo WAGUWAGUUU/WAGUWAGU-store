@@ -1,7 +1,7 @@
 package com.example.store.service;
 import com.example.store.dto.request.OwnerRequestDto;
 import com.example.store.dto.request.UpdateOwnerRequestDto;
-import com.example.store.dto.response.OwnerResponseDto;
+import com.example.store.dto.response.OwnerResponse;
 import com.example.store.global.entity.Owner;
 import com.example.store.global.repository.OwnerRepository;
 import com.example.store.global.type.UpdateOwnerType;
@@ -29,15 +29,15 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     @Transactional
-    public OwnerResponseDto getOwnerByOwnerId(Long ownerId) {
+    public OwnerResponse getOwnerByOwnerId(Long ownerId) {
         Owner owner = ownerRepository.findByOwnerIsDeletedFalseAndOwnerId(ownerId).orElseThrow();
-        return OwnerResponseDto.from(owner);
+        return OwnerResponse.from(owner);
     }
 
     @Override
-    public List<OwnerResponseDto> getAllOwner() {
+    public List<OwnerResponse> getAllOwner() {
         List<Owner> allByOwnerIsDeletedFalse = ownerRepository.findAllByOwnerIsDeletedFalse();
-        return allByOwnerIsDeletedFalse.stream().map(OwnerResponseDto::from).toList();
+        return allByOwnerIsDeletedFalse.stream().map(OwnerResponse::from).toList();
     }
 
     @Override

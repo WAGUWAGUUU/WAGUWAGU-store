@@ -2,7 +2,7 @@ package com.example.store.controller;
 
 import com.example.store.dto.request.OptionRequestDTO;
 import com.example.store.dto.request.UpdateOptionRequestDTO;
-import com.example.store.dto.response.OptionResponseDTO;
+import com.example.store.dto.response.OptionResponse;
 import com.example.store.service.OptionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,14 +21,14 @@ public class OptionController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<OptionResponseDTO> getOptionById(@PathVariable Long id) {
-        OptionResponseDTO option = optionService.getOptionById(id);
+    public ResponseEntity<OptionResponse> getOptionById(@PathVariable Long id) {
+        OptionResponse option = optionService.getOptionById(id);
         return ResponseEntity.ok(option);
     }
 
     @GetMapping("/list/{listId}")
-    public ResponseEntity<List<OptionResponseDTO>> getAllOptionsByListId(@PathVariable Long listId) {
-        List<OptionResponseDTO> options = optionService.getAllOptionsbyListID(listId);
+    public ResponseEntity<List<OptionResponse>> getAllOptionsByListId(@PathVariable Long listId) {
+        List<OptionResponse> options = optionService.getAllOptionsbyListID(listId);
         return ResponseEntity.ok(options);
     }
 
