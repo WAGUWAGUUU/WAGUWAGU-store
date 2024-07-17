@@ -2,7 +2,9 @@ package com.example.store.service;
 
 import com.example.store.dao.OptionDAO;
 import com.example.store.dto.request.OptionRequestDTO;
+
 import com.example.store.dto.request.UpdateOptionRequestDTO;
+
 import com.example.store.dto.response.OptionResponse;
 import com.example.store.global.entity.Option;
 import com.example.store.global.repository.OptionRepository;
@@ -22,8 +24,11 @@ public class OptionServiceImpl implements OptionService {
 
     @Override
     public OptionResponse getOptionById(Long id) {
+
         Option optionById = optionDAO.getOptionById(id);
         return  OptionResponse.from(optionById);
+
+
 
     }
 

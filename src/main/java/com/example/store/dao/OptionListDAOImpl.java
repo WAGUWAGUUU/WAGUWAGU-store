@@ -2,7 +2,11 @@ package com.example.store.dao;
 
 
 import com.example.store.dto.request.OptionListRequestDTO;
+
 import com.example.store.dto.request.UpdateOptionListRequestDTO;
+
+import com.example.store.dto.response.OptionListResponse;
+
 import com.example.store.global.entity.Menu;
 import com.example.store.global.entity.Option;
 import com.example.store.global.entity.OptionList;
@@ -23,6 +27,7 @@ public class OptionListDAOImpl implements OptionListDAO {
 
     private final OptionListRepository optionListRepository;
     private final MenuRepository menuRepository;
+
 
 
 
@@ -49,12 +54,17 @@ public class OptionListDAOImpl implements OptionListDAO {
 
 
     @Override
+
     public OptionList findById(Long id) {
+
+    
         Optional<OptionList> byId = optionListRepository.findById(id);
         if (byId.isEmpty()) {
               throw new  IllegalArgumentException("OptionList not found");
         }
+
         return byId.get();
+
     }
 
     @Override

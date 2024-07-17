@@ -3,6 +3,8 @@ import com.example.store.dto.request.MenuRequestDto;
 import com.example.store.dto.request.UpdateMenuRequestDto;
 import com.example.store.dto.response.MenuResponse;
 import com.example.store.global.entity.Menu;
+import com.example.store.global.exception.MenuAlreadyExistsException;
+import com.example.store.global.exception.MenuNotFoundException;
 import com.example.store.global.repository.MenuRepository;
 import com.example.store.global.type.UpdateMenuType;
 import jakarta.transaction.Transactional;
@@ -20,7 +22,7 @@ public class MenuServiceImpl implements MenuService {
     @Transactional
     public void createMenu(MenuRequestDto menuRequestDto) {
         Optional<Menu> byMenuCategoryAndMenuName = menuRepository.findByMenuCategory_MenuCategoryIdAndMenuNameAndMenuIsDeletedFalse(menuRequestDto.menuCategoryId(), menuRequestDto.menuName());
-        if(byMenuCategoryAndMenuName.isPresent()) throw new IllegalArgumentException();
+        if(byMenuCategoryAndMenuName.isPresent()) throw new MenuAlreadyExistsException();
         Menu entity = menuRequestDto.toEntity();
         menuRepository.save(entity);
     }
@@ -35,7 +37,9 @@ public class MenuServiceImpl implements MenuService {
     @Override
     @Transactional
     public MenuResponse getMenuById(Long menuId) {
-        Menu menu = menuRepository.findByMenuIdAndMenuIsDeletedFalse(menuId).orElseThrow();
+
+        Menu menu = menuRepository.findByMenuIdAndMenuIsDeletedFalse(menuId).orElseThrow(MenuNotFoundException::new);
+
         return MenuResponse.from(menu);
     }
 
@@ -43,28 +47,30 @@ public class MenuServiceImpl implements MenuService {
     @Transactional
     public List<MenuResponse> getAllMenu() {
         List<Menu> all = menuRepository.findAllByMenuIsDeletedFalse();
-        if(all.isEmpty()) throw new IllegalArgumentException();
+
+        if(all.isEmpty()) throw new MenuNotFoundException();
+
         return all.stream().map(MenuResponse::from).toList();
     }
 
     @Override
     @Transactional
     public void update(Long menuId, UpdateMenuType updateMenuType, UpdateMenuRequestDto updateMenuRequestDto) {
-        Menu menu = menuRepository.findByMenuIdAndMenuIsDeletedFalse(menuId).orElseThrow();
+        Menu menu = menuRepository.findByMenuIdAndMenuIsDeletedFalse(menuId).orElseThrow(MenuNotFoundException::new);
         menu.update(updateMenuType, updateMenuRequestDto);
     }
 
     @Override
     @Transactional
     public void changeMenuPossible(Long menuId, UpdateMenuType updateMenuType) {
-        Menu menu = menuRepository.findByMenuIdAndMenuIsDeletedFalse(menuId).orElseThrow();
+        Menu menu = menuRepository.findByMenuIdAndMenuIsDeletedFalse(menuId).orElseThrow(MenuNotFoundException::new);
         menu.changeMenuPossible();
     }
 
     @Override
     @Transactional
     public void deleteMenu(Long menuId) {
-        Menu menu = menuRepository.findByMenuIdAndMenuIsDeletedFalse(menuId).orElseThrow();
+        Menu menu = menuRepository.findByMenuIdAndMenuIsDeletedFalse(menuId).orElseThrow(MenuNotFoundException::new);
         menu.setMenuIsDeleted();
     }
 }

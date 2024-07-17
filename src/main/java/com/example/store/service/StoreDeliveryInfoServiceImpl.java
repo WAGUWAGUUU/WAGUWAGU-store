@@ -4,6 +4,9 @@ import com.example.store.dto.request.UpdateStoreDeliveryInfoRequestDto;
 import com.example.store.dto.response.StoreDeliveryInfoResponse;
 import com.example.store.global.entity.Store;
 import com.example.store.global.entity.StoreDeliveryInfo;
+import com.example.store.global.exception.StoreDeliveryInfoAlreadyExistsException;
+import com.example.store.global.exception.StoreDeliveryInfoNotFoundException;
+import com.example.store.global.exception.StoreNotFoundException;
 import com.example.store.global.repository.StoreDeliveryInfoRepository;
 import com.example.store.global.repository.StoreRepository;
 import com.example.store.global.type.UpdateStoreDeliveryInfoType;
@@ -23,9 +26,9 @@ public class StoreDeliveryInfoServiceImpl implements StoreDeliveryInfoService {
     @Transactional
     public void createStoreDeliveryInfo(Long storeId, StoreDeliveryInfoRequestDto storeDeliveryInfoRequestDto) {
         Optional<StoreDeliveryInfo> byStoreStoreIdAndStoreDeliveryInfoState = storeDeliveryInfoRepository.findByStore_StoreIdAndStoreDeliveryInfoState(storeId, storeDeliveryInfoRequestDto.storeDeliveryInfoState());
-        if(byStoreStoreIdAndStoreDeliveryInfoState.isPresent()) throw new IllegalArgumentException();
+        if(byStoreStoreIdAndStoreDeliveryInfoState.isPresent()) throw new StoreDeliveryInfoAlreadyExistsException();
         Optional<Store> byId = storeRepository.findById(storeId);
-        if(byId.isEmpty()) throw new IllegalArgumentException();
+        if(byId.isEmpty()) throw new StoreNotFoundException();
         StoreDeliveryInfo entity = storeDeliveryInfoRequestDto.toEntity(byId.get());
         storeDeliveryInfoRepository.save(entity);
     }
@@ -40,7 +43,7 @@ public class StoreDeliveryInfoServiceImpl implements StoreDeliveryInfoService {
     @Override
     @Transactional
     public void updateStoreDeliveryInfoByStoreIdAndState(Long storeId, int storeDeliveryInfoState, UpdateStoreDeliveryInfoType updateStoreDeliveryInfoType, UpdateStoreDeliveryInfoRequestDto updateStoreDeliveryInfoRequestDto) {
-        StoreDeliveryInfo storeDeliveryInfo = storeDeliveryInfoRepository.findByStore_StoreIdAndStoreDeliveryInfoState(storeId, storeDeliveryInfoState).orElseThrow();
+        StoreDeliveryInfo storeDeliveryInfo = storeDeliveryInfoRepository.findByStore_StoreIdAndStoreDeliveryInfoState(storeId, storeDeliveryInfoState).orElseThrow(StoreDeliveryInfoNotFoundException::new);
         storeDeliveryInfo.update(updateStoreDeliveryInfoType, updateStoreDeliveryInfoRequestDto);
     }
 }
