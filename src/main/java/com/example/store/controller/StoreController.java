@@ -1,12 +1,7 @@
 package com.example.store.controller;
-import com.example.store.dto.request.OwnerRequestDto;
 import com.example.store.dto.request.StoreRequestDto;
-import com.example.store.dto.request.UpdateOwnerRequestDto;
 import com.example.store.dto.request.UpdateStoreRequestDto;
-import com.example.store.dto.response.StoreResponseDto;
-import com.example.store.global.entity.Owner;
-import com.example.store.global.entity.Store;
-import com.example.store.global.type.UpdateOwnerType;
+import com.example.store.dto.response.StoreResponse;
 import com.example.store.global.type.UpdateStoreType;
 import com.example.store.service.StoreService;
 import lombok.RequiredArgsConstructor;
@@ -29,13 +24,13 @@ public class StoreController {
 
     @GetMapping("/{storeId}")
     @ResponseStatus(HttpStatus.OK)
-    public StoreResponseDto getStoreByStoreId(@PathVariable(name = "storeId") Long storeId) {
+    public StoreResponse getStoreByStoreId(@PathVariable(name = "storeId") Long storeId) {
         return storeService.getStoreByStoreId(storeId);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<StoreResponseDto> getAllStore() {
+    public List<StoreResponse> getAllStore() {
         return storeService.getAllStore();
     }
 

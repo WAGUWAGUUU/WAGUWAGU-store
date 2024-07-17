@@ -2,15 +2,12 @@ package com.example.store.service;
 
 import com.example.store.dao.OptionListDAOImpl;
 import com.example.store.dto.request.OptionListRequestDTO;
-import com.example.store.dto.response.OptionListResponseDTO;
-import com.example.store.dto.response.OptionResponseDTO;
+import com.example.store.dto.response.OptionListResponse;
 import com.example.store.global.entity.Menu;
-import com.example.store.global.entity.OptionList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,8 +19,8 @@ public class OptionListServiceImpl implements OptionListService {
 
 
     @Override
-    public List<OptionListResponseDTO> getOptionListsByMenuId(Long menuId) {
-        List<OptionListResponseDTO> byId = optionListDAO.findByMenuId(menuId);
+    public List<OptionListResponse> getOptionListsByMenuId(Long menuId) {
+        List<OptionListResponse> byId = optionListDAO.findByMenuId(menuId);
         if (byId.isEmpty()) {
             throw  new IllegalArgumentException("not found");
 
@@ -32,9 +29,9 @@ public class OptionListServiceImpl implements OptionListService {
     }
 
     @Override
-    public OptionListResponseDTO getOptionListById(Long id) {
+    public OptionListResponse getOptionListById(Long id) {
 
-        OptionListResponseDTO byId = optionListDAO.findById(id);
+        OptionListResponse byId = optionListDAO.findById(id);
         if (byId == null) {
             throw  new IllegalArgumentException("not found");
         }
@@ -57,7 +54,7 @@ public class OptionListServiceImpl implements OptionListService {
 
     @Override
     public void deleteOptionList(Long id) {
-        OptionListResponseDTO byId = optionListDAO.findById(id);
+        OptionListResponse byId = optionListDAO.findById(id);
         if (byId == null) {
             throw  new IllegalArgumentException("not found");
         }
@@ -68,7 +65,7 @@ public class OptionListServiceImpl implements OptionListService {
 
     @Override
     public void updateOptionList(Long id, OptionListRequestDTO optionList) {
-        OptionListResponseDTO byId = optionListDAO.findById(id);
+        OptionListResponse byId = optionListDAO.findById(id);
         if (byId == null) {
             throw  new IllegalArgumentException("Option List not found");
         }

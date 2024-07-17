@@ -1,7 +1,7 @@
 package com.example.store.service;
 
 import com.example.store.dto.request.OptionRequestDTO;
-import com.example.store.dto.response.OptionResponseDTO;
+import com.example.store.dto.response.OptionResponse;
 import com.example.store.global.entity.Option;
 import com.example.store.global.repository.OptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +15,12 @@ public class OptionServiceImpl implements OptionService {
     @Autowired
     private OptionRepository optionRepository;
     @Override
-    public OptionResponseDTO getOptionById(Long id) {
+    public OptionResponse getOptionById(Long id) {
         Optional<Option> byId = optionRepository.findById(id);
         if (byId.isEmpty()) {
             throw new IllegalArgumentException("Option not found");
         } else {
-            return OptionResponseDTO.from(byId.get());
+            return OptionResponse.from(byId.get());
         }
 
     }

@@ -2,7 +2,7 @@ package com.example.store.controller;
 
 import com.example.store.dto.request.StoreDeliveryInfoRequestDto;
 import com.example.store.dto.request.UpdateStoreDeliveryInfoRequestDto;
-import com.example.store.dto.response.StoreDeliveryInfoResponseDto;
+import com.example.store.dto.response.StoreDeliveryInfoResponse;
 import com.example.store.global.type.UpdateStoreDeliveryInfoType;
 import com.example.store.service.StoreDeliveryInfoService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class StoreDeliveryInfoController {
     }
 
     @GetMapping("/store/{storeId}/store-delivery-info")
-    public List<StoreDeliveryInfoResponseDto> getStoreDeliveryInfoAllByStoreId (@PathVariable(name = "storeId")Long storeId){
+    public List<StoreDeliveryInfoResponse> getStoreDeliveryInfoAllByStoreId (@PathVariable(name = "storeId")Long storeId){
         return storeDeliveryInfoService.getStoreDeliveryInfoAllByStoreId(storeId);
     }
 
