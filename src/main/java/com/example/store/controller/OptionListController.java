@@ -2,6 +2,7 @@ package com.example.store.controller;
 
 
 import com.example.store.dto.request.OptionListRequestDTO;
+import com.example.store.dto.request.UpdateOptionListRequestDTO;
 import com.example.store.dto.response.OptionListResponseDTO;
 import com.example.store.service.OptionListServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +43,7 @@ public class OptionListController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateOptionList(@PathVariable Long id, @RequestBody OptionListRequestDTO optionListRequestDTO) {
+    public ResponseEntity<Void> updateOptionList(@PathVariable Long id, @RequestBody UpdateOptionListRequestDTO optionListRequestDTO) {
         optionListService.updateOptionList(id, optionListRequestDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -2,8 +2,10 @@ package com.example.store.dao;
 
 
 import com.example.store.dto.request.OptionListRequestDTO;
+import com.example.store.dto.request.UpdateOptionListRequestDTO;
 import com.example.store.dto.response.OptionListResponseDTO;
 import com.example.store.global.entity.Menu;
+import com.example.store.global.entity.Option;
 import com.example.store.global.entity.OptionList;
 import com.example.store.global.repository.MenuRepository;
 import com.example.store.global.repository.OptionListRepository;
@@ -26,10 +28,8 @@ public class OptionListDAOImpl implements OptionListDAO {
 
 
 
-    public List<OptionListResponseDTO> findByMenuId(Long menuId){
-        return optionListRepository.findByMenuId(menuId).stream()
-                .map(OptionListResponseDTO::from)
-                .collect(Collectors.toList());
+    public List<OptionList> findByMenuId(Long menuId){
+        return optionListRepository.findByMenuId(menuId);
 
     };
 
@@ -49,13 +49,14 @@ public class OptionListDAOImpl implements OptionListDAO {
         optionListRepository.deleteById(id);
     }
 
+
     @Override
-    public OptionListResponseDTO findById(Long id) {
+    public OptionList findById(Long id) {
         Optional<OptionList> byId = optionListRepository.findById(id);
         if (byId.isEmpty()) {
               throw new  IllegalArgumentException("OptionList not found");
         }
-        return OptionListResponseDTO.from(byId.get());
+        return byId.get();
     }
 
     @Override
@@ -63,4 +64,21 @@ public class OptionListDAOImpl implements OptionListDAO {
 
         return menuRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Menu not found"));
     }
+
+    @Override
+    public void updateOptionList(Long id, UpdateOptionListRequestDTO updateOptionListRequestDTO) {
+
+        OptionList byId = optionListRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("OptionList not found"));
+
+        String listName = updateOptionListRequestDTO.listName();
+        List<Option> options = updateOptionListRequestDTO.options();
+        byId.setListName(listName);
+        byId.setOptions(options);
+        optionListRepository.save(byId);
+
+
+
+    }
+
+
 }

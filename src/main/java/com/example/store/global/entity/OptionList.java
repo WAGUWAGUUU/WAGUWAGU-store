@@ -28,4 +28,6 @@ public class OptionList {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MENU_ID")
     private Menu menu;
+
+
 }

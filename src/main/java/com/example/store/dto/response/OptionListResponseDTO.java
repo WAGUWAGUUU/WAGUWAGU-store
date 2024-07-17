@@ -1,15 +1,16 @@
 package com.example.store.dto.response;
 
-import com.example.store.global.entity.Option;
+import com.example.store.dto.dto.OptionDTO;
 import com.example.store.global.entity.OptionList;
 
 import java.util.List;
 
 public record OptionListResponseDTO (
-        String listName, List<Option> options
+        String listName,  List<OptionDTO> options
 
 ){
     public static OptionListResponseDTO from(OptionList optionList) {
-        return new OptionListResponseDTO(optionList.getListName(),optionList.getOptions());
+        List<OptionDTO> optionDTOS = optionList.getOptions().stream().map(OptionDTO::from).toList();
+        return new OptionListResponseDTO(optionList.getListName(), optionDTOS);
     }
 }
