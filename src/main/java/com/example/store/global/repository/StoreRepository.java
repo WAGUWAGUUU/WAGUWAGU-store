@@ -24,10 +24,10 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
 
     @Transactional
     @Modifying
-    @Query(value = "SELECT storeName, storeMinimumOrderAmount " +
+    @Query(value = "SELECT ownerId,storeName,storeAddress,storeLatitude,storeLongitude,storeMinimumOrderAmount " +
             "FROM (" +
-            "  SELECT S.store_name AS storeName, S.store_minimum_order_amount AS storeMinimumOrderAmount, " +
-            "         ST_Distance_Sphere(Point(:userX, :userY), Point(S.store_address_x, S.store_address_y)) AS distance " +
+            "  SELECT S.owner_id AS ownerId, S.store_name AS storeName,  S.store_address_string AS storeAddress, S.store_address_y AS storeLatitude, S.store_address_x AS storeLongitude, S.store_minimum_order_amount AS storeMinimumOrderAmount, " +
+            "  ST_Distance_Sphere(Point(:userX, :userY), Point(S.store_address_x, S.store_address_y)) AS distance " +
             "  FROM Stores S " +
             "  WHERE S.store_is_deleted = 0 AND S.store_category = :category"+
             ") AS temp " +

@@ -1,8 +1,10 @@
 package com.example.store.service;
 import com.example.store.dto.request.OwnerRequestDto;
 import com.example.store.dto.request.UpdateOwnerRequestDto;
-import com.example.store.dto.response.OwnerResponseDto;
+import com.example.store.dto.response.OwnerResponse;
 import com.example.store.global.entity.Owner;
+import com.example.store.global.exception.OwnerAlreadyExistsException;
+import com.example.store.global.exception.OwnerNotFoundException;
 import com.example.store.global.repository.OwnerRepository;
 import com.example.store.global.type.UpdateOwnerType;
 import jakarta.transaction.Transactional;
@@ -22,35 +24,35 @@ public class OwnerServiceImpl implements OwnerService {
     @Transactional
     public void createOwner(OwnerRequestDto ownerRequestDto) {
         Optional<Owner> byOwnerBusinessNumber = ownerRepository.findByOwnerBusinessNumberAndOwnerIsDeletedFalse(ownerRequestDto.ownerBusinessNumber());
-        if(byOwnerBusinessNumber.isPresent()) throw new IllegalArgumentException();
+        if(byOwnerBusinessNumber.isPresent()) throw new OwnerAlreadyExistsException();
         Owner toEntity = ownerRequestDto.toEntity();
         ownerRepository.save(toEntity);
     }
 
     @Override
     @Transactional
-    public OwnerResponseDto getOwnerByOwnerId(Long ownerId) {
-        Owner owner = ownerRepository.findByOwnerIsDeletedFalseAndOwnerId(ownerId).orElseThrow();
-        return OwnerResponseDto.from(owner);
+    public OwnerResponse getOwnerByOwnerId(Long ownerId) {
+        Owner owner = ownerRepository.findByOwnerIsDeletedFalseAndOwnerId(ownerId).orElseThrow(OwnerNotFoundException::new);
+        return OwnerResponse.from(owner);
     }
 
     @Override
-    public List<OwnerResponseDto> getAllOwner() {
+    public List<OwnerResponse> getAllOwner() {
         List<Owner> allByOwnerIsDeletedFalse = ownerRepository.findAllByOwnerIsDeletedFalse();
-        return allByOwnerIsDeletedFalse.stream().map(OwnerResponseDto::from).toList();
+        return allByOwnerIsDeletedFalse.stream().map(OwnerResponse::from).toList();
     }
 
     @Override
     @Transactional
     public void updateOwner(Long ownerId, UpdateOwnerType updateOwnerType, UpdateOwnerRequestDto updateOwnerRequestDto) {
-        Owner owner = ownerRepository.findByOwnerIsDeletedFalseAndOwnerId(ownerId).orElseThrow();
+        Owner owner = ownerRepository.findByOwnerIsDeletedFalseAndOwnerId(ownerId).orElseThrow(OwnerNotFoundException::new);
         owner.update(updateOwnerType, updateOwnerRequestDto);
     }
 
     @Override
     @Transactional
     public void deleteOwner(Long ownerId) {
-        Owner owner = ownerRepository.findByOwnerIsDeletedFalseAndOwnerId(ownerId).orElseThrow();
+        Owner owner = ownerRepository.findByOwnerIsDeletedFalseAndOwnerId(ownerId).orElseThrow(OwnerNotFoundException::new);
         owner.setOwnerIsDeleted();
     }
 }

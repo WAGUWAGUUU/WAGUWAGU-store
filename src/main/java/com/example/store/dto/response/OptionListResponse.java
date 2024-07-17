@@ -5,11 +5,11 @@ import com.example.store.global.entity.OptionList;
 
 import java.util.List;
 
-public record OptionListResponseDTO (
+public record OptionListResponse(
         String listName, List<Option> options
 
 ){
-    public static OptionListResponseDTO from(OptionList optionList) {
-        return new OptionListResponseDTO(optionList.getListName(),optionList.getOptions());
+    public static OptionListResponse from(OptionList optionList) {
+        return new OptionListResponse(optionList.getListName(),optionList.getOptions());
     }
 }
