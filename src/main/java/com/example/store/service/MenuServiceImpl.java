@@ -37,7 +37,9 @@ public class MenuServiceImpl implements MenuService {
     @Override
     @Transactional
     public MenuResponse getMenuById(Long menuId) {
+
         Menu menu = menuRepository.findByMenuIdAndMenuIsDeletedFalse(menuId).orElseThrow(MenuNotFoundException::new);
+
         return MenuResponse.from(menu);
     }
 
@@ -45,7 +47,9 @@ public class MenuServiceImpl implements MenuService {
     @Transactional
     public List<MenuResponse> getAllMenu() {
         List<Menu> all = menuRepository.findAllByMenuIsDeletedFalse();
+
         if(all.isEmpty()) throw new MenuNotFoundException();
+
         return all.stream().map(MenuResponse::from).toList();
     }
 

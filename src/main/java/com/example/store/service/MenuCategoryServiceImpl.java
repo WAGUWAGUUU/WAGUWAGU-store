@@ -30,7 +30,9 @@ public class MenuCategoryServiceImpl implements MenuCategoryService{
     @Override
     @Transactional
     public MenuCategoryResponse getMenuCategoryById(Long menuCategoryId) {
+
         MenuCategory menuCategory = menuCategoryRepository.findByMenuCategoryIdAndMenuCategoryIsDeletedFalse(menuCategoryId).orElseThrow(MenuCategoryNotFoundException::new);
+
         return MenuCategoryResponse.from(menuCategory);
     }
 

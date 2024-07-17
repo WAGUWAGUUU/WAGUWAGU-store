@@ -1,14 +1,15 @@
 package com.example.store.dto.request;
 
 import com.example.store.global.entity.Option;
+import com.example.store.global.entity.OptionList;
 
 public record OptionRequestDTO(
-        Long optionId, String optionTitle, int optionPrice
+        Long optionId,Long listId ,String optionTitle, int optionPrice
 ) {
 
-    public Option toEntity(OptionRequestDTO optionRequestDTO) {
+    public Option toEntity(OptionList optionList) {
 
-        return Option.builder().optionId(optionId).optionTitle(optionTitle).optionPrice(optionPrice).build();
+        return Option.builder().optionId(optionId).optionList(optionList).optionTitle(optionTitle).optionPrice(optionPrice).build();
 
     }
 }

@@ -32,7 +32,9 @@ public class StoreServiceImpl implements StoreService {
     @Override
     @Transactional
     public StoreResponse getStoreByStoreId(Long storeId) {
+
         Store store = storeRepository.findByStoreIdAndStoreIsDeletedFalse(storeId).orElseThrow(StoreNotFoundException::new);
+
         return StoreResponse.from(store);
     }
     @Override
