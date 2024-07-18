@@ -32,7 +32,7 @@ public class DistanceCalServiceImpl implements DistanceCalService{
     @Transactional
     public UserLocationResponse acceptOrder(Long storeId, UserLocationAndMinute userLocation, DistanceTimeRequestDto distanceTimeRequestDto) {
         int cost= 0;
-        Store store = storeRepository.findById(storeId).orElseThrow();
+        Store store = storeRepository.findById(storeId).orElseThrow(StoreNotFoundException::new);
         double distance = distanceUtility.distance(store.getStoreAddressX(), store.getStoreAddressY(), userLocation.x(), userLocation.y());
         List<StoreDeliveryInfo> allByStoreStoreId = storeDeliveryInfoRepository.findAllByStore_StoreId(storeId);
         if(allByStoreStoreId.isEmpty()) throw new StoreDeliveryInfoNotFoundException();
