@@ -7,7 +7,6 @@ import com.example.store.dto.request.UpdateOptionRequestDTO;
 
 import com.example.store.dto.response.OptionResponse;
 import com.example.store.global.entity.Option;
-import com.example.store.global.repository.OptionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +18,7 @@ import java.util.stream.Collectors;
 public class OptionServiceImpl implements OptionService {
 
 
-    private final OptionRepository optionRepository;
+
     private final OptionDAO optionDAO;
 
     @Override
