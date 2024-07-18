@@ -25,6 +25,8 @@ public class Option {
     private int optionPrice;
 
 
+
+
     @JoinColumn(name = "OPTION_LIST_ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private OptionList optionList;
