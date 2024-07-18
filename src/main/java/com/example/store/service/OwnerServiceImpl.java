@@ -36,7 +36,9 @@ public class OwnerServiceImpl implements OwnerService {
     @Override
     @Transactional
     public OwnerResponse getOwnerByOwnerId(Long ownerId) {
+
         Owner owner = ownerRepository.findByOwnerIsDeletedFalseAndOwnerId(ownerId).orElseThrow(OwnerNotFoundException::new);
+
         return OwnerResponse.from(owner);
     }
 
