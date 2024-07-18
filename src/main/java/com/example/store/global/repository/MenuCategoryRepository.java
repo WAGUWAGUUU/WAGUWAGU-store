@@ -13,4 +13,6 @@ public interface MenuCategoryRepository extends JpaRepository<MenuCategory, Long
     Optional<MenuCategory> findByMenuCategoryIdAndMenuCategoryIsDeletedFalse(Long menuCategoryId);
 
     List<MenuCategory> findAllByMenuCategoryIsDeletedFalse();
+
+    List<MenuCategory> findAllByStore_StoreIdAndMenuCategoryIsDeletedFalse(Long storeId);
 }

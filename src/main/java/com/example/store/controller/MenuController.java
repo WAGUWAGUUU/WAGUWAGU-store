@@ -36,24 +36,14 @@ public class MenuController {
         return menuService.getAllMenu();
     }
 
-    @PutMapping("/{menuId}/menu-name")
-    public void updateMenuName(@PathVariable("menuId") Long menuId, @RequestBody UpdateMenuRequestDto updateMenuRequestDto) {
-        menuService.update(menuId, UpdateMenuType.MENU_NAME, updateMenuRequestDto);
-    }
-
-    @PutMapping("/{menuId}/menu-introduction")
-    public void updateMenuIntroduction(@PathVariable("menuId") Long menuId, @RequestBody UpdateMenuRequestDto updateMenuRequestDto) {
-        menuService.update(menuId, UpdateMenuType.MENU_INTRODUCTION, updateMenuRequestDto);
+    @PutMapping("/{menuId}")
+    public void updateMenu(@PathVariable("menuId") Long menuId, @RequestParam(name = "type")String type, @RequestBody UpdateMenuRequestDto updateMenuRequestDto) {
+        menuService.update(menuId, UpdateMenuType.stringToMenuType(type), updateMenuRequestDto);
     }
 
     @PutMapping("/{menuId}/menu-possible")
     public void changeMenuPossible(@PathVariable("menuId") Long menuId) {
-        menuService.changeMenuPossible(menuId, UpdateMenuType.MENU_POSSIBLE);
-    }
-
-    @PutMapping("/{menuId}/menu-price")
-    public void updateMenuPrice(@PathVariable("menuId") Long menuId, @RequestBody UpdateMenuRequestDto updateMenuRequestDto) {
-        menuService.update(menuId, UpdateMenuType.MENU_PRICE, updateMenuRequestDto);
+        menuService.changeMenuPossible(menuId);
     }
 
     @DeleteMapping("/{menuId}")

@@ -27,6 +27,8 @@ public class Option {
     @Column(name = "OPTION_CHECKED")
     private boolean isChecked = false;
 
+
+
     @JoinColumn(name = "OPTION_LIST_ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private OptionList optionList;
