@@ -1,9 +1,6 @@
 package com.example.store.controller.exceptionController;
 
-import com.example.store.global.exception.MenuAlreadyExistsException;
-import com.example.store.global.exception.MenuCategoryAlreadyExistsException;
-import com.example.store.global.exception.MenuCategoryNotFoundException;
-import com.example.store.global.exception.MenuNotFoundException;
+import com.example.store.global.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -22,4 +19,12 @@ public class MenuExceptionController {
     public String menuNotFoundExceptionHandler(MenuNotFoundException e){
         return e.getMessage();
     }
+
+    @ExceptionHandler(MenuTypeNotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String menuTypeNotFoundExceptionHandler(MenuTypeNotFoundException e){
+        return e.getMessage();
+    }
+
+
 }

@@ -48,8 +48,6 @@ public class MenuServiceImpl implements MenuService {
     public List<MenuResponse> getAllMenu() {
         List<Menu> all = menuRepository.findAllByMenuIsDeletedFalse();
 
-        if(all.isEmpty()) throw new MenuNotFoundException();
-
         return all.stream().map(MenuResponse::from).toList();
     }
 
@@ -62,7 +60,7 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     @Transactional
-    public void changeMenuPossible(Long menuId, UpdateMenuType updateMenuType) {
+    public void changeMenuPossible(Long menuId) {
         Menu menu = menuRepository.findByMenuIdAndMenuIsDeletedFalse(menuId).orElseThrow(MenuNotFoundException::new);
         menu.changeMenuPossible();
     }

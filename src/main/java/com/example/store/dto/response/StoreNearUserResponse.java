@@ -1,7 +1,7 @@
 package com.example.store.dto.response;
 
 public interface StoreNearUserResponse {
-    Long ownerId();
+    Long getOwnerId();
     String getStoreName();
     String getStoreAddress();
     double getStoreLatitude();

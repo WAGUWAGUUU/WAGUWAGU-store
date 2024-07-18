@@ -17,7 +17,7 @@ public interface MenuService {
 
     void update(Long menuId, UpdateMenuType updateMenuType, UpdateMenuRequestDto updateMenuRequestDto);
 
-    void changeMenuPossible(Long menuId, UpdateMenuType updateMenuType);
+    void changeMenuPossible(Long menuId);
 
     void deleteMenu(Long menuId);
 

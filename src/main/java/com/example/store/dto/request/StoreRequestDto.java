@@ -7,7 +7,7 @@ import com.example.store.global.type.StoreCategory;
 import java.time.LocalTime;
 
 public record StoreRequestDto(
-        String storeName, String storeAddressString, double storeAddressX, double storeAddressY,LocalTime storeOpenAt, LocalTime storeCloseAt, String storePhone, int storeMinimumOrderAmount, String storeIntroduction, StoreCategory storeCategory,
+        String storeName, String storeAddressString, double storeAddressX, double storeAddressY,LocalTime storeOpenAt, LocalTime storeCloseAt, String storePhone, int storeMinimumOrderAmount, String storeIntroduction, String storeCategory,
         Long ownerId
 ) {
     public Store toEntity() {
@@ -22,7 +22,7 @@ public record StoreRequestDto(
                 .storePhone(storePhone)
                 .storeMinimumOrderAmount(storeMinimumOrderAmount)
                 .storeIntroduction(storeIntroduction)
-                .storeCategory(storeCategory)
+                .storeCategory(StoreCategory.stringToCategory(storeCategory))
                 .owner(owner)
                 .build();
     }
