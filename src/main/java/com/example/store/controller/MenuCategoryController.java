@@ -27,6 +27,11 @@ public class MenuCategoryController {
         return menuCategoryService.getMenuCategoryById(menuCategoryId);
     }
 
+    @GetMapping("store/{storeId}")
+    public List<MenuCategoryResponse> getMenuCategoryByStoreId(@PathVariable(name = "storeId") Long storeId) {
+        return menuCategoryService.getAllMenuCategoryByStoreId(storeId);
+    }
+
     @GetMapping
     public List<MenuCategoryResponse> getAllMenuCategory() {
         return menuCategoryService.getAllMenuCategory();

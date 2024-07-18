@@ -23,69 +23,22 @@ public class StoreController {
     }
 
     @GetMapping("/{storeId}")
-    @ResponseStatus(HttpStatus.OK)
     public StoreResponse getStoreByStoreId(@PathVariable(name = "storeId") Long storeId) {
         return storeService.getStoreByStoreId(storeId);
     }
 
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
     public List<StoreResponse> getAllStore() {
         return storeService.getAllStore();
     }
 
-    @PutMapping("/{storeId}/store-name")
-    @ResponseStatus(HttpStatus.OK)
-    public void updateStoreName(@PathVariable(name = "storeId") Long storeId, @RequestBody UpdateStoreRequestDto updateStoreRequestDto) {
-        storeService.updateStore(storeId, UpdateStoreType.STORE_NAME, updateStoreRequestDto);
-    }
-
-    @PutMapping("/{storeId}/store-address")
-    @ResponseStatus(HttpStatus.OK)
-    public void updateStoreAddress(@PathVariable(name = "storeId") Long storeId, @RequestBody UpdateStoreRequestDto updateStoreRequestDto) {
-        storeService.updateStore(storeId, UpdateStoreType.STORE_ADDRESS_STRING, updateStoreRequestDto);
-    }
-
-    @PutMapping("/{storeId}/store-open-at")
-    @ResponseStatus(HttpStatus.OK)
-    public void updateStoreOpenAt(@PathVariable(name = "storeId") Long storeId, @RequestBody UpdateStoreRequestDto updateStoreRequestDto) {
-        storeService.updateStore(storeId, UpdateStoreType.STORE_OPEN_AT, updateStoreRequestDto);
-    }
-
-    @PutMapping("/{storeId}/store-close-at")
-    @ResponseStatus(HttpStatus.OK)
-    public void updateStoreCloseAt(@PathVariable(name = "storeId") Long storeId, @RequestBody UpdateStoreRequestDto updateStoreRequestDto) {
-        storeService.updateStore(storeId, UpdateStoreType.STORE_CLOSE_AT, updateStoreRequestDto);
-    }
-
-    @PutMapping("/{storeId}/store-phone")
-    @ResponseStatus(HttpStatus.OK)
-    public void updateStorePhone(@PathVariable(name = "storeId") Long storeId, @RequestBody UpdateStoreRequestDto updateStoreRequestDto) {
-        storeService.updateStore(storeId, UpdateStoreType.STORE_PHONE, updateStoreRequestDto);
-    }
-
-    @PutMapping("/{storeId}/store-minimum-order-amount")
-    @ResponseStatus(HttpStatus.OK)
-    public void updateStoreMinimumOrderAmount(@PathVariable(name = "storeId") Long storeId, @RequestBody UpdateStoreRequestDto updateStoreRequestDto) {
-        storeService.updateStore(storeId, UpdateStoreType.STORE_MINIMUM_ORDER_AMOUNT, updateStoreRequestDto);
-    }
-
-    @PutMapping("/{storeId}/store-introduction")
-    @ResponseStatus(HttpStatus.OK)
-    public void updateStoreIntroduction(@PathVariable(name = "storeId") Long storeId, @RequestBody UpdateStoreRequestDto updateStoreRequestDto) {
-        storeService.updateStore(storeId, UpdateStoreType.STORE_INTRODUCTION, updateStoreRequestDto);
-    }
-
-    @PutMapping("/{storeId}/store-category")
-    @ResponseStatus(HttpStatus.OK)
-    public void updateStoreCategory(@PathVariable(name = "storeId") Long storeId, @RequestBody UpdateStoreRequestDto updateStoreRequestDto) {
-        storeService.updateStore(storeId, UpdateStoreType.STORE_CATEGORY, updateStoreRequestDto);
+    @PutMapping("/{storeId}")
+    public void updateStoreName(@PathVariable(name = "storeId") Long storeId, @RequestParam(name = "type")String type, @RequestBody UpdateStoreRequestDto updateStoreRequestDto) {
+        storeService.updateStore(storeId, UpdateStoreType.stringToStoreType(type), updateStoreRequestDto);
     }
 
     @DeleteMapping("/{storeId}")
-    @ResponseStatus(HttpStatus.OK)
     public void deleteStore(@PathVariable(name = "storeId") Long storeId) {
         storeService.deleteStore(storeId);
     }
-
 }

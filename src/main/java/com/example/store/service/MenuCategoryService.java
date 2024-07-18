@@ -11,6 +11,8 @@ public interface MenuCategoryService {
 
     MenuCategoryResponse getMenuCategoryById(Long menuCategoryId);
 
+    List<MenuCategoryResponse> getAllMenuCategoryByStoreId(Long storeId);
+
     List<MenuCategoryResponse> getAllMenuCategory();
 
     void updateMenuCategoryName(Long menuCategoryId, UpdateMenuCategoryRequestDto updateMenuCategoryRequestDto);
