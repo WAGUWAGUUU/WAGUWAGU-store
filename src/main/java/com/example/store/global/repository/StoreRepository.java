@@ -24,9 +24,9 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
 
     @Transactional
     @Modifying
-    @Query(value = "SELECT ownerId,storeId,storeName,storeAddress,storeLongitude,storeLatitude,storeMinimumOrderAmount " +
+    @Query(value = "SELECT ownerId,storeId,storeName,storeAddress,storeLongitude,storeLatitude,storeMinimumOrderAmount,storeIntroduction " +
             "FROM (" +
-            "  SELECT S.owner_id AS ownerId, S.store_id AS storeId, S.store_name AS storeName,  S.store_address_string AS storeAddress, S.store_address_y AS storeLatitude, S.store_address_x AS storeLongitude, S.store_minimum_order_amount AS storeMinimumOrderAmount, " +
+            "  SELECT S.owner_id AS ownerId, S.store_id AS storeId, S.store_name AS storeName,  S.store_address_string AS storeAddress, S.store_address_y AS storeLatitude, S.store_address_x AS storeLongitude, S.store_minimum_order_amount AS storeMinimumOrderAmount, S.store_introduction AS storeIntroduction, " +
             "  ST_Distance_Sphere(Point(:userX, :userY), Point(S.store_address_x, S.store_address_y)) AS distance " +
             "  FROM Stores S" +
             "  WHERE S.store_is_deleted = 0 AND S.store_category = :category"+
