@@ -88,7 +88,7 @@ public class DistanceCalServiceImpl implements DistanceCalService{
 
         return storeAllNearUser.stream().map(storeNearUserResponse -> {
             StoreListDeliveryResponse storeListDeliveryResponse = showStoreList(storeNearUserResponse.getStoreId(), storeNearUserRequest.longitude(), storeNearUserRequest.latitude());
-            return new StoreListResponse(storeNearUserResponse.getOwnerId(), storeNearUserResponse.getStoreId(), storeNearUserResponse.getStoreName(), storeNearUserResponse.getStoreAddress(),storeNearUserResponse.getStoreLongitude(), storeNearUserResponse.getStoreLatitude(), storeNearUserResponse.getStoreMinimumOrderAmount(), storeListDeliveryResponse.distanceFromStoreToCustomer(), storeListDeliveryResponse.deliveryFee());
+            return new StoreListResponse(storeNearUserResponse.getOwnerId(), storeNearUserResponse.getStoreId(), storeNearUserResponse.getStoreName(), storeNearUserResponse.getStoreAddress(),storeNearUserResponse.getStoreLongitude(), storeNearUserResponse.getStoreLatitude(), storeNearUserResponse.getStoreMinimumOrderAmount(), storeListDeliveryResponse.storeListDeliveryResponse.distanceFromStoreToCustomer(), storeListDeliveryResponse.deliveryFee());
         }).collect(Collectors.toList());
     }
 
