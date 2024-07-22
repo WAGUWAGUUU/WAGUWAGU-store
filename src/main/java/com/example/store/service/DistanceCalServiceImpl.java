@@ -4,6 +4,8 @@ import com.example.store.dto.kafka.KafkaDistanceDto;
 import com.example.store.dto.request.DistanceTimeRequestDto;
 import com.example.store.dto.request.StoreNearUserRequest;
 import com.example.store.dto.request.UserLocationAndMinute;
+import com.example.store.dto.response.StoreListDeliveryResponse;
+import com.example.store.dto.response.StoreListResponse;
 import com.example.store.dto.response.StoreNearUserResponse;
 import com.example.store.dto.response.UserLocationResponse;
 import com.example.store.global.entity.DistanceProducer;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -55,11 +58,36 @@ public class DistanceCalServiceImpl implements DistanceCalService{
     }
 
     @Override
-    @Transactional
-    public List<StoreNearUserResponse> userNearStore(StoreNearUserRequest storeNearUserRequest) {
-        List<StoreNearUserResponse> storeAllNearUser = storeRepository.findStoreAllNearUser(storeNearUserRequest.longitude(), storeNearUserRequest.latitude(), storeNearUserRequest.category());
-        if(storeAllNearUser.isEmpty()) throw new StoreNotFoundException();
-        return storeAllNearUser;
+    public StoreListDeliveryResponse showStoreList(Long storeId, double longitude, double latitude) {
+        int cost= 0;
+        Store store = storeRepository.findById(storeId).orElseThrow(StoreNotFoundException::new);
+        double distance = distanceUtility.distance(store.getStoreAddressX(), store.getStoreAddressY(), longitude, latitude);
+        List<StoreDeliveryInfo> allByStoreStoreId = storeDeliveryInfoRepository.findAllByStore_StoreId(storeId);
+        if(allByStoreStoreId.isEmpty()) throw new StoreDeliveryInfoNotFoundException();
+        allByStoreStoreId.sort((o1, o2) -> o1.getStoreDeliveryInfoState() - o2.getStoreDeliveryInfoState());
+        for(StoreDeliveryInfo info : allByStoreStoreId) {
+            if(distance < info.getStoreDeliveryInfoDistanceEnd()) {
+                cost = info.getStoreDeliveryInfoFee();
+                break;
+            }
+            if(info.getStoreDeliveryInfoState()==5) {
+                cost = info.getStoreDeliveryInfoFee();
+            }
+        }
+        // 소수점 셋째자리 내림
+        distance = Math.floor(distance*10)/10.0;
+        return new StoreListDeliveryResponse(distance, cost);
     }
 
+    @Override
+    @Transactional
+    public List<StoreListResponse> userNearStore(StoreNearUserRequest storeNearUserRequest) {
+        List<StoreNearUserResponse> storeAllNearUser = storeRepository.findStoreAllNearUser(storeNearUserRequest.longitude(), storeNearUserRequest.latitude(), storeNearUserRequest.category());
+        if(storeAllNearUser.isEmpty()) throw new StoreNotFoundException();
+
+        return storeAllNearUser.stream().map(storeNearUserResponse -> {
+            StoreListDeliveryResponse storeListDeliveryResponse = showStoreList(storeNearUserResponse.getStoreId(), storeNearUserRequest.longitude(), storeNearUserRequest.latitude());
+            return new StoreListResponse(storeNearUserResponse.getOwnerId(), storeNearUserResponse.getStoreId(), storeNearUserResponse.getStoreName(), storeNearUserResponse.getStoreAddress(),storeNearUserResponse.getStoreLongitude(), storeNearUserResponse.getStoreLatitude(), storeNearUserResponse.getStoreMinimumOrderAmount(), storeListDeliveryResponse.distanceFromStoreToCustomer(), storeListDeliveryResponse.deliveryFee());
+        }).collect(Collectors.toList());
+    }
 }

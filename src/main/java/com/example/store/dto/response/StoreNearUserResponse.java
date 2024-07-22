@@ -5,7 +5,7 @@ public interface StoreNearUserResponse {
     Long getStoreId();
     String getStoreName();
     String getStoreAddress();
-    double getStoreLatitude();
     double getStoreLongitude();
+    double getStoreLatitude();
     int getStoreMinimumOrderAmount();
 }
