@@ -35,4 +35,6 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
             "ORDER BY distance",
             nativeQuery = true)
     List<StoreNearUserResponse> findStoreAllNearUser(@Param("userX") double userX, @Param("userY") double userY, @Param("category") String category);
+
+
 }
