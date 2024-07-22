@@ -3,6 +3,7 @@ package com.example.store.controller;
 import com.example.store.dto.request.DistanceTimeRequestDto;
 import com.example.store.dto.request.StoreNearUserRequest;
 import com.example.store.dto.request.UserLocationAndMinute;
+import com.example.store.dto.response.StoreListResponse;
 import com.example.store.dto.response.StoreNearUserResponse;
 import com.example.store.dto.response.UserLocationResponse;
 import com.example.store.service.DistanceCalService;
@@ -23,7 +24,7 @@ public class DistanceCalController {
     }
 
     @PostMapping("user-near-store")
-    public List<StoreNearUserResponse> userNearStore(@RequestBody StoreNearUserRequest storeNearUserRequest) {
+    public List<StoreListResponse> userNearStore(@RequestBody StoreNearUserRequest storeNearUserRequest) {
         return distanceCalService.userNearStore(storeNearUserRequest);
     }
 }

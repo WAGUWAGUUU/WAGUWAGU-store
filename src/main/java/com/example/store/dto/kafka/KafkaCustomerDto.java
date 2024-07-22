@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public record KafkaCustomerDto(
         Long customerId,
-        double customerAddressX,
-        double customerAddressY
+        double longitude,
+        double latitude
 ) {
 }
