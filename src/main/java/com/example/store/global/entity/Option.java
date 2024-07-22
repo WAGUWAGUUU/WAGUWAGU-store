@@ -10,7 +10,6 @@ import lombok.*;
 @NoArgsConstructor
 @Table(name = "OPTIONS")
 @Builder
-@Setter
 public class Option {
 
     @Id
@@ -19,8 +18,9 @@ public class Option {
     private Long optionId;
 
     @Column(name = "OPTION_TITLE")
+    @Setter
     private String optionTitle;
-
+    @Setter
     @Column(name = "OPTION_PRICE")
     private int optionPrice;
 
@@ -31,5 +31,6 @@ public class Option {
 
     @JoinColumn(name = "OPTION_LIST_ID")
     @ManyToOne(fetch = FetchType.LAZY)
+    @Setter
     private OptionList optionList;
 }

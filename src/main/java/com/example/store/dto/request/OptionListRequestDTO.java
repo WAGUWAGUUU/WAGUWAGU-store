@@ -7,11 +7,16 @@ import com.example.store.global.entity.OptionList;
 import java.util.List;
 
 public record OptionListRequestDTO(
-        Long listId,Long menuId, String  listName, List<Option> options
+        Long menuId, String  listName, List<Option> options
 ) {
     public OptionList toEntity(Menu menu){
 
-        return OptionList.builder().listId(listId).listName(listName).options(options).menu(menu).build();
+        OptionList build = OptionList.builder()
+                .listName(listName)
+                .menu(menu)
+                .build();
+        options.forEach(build::addOption);
+        return build;
 
 
 
