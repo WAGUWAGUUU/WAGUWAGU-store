@@ -1,6 +1,6 @@
 package com.example.store.dto.request;
 
 public record StoreNearUserRequest(
-        double x, double y, String category
+        double longitude, double latitude, String category
 ) {
 }

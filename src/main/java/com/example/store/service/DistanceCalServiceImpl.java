@@ -33,7 +33,7 @@ public class DistanceCalServiceImpl implements DistanceCalService{
     public UserLocationResponse acceptOrder(Long storeId, UserLocationAndMinute userLocation, DistanceTimeRequestDto distanceTimeRequestDto) {
         int cost= 0;
         Store store = storeRepository.findById(storeId).orElseThrow(StoreNotFoundException::new);
-        double distance = distanceUtility.distance(store.getStoreAddressX(), store.getStoreAddressY(), userLocation.x(), userLocation.y());
+        double distance = distanceUtility.distance(store.getStoreAddressX(), store.getStoreAddressY(), userLocation.longitude(), userLocation.latitude());
         List<StoreDeliveryInfo> allByStoreStoreId = storeDeliveryInfoRepository.findAllByStore_StoreId(storeId);
         if(allByStoreStoreId.isEmpty()) throw new StoreDeliveryInfoNotFoundException();
         allByStoreStoreId.sort((o1, o2) -> o1.getStoreDeliveryInfoState() - o2.getStoreDeliveryInfoState());
@@ -57,7 +57,7 @@ public class DistanceCalServiceImpl implements DistanceCalService{
     @Override
     @Transactional
     public List<StoreNearUserResponse> userNearStore(StoreNearUserRequest storeNearUserRequest) {
-        List<StoreNearUserResponse> storeAllNearUser = storeRepository.findStoreAllNearUser(storeNearUserRequest.x(), storeNearUserRequest.y(), storeNearUserRequest.category());
+        List<StoreNearUserResponse> storeAllNearUser = storeRepository.findStoreAllNearUser(storeNearUserRequest.longitude(), storeNearUserRequest.latitude(), storeNearUserRequest.category());
         if(storeAllNearUser.isEmpty()) throw new StoreNotFoundException();
         return storeAllNearUser;
     }
