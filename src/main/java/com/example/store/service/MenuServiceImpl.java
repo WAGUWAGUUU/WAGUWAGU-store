@@ -73,7 +73,4 @@ public class MenuServiceImpl implements MenuService {
         menu.setMenuIsDeleted();
     }
 
-    public List<MenuResponseByStoreId> getAllMenuBy
-
-
 }
