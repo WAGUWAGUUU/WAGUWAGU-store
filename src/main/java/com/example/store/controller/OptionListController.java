@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/option-lists")
+    @RequestMapping("/api/v1/option-lists")
 public class OptionListController {
 
     private final OptionListServiceImpl optionListService;
