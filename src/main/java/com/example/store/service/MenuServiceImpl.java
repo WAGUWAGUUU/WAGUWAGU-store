@@ -2,6 +2,7 @@ package com.example.store.service;
 import com.example.store.dto.request.MenuRequestDto;
 import com.example.store.dto.request.UpdateMenuRequestDto;
 import com.example.store.dto.response.MenuResponse;
+import com.example.store.dto.response.MenuResponseByStoreId;
 import com.example.store.global.entity.Menu;
 import com.example.store.global.exception.MenuAlreadyExistsException;
 import com.example.store.global.exception.MenuNotFoundException;
@@ -18,6 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MenuServiceImpl implements MenuService {
     private final MenuRepository menuRepository;
+    private final MenuCategoryService menuCategoryService;
     @Override
     @Transactional
     public void createMenu(MenuRequestDto menuRequestDto) {
@@ -39,7 +41,6 @@ public class MenuServiceImpl implements MenuService {
     public MenuResponse getMenuById(Long menuId) {
 
         Menu menu = menuRepository.findByMenuIdAndMenuIsDeletedFalse(menuId).orElseThrow(MenuNotFoundException::new);
-
         return MenuResponse.from(menu);
     }
 
@@ -71,4 +72,5 @@ public class MenuServiceImpl implements MenuService {
         Menu menu = menuRepository.findByMenuIdAndMenuIsDeletedFalse(menuId).orElseThrow(MenuNotFoundException::new);
         menu.setMenuIsDeleted();
     }
+
 }

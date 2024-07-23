@@ -3,6 +3,7 @@ package com.example.store.service;
 import com.example.store.dto.request.DistanceTimeRequestDto;
 import com.example.store.dto.request.StoreNearUserRequest;
 import com.example.store.dto.request.UserLocationAndMinute;
+import com.example.store.dto.request.UserLocationRequest;
 import com.example.store.dto.response.StoreListDeliveryResponse;
 import com.example.store.dto.response.StoreListResponse;
 import com.example.store.dto.response.StoreNearUserResponse;
@@ -17,4 +18,6 @@ public interface DistanceCalService {
 
 
     List<StoreListResponse>  userNearStore(StoreNearUserRequest storeNearUserRequest);
+
+    StoreListResponse storeInfoDetail(Long storeId, UserLocationRequest request);
 }

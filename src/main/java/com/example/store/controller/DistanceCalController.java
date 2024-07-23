@@ -3,6 +3,7 @@ package com.example.store.controller;
 import com.example.store.dto.request.DistanceTimeRequestDto;
 import com.example.store.dto.request.StoreNearUserRequest;
 import com.example.store.dto.request.UserLocationAndMinute;
+import com.example.store.dto.request.UserLocationRequest;
 import com.example.store.dto.response.StoreListResponse;
 import com.example.store.dto.response.StoreNearUserResponse;
 import com.example.store.dto.response.UserLocationResponse;
@@ -21,6 +22,11 @@ public class DistanceCalController {
     public UserLocationResponse acceptOrder(@PathVariable(name = "storeId")Long storeId, @RequestBody UserLocationAndMinute userLocation) {
         DistanceTimeRequestDto distanceTimeRequestDto = new DistanceTimeRequestDto(userLocation.minute());
         return distanceCalService.acceptOrder(storeId, userLocation, distanceTimeRequestDto);
+    }
+
+    @PostMapping("/store/{storeId}")
+    public StoreListResponse storeInfoDetail(@PathVariable(name = "storeId")Long storeId, @RequestBody UserLocationRequest request) {
+        return distanceCalService.storeInfoDetail(storeId, request);
     }
 
     @PostMapping("user-near-store")

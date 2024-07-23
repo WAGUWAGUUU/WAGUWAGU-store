@@ -8,4 +8,5 @@ public interface StoreNearUserResponse {
     double getStoreLongitude();
     double getStoreLatitude();
     int getStoreMinimumOrderAmount();
+    String getStoreIntroduction();
 }
