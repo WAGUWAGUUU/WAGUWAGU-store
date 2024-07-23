@@ -7,7 +7,7 @@ import com.example.store.global.entity.OptionList;
 import java.util.List;
 
 public record OptionListRequestDTO(
-        Long menuId, String  listName, List<Option> options
+        Long listId,Long menuId, String  listName, List<Option> options
 ) {
     public OptionList toEntity(Menu menu){
 
