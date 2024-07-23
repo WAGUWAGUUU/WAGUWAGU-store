@@ -63,6 +63,7 @@ public class OptionListServiceImpl implements OptionListService {
         if (menuById == null) {
             throw  new IllegalArgumentException("menu not found");
         }
+        System.out.println(optionList.options());
         optionListDAO.save(optionList);
 
     }

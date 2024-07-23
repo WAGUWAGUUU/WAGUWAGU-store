@@ -24,7 +24,7 @@ public class OwnerController {
 //    @PostMapping
 //    @ResponseStatus(HttpStatus.CREATED)
 //    public void createOwner() {
-//        ownerService.createOwner();
+//        ownerService.createOwner(new KafkaStatus<>(new KafkaOwnerDto(1L,"gf","333"),"FFF"));
 //    }
 
     @GetMapping("/{ownerId}")

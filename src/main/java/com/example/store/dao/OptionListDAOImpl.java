@@ -43,8 +43,9 @@ public class OptionListDAOImpl implements OptionListDAO {
 
         OptionList optionList1 = optionList.toEntity(menu);
 
-
+        System.out.println(optionList1.getOptions().get(0).toString());
         optionListRepository.save(optionList1);
+
     }
 
 

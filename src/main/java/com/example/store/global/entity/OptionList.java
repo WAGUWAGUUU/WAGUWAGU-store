@@ -3,6 +3,7 @@ package com.example.store.global.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -11,7 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name ="OPTION_LIST")
 @Builder
-@Setter
 public class OptionList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,15 +19,23 @@ public class OptionList {
     private Long listId;
 
     @Column(name = "OPTION_LIST_NAME")
+    @Setter
     private String listName;
 
+    @Builder.Default
+    @OneToMany(mappedBy = "optionList"  ,cascade = CascadeType.ALL, orphanRemoval = true)
+    @Setter
+    private List<Option> options=new ArrayList<>();
 
-    @OneToMany(mappedBy = "optionList", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Option> options;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY )
     @JoinColumn(name = "MENU_ID")
     private Menu menu;
 
+    public void addOption(Option option) {
+
+        option.setOptionList(this);
+        options.add(option);
+
+    }
 
 }
