@@ -4,6 +4,7 @@ import com.example.store.dto.kafka.KafkaDistanceDto;
 import com.example.store.dto.request.DistanceTimeRequestDto;
 import com.example.store.dto.request.StoreNearUserRequest;
 import com.example.store.dto.request.UserLocationAndMinute;
+import com.example.store.dto.request.UserLocationRequest;
 import com.example.store.dto.response.StoreListDeliveryResponse;
 import com.example.store.dto.response.StoreListResponse;
 import com.example.store.dto.response.StoreNearUserResponse;
@@ -87,7 +88,14 @@ public class DistanceCalServiceImpl implements DistanceCalService{
 
         return storeAllNearUser.stream().map(storeNearUserResponse -> {
             StoreListDeliveryResponse storeListDeliveryResponse = showStoreList(storeNearUserResponse.getStoreId(), storeNearUserRequest.longitude(), storeNearUserRequest.latitude());
-            return new StoreListResponse(storeNearUserResponse.getOwnerId(), storeNearUserResponse.getStoreId(), storeNearUserResponse.getStoreName(), storeNearUserResponse.getStoreAddress(),storeNearUserResponse.getStoreLongitude(), storeNearUserResponse.getStoreLatitude(), storeNearUserResponse.getStoreMinimumOrderAmount(), storeListDeliveryResponse.distanceFromStoreToCustomer(), storeListDeliveryResponse.deliveryFee());
+            return new StoreListResponse(storeNearUserResponse.getOwnerId(), storeNearUserResponse.getStoreId(), storeNearUserResponse.getStoreName(), storeNearUserResponse.getStoreAddress(),storeNearUserResponse.getStoreLongitude(), storeNearUserResponse.getStoreLatitude(), storeNearUserResponse.getStoreMinimumOrderAmount(), storeNearUserResponse.getStoreIntroduction(), storeListDeliveryResponse.distanceFromStoreToCustomer(), storeListDeliveryResponse.deliveryFee());
         }).collect(Collectors.toList());
+    }
+
+    @Override
+    public StoreListResponse storeInfoDetail(Long storeId, UserLocationRequest request) {
+        Store store = storeRepository.findById(storeId).orElseThrow(StoreNotFoundException::new);
+        StoreListDeliveryResponse storeListDeliveryResponse = showStoreList(storeId, request.longitude(), request.latitude());
+        return new StoreListResponse(store.getOwner().getOwnerId(), store.getStoreId(),store.getStoreName(),store.getStoreAddressString(), store.getStoreAddressX(), store.getStoreAddressY(), store.getStoreMinimumOrderAmount(),store.getStoreIntroduction(), storeListDeliveryResponse.distanceFromStoreToCustomer(), storeListDeliveryResponse.deliveryFee());
     }
 }
