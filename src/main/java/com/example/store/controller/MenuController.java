@@ -31,6 +31,7 @@ public class MenuController {
         return menuService.getMenuById(menuId);
     }
 
+
     @GetMapping
     public List<MenuResponse> getAllMenu() {
         return menuService.getAllMenu();

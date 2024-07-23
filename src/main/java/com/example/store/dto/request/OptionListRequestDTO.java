@@ -10,10 +10,7 @@ public record OptionListRequestDTO(
         Long listId,Long menuId, String  listName, List<Option> options
 ) {
     public OptionList toEntity(Menu menu){
-
+        System.out.println("testhihihi0723");
         return OptionList.builder().listId(listId).listName(listName).options(options).menu(menu).build();
-
-
-
     }
 }
