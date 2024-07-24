@@ -11,7 +11,12 @@ public record OptionListRequestDTO(
 ) {
     public OptionList toEntity(Menu menu){
 
-        return OptionList.builder().listId(listId).listName(listName).options(options).menu(menu).build();
+        OptionList optionList = OptionList.builder()
+                .listName(listName)
+                .menu(menu)
+                .build();
+        options.forEach(optionList::addOption); // Ensure bidirectional relationship is handled
+        return optionList;
 
 
 

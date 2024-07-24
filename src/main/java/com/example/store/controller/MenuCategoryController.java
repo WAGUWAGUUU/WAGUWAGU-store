@@ -1,9 +1,7 @@
 package com.example.store.controller;
 import com.example.store.dto.request.MenuCategoryRequestDto;
-import com.example.store.dto.request.OwnerRequestDto;
 import com.example.store.dto.request.UpdateMenuCategoryRequestDto;
-import com.example.store.dto.response.MenuCategoryResponseDto;
-import com.example.store.global.entity.MenuCategory;
+import com.example.store.dto.response.MenuCategoryResponse;
 import com.example.store.service.MenuCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,12 +23,17 @@ public class MenuCategoryController {
     }
 
     @GetMapping("/{menuCategoryId}")
-    public MenuCategoryResponseDto getMenuCategoryById(@PathVariable(name = "menuCategoryId") Long menuCategoryId) {
+    public MenuCategoryResponse getMenuCategoryById(@PathVariable(name = "menuCategoryId") Long menuCategoryId) {
         return menuCategoryService.getMenuCategoryById(menuCategoryId);
     }
 
+    @GetMapping("store/{storeId}")
+    public List<MenuCategoryResponse> getMenuCategoryByStoreId(@PathVariable(name = "storeId") Long storeId) {
+        return menuCategoryService.getAllMenuCategoryByStoreId(storeId);
+    }
+
     @GetMapping
-    public List<MenuCategoryResponseDto> getAllMenuCategory() {
+    public List<MenuCategoryResponse> getAllMenuCategory() {
         return menuCategoryService.getAllMenuCategory();
     }
 

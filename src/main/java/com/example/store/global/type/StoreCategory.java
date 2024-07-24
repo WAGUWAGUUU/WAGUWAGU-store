@@ -1,7 +1,7 @@
 package com.example.store.global.type;
 
 public enum StoreCategory {
-    피자, 중식, 치킨, 디저트, 양식, 한식, 일식;
+    피자, 중식, 치킨, 디저트, 양식, 한식, 일식, 기타,회;
     public static StoreCategory stringToCategory(String category){
         switch(category) {
             case "피자":
@@ -18,7 +18,9 @@ public enum StoreCategory {
                 return StoreCategory.한식;
             case "일식":
                 return StoreCategory.일식;
+            case "회":
+                return StoreCategory.회;
         }
-        return null;
+        return StoreCategory.기타;
     }
 }
