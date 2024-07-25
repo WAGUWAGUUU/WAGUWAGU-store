@@ -3,9 +3,8 @@ package com.example.store.dao;
 
 import com.example.store.dto.request.OptionListRequestDTO;
 
+import com.example.store.dto.request.OptionListRequestDTORevised;
 import com.example.store.dto.request.UpdateOptionListRequestDTO;
-
-import com.example.store.dto.response.OptionListResponse;
 
 import com.example.store.global.entity.Menu;
 import com.example.store.global.entity.Option;
@@ -45,7 +44,6 @@ public class OptionListDAOImpl implements OptionListDAO {
 
         System.out.println(optionList1.getOptions().get(0).toString());
         optionListRepository.save(optionList1);
-
     }
 
 
@@ -84,10 +82,11 @@ public class OptionListDAOImpl implements OptionListDAO {
         byId.setListName(listName);
         byId.setOptions(options);
         optionListRepository.save(byId);
-
-
-
     }
 
-
+    @Override
+    public void saveV2(Menu menu, OptionListRequestDTORevised req) {
+        OptionList optionsList = req.toEntity(menu);
+        optionListRepository.save(optionsList);
+    }
 }

@@ -11,7 +11,7 @@ public interface OptionService {
 
      OptionResponse getOptionById(Long id);
      List<OptionResponse> getAllOptionsbyListID(Long id);
-     void addOption(OptionRequestDTO option);
+     void addOption(Long listId, OptionRequestDTO option);
      void deleteOptionById(Long id);
      void  updateOptionById(Long id, UpdateOptionRequestDTO optionRequestDTO);
 

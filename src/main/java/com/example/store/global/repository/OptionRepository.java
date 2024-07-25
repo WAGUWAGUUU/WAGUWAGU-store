@@ -10,4 +10,6 @@ import java.util.List;
 public interface OptionRepository extends JpaRepository<Option, Long> {
     @Query("SELECT o FROM Option o WHERE o.optionList.listId = :listId")
     List<Option> findByOptionListId(@Param("listId") Long listId);
+
+    List<Option> findByOptionList_ListId(Long optionListId);
 }
