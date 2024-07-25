@@ -3,6 +3,7 @@ package com.example.store.service;
 import com.example.store.dto.request.StoreRequestDto;
 import com.example.store.dto.request.UpdateStoreRequestDto;
 import com.example.store.dto.response.StoreResponse;
+import com.example.store.global.entity.Store;
 import com.example.store.global.type.UpdateStoreType;
 
 import java.util.List;
@@ -17,4 +18,7 @@ public interface StoreService {
     void deleteStore(Long storeId);
 
     List<StoreResponse> getAllStore();
+
+    // ownerId 기준으로 storeId 가져오기
+    Store getStoreByOwnerId(Long ownerId);
 }
