@@ -24,14 +24,14 @@ public class OptionListController {
 
 
     @GetMapping("/menu/{menuId}")
-    public ResponseEntity<List<OptionListResponse>> getOptionListsByMenuId(@PathVariable Long menuId) {
+    public ResponseEntity<List<OptionListResponse>> getOptionListsByMenuId(@PathVariable("menuId") Long menuId) {
         List<OptionListResponse> optionLists = optionListService.getOptionListsByMenuId(menuId);
         return new ResponseEntity<>(optionLists, HttpStatus.OK);
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<OptionListResponse> getOptionListById(@PathVariable Long id) {
+    public ResponseEntity<OptionListResponse> getOptionListById(@PathVariable("id") Long id) {
         OptionListResponse optionList = optionListService.getOptionListById(id);
         return new ResponseEntity<>(optionList, HttpStatus.OK);
     }
@@ -45,13 +45,13 @@ public class OptionListController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateOptionList(@PathVariable Long id, @RequestBody UpdateOptionListRequestDTO optionListRequestDTO) {
+    public ResponseEntity<Void> updateOptionList(@PathVariable("id") Long id, @RequestBody UpdateOptionListRequestDTO optionListRequestDTO) {
         optionListService.updateOptionList(id, optionListRequestDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteOptionList(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteOptionList(@PathVariable("id") Long id) {
         optionListService.deleteOptionList(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
