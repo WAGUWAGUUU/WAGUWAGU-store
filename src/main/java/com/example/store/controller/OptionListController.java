@@ -24,7 +24,7 @@ public class OptionListController {
 
 
     @GetMapping("/menu/{menuId}")
-    public ResponseEntity<List<OptionListResponse>> getOptionListsByMenuId(@PathVariable Long menuId) {
+    public ResponseEntity<List<OptionListResponse>> getOptionListsByMenuId(@PathVariable("menuId") Long menuId) {
         List<OptionListResponse> optionLists = optionListService.getOptionListsByMenuId(menuId);
         return new ResponseEntity<>(optionLists, HttpStatus.OK);
     }
