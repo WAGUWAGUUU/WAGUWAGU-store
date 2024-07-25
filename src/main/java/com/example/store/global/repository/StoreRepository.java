@@ -22,6 +22,8 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
 
     List<Store> findAllByStoreIsDeletedFalse();
 
+    Optional<Store> findByOwner_OwnerId(Long ownerId);
+
     @Transactional
     @Modifying
     @Query(value = "SELECT ownerId,storeId,storeName,storeAddress,storeLongitude,storeLatitude,storeMinimumOrderAmount,storeIntroduction " +

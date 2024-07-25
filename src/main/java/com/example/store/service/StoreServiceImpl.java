@@ -57,4 +57,10 @@ public class StoreServiceImpl implements StoreService {
         Store store = storeRepository.findByStoreIdAndStoreIsDeletedFalse(storeId).orElseThrow(StoreNotFoundException::new);
         store.setStoreIsDeleted();
     }
+
+    @Override
+    public Store getStoreByOwnerId(Long ownerId) {
+        Store store = storeRepository.findByOwner_OwnerId(ownerId).orElseThrow(StoreNotFoundException::new);
+        return store;
+    }
 }

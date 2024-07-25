@@ -40,6 +40,7 @@ public class MenuCategoryServiceImpl implements MenuCategoryService{
     @Transactional
     public List<MenuCategoryResponse> getAllMenuCategoryByStoreId(Long storeId) {
         List<MenuCategory> allByStoreStoreIdAndMenuCategoryIsDeletedFalse = menuCategoryRepository.findAllByStore_StoreIdAndMenuCategoryIsDeletedFalse(storeId);
+        System.out.println("*******************************************************************************");
         return allByStoreStoreIdAndMenuCategoryIsDeletedFalse.stream().map(MenuCategoryResponse::from).toList();
     }
 

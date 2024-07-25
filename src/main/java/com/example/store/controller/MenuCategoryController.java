@@ -12,6 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/menu-category")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class MenuCategoryController {
     private final MenuCategoryService menuCategoryService;
 

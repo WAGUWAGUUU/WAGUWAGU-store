@@ -21,11 +21,11 @@ import java.util.List;
 public class OwnerController {
     private final OwnerService ownerService;
 
-//    @PostMapping
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public void createOwner() {
-//        ownerService.createOwner(new KafkaStatus<>(new KafkaOwnerDto(1L,"gf","333"),"FFF"));
-//    }
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createOwner() {
+        ownerService.createOwner(new KafkaStatus<>(new KafkaOwnerDto(1L,"gf","333"),"FFF"));
+    }
 
     @GetMapping("/{ownerId}")
     public OwnerResponse getOwnerByOwnerId(@PathVariable(name = "ownerId") Long ownerId) {

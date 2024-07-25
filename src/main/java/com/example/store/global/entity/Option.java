@@ -25,9 +25,8 @@ public class Option {
     private int optionPrice;
 
     @Column(name = "OPTION_CHECKED")
+    @Builder.Default
     private boolean isChecked = false;
-
-
 
     @JoinColumn(name = "OPTION_LIST_ID")
     @ManyToOne(fetch = FetchType.LAZY)
