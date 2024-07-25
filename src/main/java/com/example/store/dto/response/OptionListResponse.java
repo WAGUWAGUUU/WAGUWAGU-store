@@ -11,12 +11,12 @@ import java.util.List;
 
 public record OptionListResponse(
 
-        String listName,  List<OptionDTO> options
+        Long listId, String listName,  List<OptionDTO> options
 
 ){
     public static OptionListResponse from(OptionList optionList) {
         List<OptionDTO> optionDTOS = optionList.getOptions().stream().map(OptionDTO::from).toList();
-        return new OptionListResponse(optionList.getListName(), optionDTOS);
+        return new OptionListResponse(optionList.getListId(), optionList.getListName(), optionDTOS);
 
     }
 }
