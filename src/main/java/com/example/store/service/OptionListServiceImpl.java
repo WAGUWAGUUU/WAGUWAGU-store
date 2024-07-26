@@ -3,6 +3,7 @@ package com.example.store.service;
 import com.example.store.dao.OptionListDAOImpl;
 import com.example.store.dto.request.OptionListRequestDTO;
 
+import com.example.store.dto.request.UpdateOptionListNameRequest;
 import com.example.store.dto.request.OptionListRequestDTORevised;
 import com.example.store.dto.request.UpdateOptionListRequestDTO;
 
@@ -10,6 +11,7 @@ import com.example.store.dto.response.OptionListResponse;
 import com.example.store.dto.response.OptionListResponseRevised;
 import com.example.store.global.entity.Menu;
 import com.example.store.global.entity.OptionList;
+import jakarta.transaction.Transactional;
 import com.example.store.global.exception.MenuNotFoundException;
 import com.example.store.global.repository.MenuRepository;
 import lombok.RequiredArgsConstructor;
@@ -89,6 +91,12 @@ public class OptionListServiceImpl implements OptionListService {
     }
 
     @Override
+
+    @Transactional
+    public void updateOptionListName(Long id, UpdateOptionListNameRequest updateOptionListNameRequest) {
+        optionListDAO.updateOptionListName(id, updateOptionListNameRequest);
+    }
+
     public void createOptionListV2(OptionListRequestDTORevised req) {
         Menu menu = menuRepository.findByMenuIdAndMenuIsDeletedFalse(req.menuId()).orElseThrow(MenuNotFoundException::new);
         System.out.println("***************************************************************************");

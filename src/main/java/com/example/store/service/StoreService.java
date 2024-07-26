@@ -20,5 +20,5 @@ public interface StoreService {
     List<StoreResponse> getAllStore();
 
     // ownerId 기준으로 storeId 가져오기
-    Store getStoreByOwnerId(Long ownerId);
+    StoreResponse getStoreByOwnerId(Long ownerId);
 }

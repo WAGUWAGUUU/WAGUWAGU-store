@@ -43,7 +43,7 @@ public class MenuController {
         menuService.update(menuId, UpdateMenuType.stringToMenuType(type), updateMenuRequestDto);
     }
 
-    @PutMapping("/{menuId}/menu-possible")
+    @GetMapping("/{menuId}/menu-possible")
     public void changeMenuPossible(@PathVariable("menuId") Long menuId) {
         menuService.changeMenuPossible(menuId);
     }

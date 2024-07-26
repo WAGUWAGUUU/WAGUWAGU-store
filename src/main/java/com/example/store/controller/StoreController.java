@@ -45,7 +45,7 @@ public class StoreController {
     }
 
     @GetMapping("/owner/{ownerId}")
-    public Store getStoreByOwnerId(@PathVariable Long ownerId) {
+    public StoreResponse getStoreByOwnerId(@PathVariable(name="ownerId") Long ownerId) {
         return storeService.getStoreByOwnerId(ownerId);
     }
 }
