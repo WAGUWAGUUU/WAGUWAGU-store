@@ -3,11 +3,13 @@ package com.example.store.service;
 import com.example.store.dao.OptionListDAOImpl;
 import com.example.store.dto.request.OptionListRequestDTO;
 
+import com.example.store.dto.request.UpdateOptionListNameRequest;
 import com.example.store.dto.request.UpdateOptionListRequestDTO;
 
 import com.example.store.dto.response.OptionListResponse;
 import com.example.store.global.entity.Menu;
 import com.example.store.global.entity.OptionList;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -92,7 +94,11 @@ public class OptionListServiceImpl implements OptionListService {
 
     }
 
-
+    @Override
+    @Transactional
+    public void updateOptionListName(Long id, UpdateOptionListNameRequest updateOptionListNameRequest) {
+        optionListDAO.updateOptionListName(id, updateOptionListNameRequest);
+    }
 
 
 }

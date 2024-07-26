@@ -2,6 +2,7 @@ package com.example.store.service;
 
 import com.example.store.dto.request.OptionListRequestDTO;
 
+import com.example.store.dto.request.UpdateOptionListNameRequest;
 import com.example.store.dto.request.UpdateOptionListRequestDTO;
 
 import com.example.store.dto.response.OptionListResponse;
@@ -15,5 +16,7 @@ public interface OptionListService {
      void createOptionList(OptionListRequestDTO optionList);
      void deleteOptionList(Long id);
      void updateOptionList(Long id, UpdateOptionListRequestDTO optionList);
+
+     void updateOptionListName(Long id, UpdateOptionListNameRequest updateOptionListNameRequest);
 
 }

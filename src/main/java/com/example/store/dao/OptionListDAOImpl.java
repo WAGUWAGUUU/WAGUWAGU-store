@@ -3,6 +3,7 @@ package com.example.store.dao;
 
 import com.example.store.dto.request.OptionListRequestDTO;
 
+import com.example.store.dto.request.UpdateOptionListNameRequest;
 import com.example.store.dto.request.UpdateOptionListRequestDTO;
 
 import com.example.store.dto.response.OptionListResponse;
@@ -12,6 +13,7 @@ import com.example.store.global.entity.Option;
 import com.example.store.global.entity.OptionList;
 import com.example.store.global.repository.MenuRepository;
 import com.example.store.global.repository.OptionListRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Repository;
@@ -87,6 +89,15 @@ public class OptionListDAOImpl implements OptionListDAO {
 
 
 
+    }
+
+    @Override
+    public void updateOptionListName(Long listId, UpdateOptionListNameRequest updateOptionListNameRequest) {
+        OptionList byId = optionListRepository.findById(listId).orElseThrow(() -> new IllegalArgumentException("OptionList not found"));
+
+        String listName = updateOptionListNameRequest.value();
+        byId.setListName(listName);
+        optionListRepository.save(byId);
     }
 
 

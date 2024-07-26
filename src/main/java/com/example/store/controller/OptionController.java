@@ -39,16 +39,18 @@ public class OptionController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteOptionById(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteOptionById(@PathVariable(name = "id") Long id) {
         optionService.deleteOptionById(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateOptionById(@PathVariable Long id, @RequestBody UpdateOptionRequestDTO updateOptionRequestDTO) {
+    public ResponseEntity<Void> updateOptionById(@PathVariable(name="id") Long id, @RequestBody UpdateOptionRequestDTO updateOptionRequestDTO) {
         optionService.updateOptionById(id, updateOptionRequestDTO);
         return ResponseEntity.noContent().build();
     }
+
+
 
 
 
