@@ -4,6 +4,9 @@ import com.example.store.dto.request.OptionRequestDTO;
 import com.example.store.dto.request.UpdateOptionRequestDTO;
 import com.example.store.global.entity.Option;
 import com.example.store.global.entity.OptionList;
+import com.example.store.global.exception.OptionAlreadyExistsException;
+import com.example.store.global.exception.OptionListNotFoundException;
+import com.example.store.global.exception.OptionNotFoundException;
 import com.example.store.global.repository.OptionListRepository;
 import com.example.store.global.repository.OptionRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,13 +26,13 @@ public class OptionDAOImpl implements OptionDAO {
     public Option getOptionById(Long id) {
         Optional<Option> byId = optionRepository.findById(id);
 
-        return byId.orElseThrow(() -> new IllegalArgumentException("no option of this id "));
+        return byId.orElseThrow(OptionNotFoundException::new);
     }
 
     @Override
     public List<Option> getAllOptionsByListId(Long listId) {
         OptionList optionList = optionListRepository.findById(listId)
-                .orElseThrow(() -> new IllegalArgumentException("OptionList not found"));
+                .orElseThrow(OptionListNotFoundException::new);
 
 //        List<Option> options = optionRepository.findByOptionListId(listId);
 //        options.forEach(option -> option.setOptionList(optionList));
@@ -44,18 +47,18 @@ public class OptionDAOImpl implements OptionDAO {
                 .findByOptionList_ListId(listId);
         options.forEach(el -> {
             if (el.getOptionTitle().equals(optionRequestDTO.optionTitle()))
-                throw new IllegalArgumentException("Option already exists");
+                throw new OptionAlreadyExistsException();
         });
         // 저장
         OptionList optionList = optionListRepository.findById(listId)
-                .orElseThrow(() -> new IllegalArgumentException("OptionList not found"));
+                .orElseThrow(OptionListNotFoundException::new);
         optionRepository.save(optionRequestDTO.toEntity(optionList));
     }
 
     @Override
     public void updateOption(Long id, UpdateOptionRequestDTO optionRequestDTO) {
         Option option = optionRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Option not found"));
+                .orElseThrow(OptionNotFoundException::new);
 
         option.setOptionTitle(optionRequestDTO.optionTitle());
         option.setOptionPrice(optionRequestDTO.optionPrice());
@@ -67,7 +70,7 @@ public class OptionDAOImpl implements OptionDAO {
 
     @Override
     public void deleteOptionById(Long id) {
-        optionRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("cannot delete:no option found "));
+        optionRepository.findById(id).orElseThrow(OptionNotFoundException::new);
         optionRepository.deleteById(id);
     }
 }
