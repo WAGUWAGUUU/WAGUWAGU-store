@@ -20,9 +20,9 @@ public class Customer {
     @Column(name = "CUSTOMER_ID")
     private Long customerId;
 
-    @Column(name = "CUSTOMER_ADDRESS_X")
-    double customerAddressX;
+    @Column(name = "CUSTOMER_LONGITUDE")
+    double customerLongitude;
 
-    @Column(name = "CUSTOMER_ADDRESS_Y")
-    double customerAddressY;
+    @Column(name = "CUSTOMER_LATITUDE")
+    double customerLatitude;
 }

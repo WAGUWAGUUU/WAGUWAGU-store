@@ -32,7 +32,7 @@ public class OptionController {
     }
 
     @PostMapping("/list/{listId}")
-    public ResponseEntity<Void> addOption(@PathVariable Long listId, @RequestBody OptionRequestDTO optionRequestDTO) {
+    public ResponseEntity<Void> addOption(@PathVariable("listId") Long listId, @RequestBody OptionRequestDTO optionRequestDTO) {
         optionService.addOption(listId, optionRequestDTO);
         return ResponseEntity.status(201).build();
     }

@@ -37,7 +37,7 @@ public class DistanceCalServiceImpl implements DistanceCalService{
     public UserLocationResponse acceptOrder(Long storeId, UserLocationAndMinute userLocation, DistanceTimeRequestDto distanceTimeRequestDto) {
         int cost= 0;
         Store store = storeRepository.findById(storeId).orElseThrow(StoreNotFoundException::new);
-        double distance = distanceUtility.distance(store.getStoreAddressX(), store.getStoreAddressY(), userLocation.longitude(), userLocation.latitude());
+        double distance = distanceUtility.distance(store.getStoreLongitude(), store.getStoreLatitude(), userLocation.longitude(), userLocation.latitude());
         List<StoreDeliveryInfo> allByStoreStoreId = storeDeliveryInfoRepository.findAllByStore_StoreId(storeId);
         if(allByStoreStoreId.isEmpty()) throw new StoreDeliveryInfoNotFoundException();
         allByStoreStoreId.sort((o1, o2) -> o1.getStoreDeliveryInfoState() - o2.getStoreDeliveryInfoState());
@@ -53,8 +53,6 @@ public class DistanceCalServiceImpl implements DistanceCalService{
         // 소수점 셋째자리 내림
         distance = Math.floor(distance*10)/10.0;
         LocalDateTime due = LocalDateTime.now().plusMinutes(distanceTimeRequestDto.minute());
-        KafkaDistanceDto kafkaDistanceDto = new KafkaDistanceDto(1L, store.getStoreName(), store.getStoreAddressString(), cost, distance, store.getStoreAddressY(), store.getStoreAddressX(), due);
-        producer.sendToRider(kafkaDistanceDto,"assign");
         return new UserLocationResponse(distance, cost, due);
     }
 
@@ -62,7 +60,7 @@ public class DistanceCalServiceImpl implements DistanceCalService{
     public StoreListDeliveryResponse showStoreList(Long storeId, double longitude, double latitude) {
         int cost= 0;
         Store store = storeRepository.findById(storeId).orElseThrow(StoreNotFoundException::new);
-        double distance = distanceUtility.distance(store.getStoreAddressX(), store.getStoreAddressY(), longitude, latitude);
+        double distance = distanceUtility.distance(store.getStoreLongitude(), store.getStoreLatitude(), longitude, latitude);
         List<StoreDeliveryInfo> allByStoreStoreId = storeDeliveryInfoRepository.findAllByStore_StoreId(storeId);
         if(allByStoreStoreId.isEmpty()) throw new StoreDeliveryInfoNotFoundException();
         allByStoreStoreId.sort((o1, o2) -> o1.getStoreDeliveryInfoState() - o2.getStoreDeliveryInfoState());
@@ -96,6 +94,6 @@ public class DistanceCalServiceImpl implements DistanceCalService{
     public StoreListResponse storeInfoDetail(Long storeId, UserLocationRequest request) {
         Store store = storeRepository.findById(storeId).orElseThrow(StoreNotFoundException::new);
         StoreListDeliveryResponse storeListDeliveryResponse = showStoreList(storeId, request.longitude(), request.latitude());
-        return new StoreListResponse(store.getOwner().getOwnerId(), store.getStoreId(),store.getStoreName(),store.getStoreAddressString(), store.getStoreAddressX(), store.getStoreAddressY(), store.getStoreMinimumOrderAmount(),store.getStoreIntroduction(), storeListDeliveryResponse.distanceFromStoreToCustomer(), storeListDeliveryResponse.deliveryFee());
+        return new StoreListResponse(store.getOwner().getOwnerId(), store.getStoreId(),store.getStoreName(),store.getStoreAddress(), store.getStoreLongitude(), store.getStoreLatitude(), store.getStoreMinimumOrderAmount(),store.getStoreIntroduction(), storeListDeliveryResponse.distanceFromStoreToCustomer(), storeListDeliveryResponse.deliveryFee());
     }
 }
