@@ -13,11 +13,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/options")
 @RequiredArgsConstructor
+//@CrossOrigin(origins = "*")
 public class OptionController {
 
     private final OptionService optionService;
-
-
 
 
     @GetMapping("/{id}")
@@ -33,8 +32,8 @@ public class OptionController {
     }
 
     @PostMapping("/list/{listId}")
-    public ResponseEntity<Void> addOption(@PathVariable Long listId,@RequestBody OptionRequestDTO optionRequestDTO) {
-        optionService.addOption(optionRequestDTO);
+    public ResponseEntity<Void> addOption(@PathVariable Long listId, @RequestBody OptionRequestDTO optionRequestDTO) {
+        optionService.addOption(listId, optionRequestDTO);
         return ResponseEntity.status(201).build();
     }
 

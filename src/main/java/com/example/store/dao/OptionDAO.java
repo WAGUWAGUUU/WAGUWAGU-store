@@ -10,7 +10,7 @@ public interface OptionDAO {
 
     Option getOptionById(Long id);
     List<Option> getAllOptionsByListId(Long listId);
-    void addOption(OptionRequestDTO optionRequestDTO);
+    void addOption(Long listId, OptionRequestDTO optionRequestDTO);
     void updateOption(Long id, UpdateOptionRequestDTO optionRequestDTO);
     void deleteOptionById(Long id);
 

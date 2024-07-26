@@ -4,10 +4,12 @@ package com.example.store.controller;
 import com.example.store.dto.request.OptionListRequestDTO;
 
 import com.example.store.dto.request.UpdateOptionListNameRequest;
+import com.example.store.dto.request.OptionListRequestDTORevised;
 import com.example.store.dto.request.UpdateOptionListRequestDTO;
 
 import com.example.store.dto.request.UpdateOptionRequestDTO;
 import com.example.store.dto.response.OptionListResponse;
+import com.example.store.dto.response.OptionListResponseRevised;
 import com.example.store.service.OptionListServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,7 +20,8 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-    @RequestMapping("/api/v1/option-lists")
+@RequestMapping("/api/v1/option-lists")
+//@CrossOrigin(origins = "*")
 public class OptionListController {
 
     private final OptionListServiceImpl optionListService;
@@ -62,5 +65,17 @@ public class OptionListController {
     public ResponseEntity<Void> deleteOptionList(@PathVariable("id") Long id) {
         optionListService.deleteOptionList(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("/revised")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createOptionListV2(@RequestBody OptionListRequestDTORevised req) {
+        optionListService.createOptionListV2(req);
+    }
+
+    @GetMapping("/menu/{menuId}/revised")
+    public List<OptionListResponseRevised> getOptionListsByMenuIdV2(@PathVariable("menuId") Long menuId) {
+        List<OptionListResponseRevised> optionLists = optionListService.getOptionListsByMenuIdV2(menuId);
+        return optionLists;
     }
 }

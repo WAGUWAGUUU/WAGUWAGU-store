@@ -38,10 +38,17 @@ public class OptionDAOImpl implements OptionDAO {
     }
 
     @Override
-    public void addOption(OptionRequestDTO optionRequestDTO) {
-        OptionList optionList = optionListRepository.findById(optionRequestDTO.listId())
+    public void addOption(Long listId, OptionRequestDTO optionRequestDTO) {
+        // 이미 존재하면 exception 띄움
+        List<Option> options = optionRepository
+                .findByOptionList_ListId(listId);
+        options.forEach(el -> {
+            if (el.getOptionTitle().equals(optionRequestDTO.optionTitle()))
+                throw new IllegalArgumentException("Option already exists");
+        });
+        // 저장
+        OptionList optionList = optionListRepository.findById(listId)
                 .orElseThrow(() -> new IllegalArgumentException("OptionList not found"));
-
         optionRepository.save(optionRequestDTO.toEntity(optionList));
     }
 
