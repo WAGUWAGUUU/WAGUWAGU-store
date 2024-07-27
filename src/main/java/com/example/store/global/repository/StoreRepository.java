@@ -30,7 +30,7 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
             "FROM (" +
             "  SELECT S.owner_id AS ownerId, S.store_id AS storeId, S.store_name AS storeName,  S.store_address AS storeAddress, S.store_latitude AS storeLatitude, S.store_longitude AS storeLongitude, S.store_minimum_order_amount AS storeMinimumOrderAmount, S.store_introduction AS storeIntroduction, " +
             "  ST_Distance_Sphere(Point(:userLongitude, :userLatitude), Point(S.store_longitude, S.store_latitude)) AS distance " +
-            "  FROM Stores S" +
+            "  FROM stores S" +
             "  WHERE S.store_is_deleted = 0 AND S.store_category = :category"+
             ") AS temp " +
             "WHERE distance <= 5000 " +

@@ -17,7 +17,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name ="STORES")
+@Table(name ="stores")
 @Builder
 public class Store {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
