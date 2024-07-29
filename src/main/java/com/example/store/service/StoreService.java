@@ -1,6 +1,7 @@
 package com.example.store.service;
 
 import com.example.store.dto.request.StoreRequestDto;
+import com.example.store.dto.request.StoreUpdateRequest;
 import com.example.store.dto.request.UpdateStoreRequestDto;
 import com.example.store.dto.response.StoreResponse;
 import com.example.store.global.entity.Store;
@@ -13,7 +14,9 @@ public interface StoreService {
 
     StoreResponse getStoreByStoreId(Long storeId);
 
-    void updateStore(Long storeId, UpdateStoreType updateStoreType, UpdateStoreRequestDto updateStoreRequestDto);
+//    void updateStore(Long storeId, UpdateStoreType updateStoreType, UpdateStoreRequestDto updateStoreRequestDto);
+
+    void updateStoreInfo(Long storeId, StoreUpdateRequest req);
 
     void deleteStore(Long storeId);
 
