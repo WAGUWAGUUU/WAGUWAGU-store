@@ -12,5 +12,7 @@ public interface StoreDeliveryInfoService {
 
     List<StoreDeliveryInfoResponse>  getStoreDeliveryInfoAllByStoreId(Long storeId);
 
-    void updateStoreDeliveryInfoByStoreIdAndState(Long storeId, int storeDeliveryInfoState, UpdateStoreDeliveryInfoType updateStoreDeliveryInfoType, UpdateStoreDeliveryInfoRequestDto updateStoreDeliveryInfoRequestDto);
+//    void updateStoreDeliveryInfoByStoreIdAndState(Long storeId, int storeDeliveryInfoState, UpdateStoreDeliveryInfoType updateStoreDeliveryInfoType, UpdateStoreDeliveryInfoRequestDto updateStoreDeliveryInfoRequestDto);
+
+    void updateStoreDeliveryInfo(Long storeId, StoreDeliveryInfoRequestDto req);
 }
