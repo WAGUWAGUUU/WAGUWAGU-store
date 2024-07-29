@@ -110,6 +110,5 @@ public class OptionListServiceImpl implements OptionListService {
         return byId.stream()
                 .map(OptionListResponseRevised::from)
                 .collect(Collectors.toList());
-
     }
 }
