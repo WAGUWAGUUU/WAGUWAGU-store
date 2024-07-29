@@ -98,10 +98,9 @@ public class OptionListServiceImpl implements OptionListService {
     @Override
     public List<OptionListResponseRevised> getOptionListsByMenuIdV2(Long menuId) {
         List<OptionList> byId = optionListDAO.findByMenuId(menuId);
-        if (byId.isEmpty()) throw  new IllegalArgumentException("not found");
+        if (byId.isEmpty()) throw new IllegalArgumentException("not found");
         return byId.stream()
                 .map(OptionListResponseRevised::from)
                 .collect(Collectors.toList());
-
     }
 }

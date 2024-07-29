@@ -23,7 +23,8 @@ public class OwnerServiceImpl implements OwnerService {
     private final OwnerRepository ownerRepository;
 
     // 삭제 된 거는 조회가 안 되게끔
-    @KafkaListener(topics = "owner-info-request-to-store-topic",groupId="store-group")
+//    ,groupId="store-group"
+    @KafkaListener(topics = "owner-info-request-to-store-topic", groupId="store-group1")
     @Override
     @Transactional
     public void createOwner(KafkaStatus<KafkaOwnerDto> kafkaStatus) {
