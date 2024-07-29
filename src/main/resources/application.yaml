@@ -16,5 +16,5 @@ spring:
     consumer:
       value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      group-id: store-group1
+      group-id: store-group2
       auto-offset-reset: earliest

@@ -3,6 +3,7 @@ package com.example.store.service;
 import com.example.store.dao.OptionListDAOImpl;
 import com.example.store.dto.request.OptionListRequestDTO;
 
+import com.example.store.dto.request.UpdateOptionListNameRequest;
 import com.example.store.dto.request.OptionListRequestDTORevised;
 import com.example.store.dto.request.UpdateOptionListRequestDTO;
 
@@ -10,6 +11,8 @@ import com.example.store.dto.response.OptionListResponse;
 import com.example.store.dto.response.OptionListResponseRevised;
 import com.example.store.global.entity.Menu;
 import com.example.store.global.entity.OptionList;
+import com.example.store.global.exception.OptionListNotFoundException;
+import jakarta.transaction.Transactional;
 import com.example.store.global.exception.MenuNotFoundException;
 import com.example.store.global.repository.MenuRepository;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +37,7 @@ public class OptionListServiceImpl implements OptionListService {
 
       
         if (byId.isEmpty()) {
-            throw  new IllegalArgumentException("not found");
+            throw  new OptionListNotFoundException();
 
         }
 
@@ -52,7 +55,7 @@ public class OptionListServiceImpl implements OptionListService {
 
        
 
-            throw  new IllegalArgumentException("not found");
+            throw  new OptionListNotFoundException();
         }
 
         return OptionListResponse.from(list);
@@ -62,7 +65,7 @@ public class OptionListServiceImpl implements OptionListService {
     public void createOptionList(OptionListRequestDTO optionList) {
         Menu menuById = optionListDAO.findMenuById(optionList.menuId());
         if (menuById == null) {
-            throw  new IllegalArgumentException("menu not found");
+            throw  new MenuNotFoundException();
         }
         System.out.println(optionList.options());
         optionListDAO.save(optionList);
@@ -75,7 +78,7 @@ public class OptionListServiceImpl implements OptionListService {
         OptionList byId = optionListDAO.findById(id);
 
         if (byId == null) {
-            throw  new IllegalArgumentException("not found");
+            throw  new OptionListNotFoundException();
         }
 
         optionListDAO.deleteById(id);
@@ -89,16 +92,21 @@ public class OptionListServiceImpl implements OptionListService {
     }
 
     @Override
+
+    @Transactional
+    public void updateOptionListName(Long id, UpdateOptionListNameRequest updateOptionListNameRequest) {
+        optionListDAO.updateOptionListName(id, updateOptionListNameRequest);
+    }
+
     public void createOptionListV2(OptionListRequestDTORevised req) {
         Menu menu = menuRepository.findByMenuIdAndMenuIsDeletedFalse(req.menuId()).orElseThrow(MenuNotFoundException::new);
-        System.out.println("***************************************************************************");
         optionListDAO.saveV2(menu, req);
     }
 
     @Override
     public List<OptionListResponseRevised> getOptionListsByMenuIdV2(Long menuId) {
         List<OptionList> byId = optionListDAO.findByMenuId(menuId);
-        if (byId.isEmpty()) throw new IllegalArgumentException("not found");
+        if (byId.isEmpty()) throw new OptionListNotFoundException();
         return byId.stream()
                 .map(OptionListResponseRevised::from)
                 .collect(Collectors.toList());

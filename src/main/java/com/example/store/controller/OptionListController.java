@@ -3,9 +3,11 @@ package com.example.store.controller;
 
 import com.example.store.dto.request.OptionListRequestDTO;
 
+import com.example.store.dto.request.UpdateOptionListNameRequest;
 import com.example.store.dto.request.OptionListRequestDTORevised;
 import com.example.store.dto.request.UpdateOptionListRequestDTO;
 
+import com.example.store.dto.request.UpdateOptionRequestDTO;
 import com.example.store.dto.response.OptionListResponse;
 import com.example.store.dto.response.OptionListResponseRevised;
 import com.example.store.service.OptionListServiceImpl;
@@ -34,7 +36,7 @@ public class OptionListController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<OptionListResponse> getOptionListById(@PathVariable Long id) {
+    public ResponseEntity<OptionListResponse> getOptionListById(@PathVariable("id") Long id) {
         OptionListResponse optionList = optionListService.getOptionListById(id);
         return new ResponseEntity<>(optionList, HttpStatus.OK);
     }
@@ -48,13 +50,19 @@ public class OptionListController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateOptionList(@PathVariable Long id, @RequestBody UpdateOptionListRequestDTO optionListRequestDTO) {
+    public ResponseEntity<Void> updateOptionList(@PathVariable("id") Long id, @RequestBody UpdateOptionListRequestDTO optionListRequestDTO) {
         optionListService.updateOptionList(id, optionListRequestDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PutMapping("/{id}/name")
+    public ResponseEntity<Void> updateOptionListName(@PathVariable("id") Long id, @RequestBody UpdateOptionListNameRequest updateOptionListNameRequest) {
+        optionListService.updateOptionListName(id, updateOptionListNameRequest);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteOptionList(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteOptionList(@PathVariable("id") Long id) {
         optionListService.deleteOptionList(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

@@ -3,14 +3,18 @@ package com.example.store.dao;
 
 import com.example.store.dto.request.OptionListRequestDTO;
 
+import com.example.store.dto.request.UpdateOptionListNameRequest;
 import com.example.store.dto.request.OptionListRequestDTORevised;
 import com.example.store.dto.request.UpdateOptionListRequestDTO;
 
 import com.example.store.global.entity.Menu;
 import com.example.store.global.entity.Option;
 import com.example.store.global.entity.OptionList;
+import com.example.store.global.exception.MenuNotFoundException;
+import com.example.store.global.exception.OptionListNotFoundException;
 import com.example.store.global.repository.MenuRepository;
 import com.example.store.global.repository.OptionListRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Repository;
@@ -37,8 +41,7 @@ public class OptionListDAOImpl implements OptionListDAO {
 
 
     public void save(OptionListRequestDTO optionList) {
-        Menu menu = menuRepository.findById(optionList.menuId())
-                .orElseThrow(() -> new IllegalArgumentException("Menu not found"));
+        Menu menu = menuRepository.findById(optionList.menuId()).orElseThrow(MenuNotFoundException::new);
 
         OptionList optionList1 = optionList.toEntity(menu);
 
@@ -59,7 +62,7 @@ public class OptionListDAOImpl implements OptionListDAO {
     
         Optional<OptionList> byId = optionListRepository.findById(id);
         if (byId.isEmpty()) {
-              throw new  IllegalArgumentException("OptionList not found");
+              throw new OptionListNotFoundException();
         }
 
         return byId.get();
@@ -69,13 +72,13 @@ public class OptionListDAOImpl implements OptionListDAO {
     @Override
     public Menu findMenuById(Long id) {
 
-        return menuRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Menu not found"));
+        return menuRepository.findById(id).orElseThrow(MenuNotFoundException::new);
     }
 
     @Override
     public void updateOptionList(Long id, UpdateOptionListRequestDTO updateOptionListRequestDTO) {
 
-        OptionList byId = optionListRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("OptionList not found"));
+        OptionList byId = optionListRepository.findById(id).orElseThrow(OptionListNotFoundException::new);
 
         String listName = updateOptionListRequestDTO.listName();
         List<Option> options = updateOptionListRequestDTO.options();
@@ -85,6 +88,14 @@ public class OptionListDAOImpl implements OptionListDAO {
     }
 
     @Override
+    public void updateOptionListName(Long listId, UpdateOptionListNameRequest updateOptionListNameRequest) {
+        OptionList byId = optionListRepository.findById(listId).orElseThrow(OptionListNotFoundException::new);
+
+        String listName = updateOptionListNameRequest.value();
+        byId.setListName(listName);
+        optionListRepository.save(byId);
+    }
+
     public void saveV2(Menu menu, OptionListRequestDTORevised req) {
         OptionList optionsList = req.toEntity(menu);
         optionListRepository.save(optionsList);

@@ -24,7 +24,7 @@ public class CustomerServiceImpl implements CustomerService{
     public void createCustomer(KafkaStatus<KafkaCustomerDto> kafkaStatus) {
         if(kafkaStatus.status().equals("customer_info_to_store")) {
             CustomerRequest customerRequest = new CustomerRequest(kafkaStatus.data().customerId(), kafkaStatus.data().longitude(), kafkaStatus.data().latitude());
-            Customer customer = new Customer(customerRequest.customerId(), customerRequest.customerAddressX(), customerRequest.customerAddressY());
+            Customer customer = new Customer(customerRequest.customerId(), customerRequest.customerLongitude(), customerRequest.customerLatitude());
             customerRepository.save(customer);
         }
     }

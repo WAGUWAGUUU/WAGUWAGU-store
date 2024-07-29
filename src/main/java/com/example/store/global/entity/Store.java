@@ -27,14 +27,14 @@ public class Store {
     @Column(name = "STORE_NAME")
     private String storeName;
 
-    @Column(name = "STORE_ADDRESS_STRING")
-    private String storeAddressString;
+    @Column(name = "STORE_ADDRESS")
+    private String storeAddress;
 
-    @Column(name = "STORE_ADDRESS_X")
-    private double storeAddressX;
+    @Column(name = "STORE_LONGITUDE")
+    private double storeLongitude;
 
-    @Column(name = "STORE_ADDRESS_Y")
-    private double storeAddressY;
+    @Column(name = "STORE_LATITUDE")
+    private double storeLatitude;
 
     @Column(name = "STORE_OPEN_AT")
     private LocalTime storeOpenAt;
@@ -73,8 +73,8 @@ public class Store {
             case STORE_NAME:
                 this.storeName = updateStoreRequestDto.value();
                 break;
-            case STORE_ADDRESS_STRING:
-                this.storeAddressString = updateStoreRequestDto.value();
+            case STORE_ADDRESS:
+                this.storeAddress = updateStoreRequestDto.value();
                 break;
             case STORE_OPEN_AT:
                 this.storeOpenAt = LocalTime.parse(updateStoreRequestDto.value());

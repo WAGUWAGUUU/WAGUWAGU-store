@@ -28,15 +28,15 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
     @Modifying
     @Query(value = "SELECT ownerId,storeId,storeName,storeAddress,storeLongitude,storeLatitude,storeMinimumOrderAmount,storeIntroduction " +
             "FROM (" +
-            "  SELECT S.owner_id AS ownerId, S.store_id AS storeId, S.store_name AS storeName,  S.store_address_string AS storeAddress, S.store_address_y AS storeLatitude, S.store_address_x AS storeLongitude, S.store_minimum_order_amount AS storeMinimumOrderAmount, S.store_introduction AS storeIntroduction, " +
-            "  ST_Distance_Sphere(Point(:userX, :userY), Point(S.store_address_x, S.store_address_y)) AS distance " +
+            "  SELECT S.owner_id AS ownerId, S.store_id AS storeId, S.store_name AS storeName,  S.store_address AS storeAddress, S.store_latitude AS storeLatitude, S.store_longitude AS storeLongitude, S.store_minimum_order_amount AS storeMinimumOrderAmount, S.store_introduction AS storeIntroduction, " +
+            "  ST_Distance_Sphere(Point(:userLongitude, :userLatitude), Point(S.store_longitude, S.store_latitude)) AS distance " +
             "  FROM Stores S" +
             "  WHERE S.store_is_deleted = 0 AND S.store_category = :category"+
             ") AS temp " +
             "WHERE distance <= 5000 " +
             "ORDER BY distance",
             nativeQuery = true)
-    List<StoreNearUserResponse> findStoreAllNearUser(@Param("userX") double userX, @Param("userY") double userY, @Param("category") String category);
+    List<StoreNearUserResponse> findStoreAllNearUser(@Param("userLongitude") double userLongitude, @Param("userLatitude") double userLatitude, @Param("category") String category);
 
 
 }

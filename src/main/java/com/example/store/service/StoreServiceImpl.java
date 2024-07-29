@@ -59,8 +59,8 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public Store getStoreByOwnerId(Long ownerId) {
-        Store store = storeRepository.findByOwner_OwnerId(ownerId).orElseThrow(StoreNotFoundException::new);
-        return store;
+    public StoreResponse getStoreByOwnerId(Long ownerId) {
+        Store store = storeRepository.findByOwner_OwnerIdAndStoreIsDeletedFalse(ownerId).orElseThrow(StoreNotFoundException::new);
+        return StoreResponse.from(store);
     }
 }
