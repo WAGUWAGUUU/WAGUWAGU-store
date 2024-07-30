@@ -1,5 +1,6 @@
 package com.example.store.global.entity;
 
+import com.example.store.dto.request.StoreUpdateRequest;
 import com.example.store.dto.request.UpdateOwnerRequestDto;
 import com.example.store.dto.request.UpdateStoreRequestDto;
 import com.example.store.global.type.StoreCategory;
@@ -27,14 +28,14 @@ public class Store {
     @Column(name = "STORE_NAME")
     private String storeName;
 
-    @Column(name = "STORE_ADDRESS_STRING")
-    private String storeAddressString;
+    @Column(name = "STORE_ADDRESS")
+    private String storeAddress;
 
-    @Column(name = "STORE_ADDRESS_X")
-    private double storeAddressX;
+    @Column(name = "STORE_LONGITUDE")
+    private double storeLongitude;
 
-    @Column(name = "STORE_ADDRESS_Y")
-    private double storeAddressY;
+    @Column(name = "STORE_LATITUDE")
+    private double storeLatitude;
 
     @Column(name = "STORE_OPEN_AT")
     private LocalTime storeOpenAt;
@@ -68,33 +69,46 @@ public class Store {
 //    @OneToMany(mappedBy = "store")
 //    private List<StoreDeliveryInfo> storeDeliveryInfos;
 
-    public void update(UpdateStoreType updateStoreType, UpdateStoreRequestDto updateStoreRequestDto) {
-        switch (updateStoreType) {
-            case STORE_NAME:
-                this.storeName = updateStoreRequestDto.value();
-                break;
-            case STORE_ADDRESS_STRING:
-                this.storeAddressString = updateStoreRequestDto.value();
-                break;
-            case STORE_OPEN_AT:
-                this.storeOpenAt = LocalTime.parse(updateStoreRequestDto.value());
-                break;
-            case STORE_CLOSE_AT:
-                this.storeCloseAt = LocalTime.parse(updateStoreRequestDto.value());
-                break;
-            case STORE_PHONE:
-                this.storePhone = updateStoreRequestDto.value();
-                break;
-            case STORE_MINIMUM_ORDER_AMOUNT:
-                this.storeMinimumOrderAmount = Integer.parseInt(updateStoreRequestDto.value());
-                break;
-            case STORE_INTRODUCTION:
-                this.storeIntroduction = updateStoreRequestDto.value();
-                break;
-            case STORE_CATEGORY:
-                this.storeCategory = StoreCategory.stringToCategory(updateStoreRequestDto.value());
-                break;
-        }
+//    public void update(UpdateStoreType updateStoreType, UpdateStoreRequestDto updateStoreRequestDto) {
+//        switch (updateStoreType) {
+//            case STORE_NAME:
+//                this.storeName = updateStoreRequestDto.value();
+//                break;
+//            case STORE_ADDRESS:
+//                this.storeAddress = updateStoreRequestDto.value();
+//                break;
+//            case STORE_OPEN_AT:
+//                this.storeOpenAt = LocalTime.parse(updateStoreRequestDto.value());
+//                break;
+//            case STORE_CLOSE_AT:
+//                this.storeCloseAt = LocalTime.parse(updateStoreRequestDto.value());
+//                break;
+//            case STORE_PHONE:
+//                this.storePhone = updateStoreRequestDto.value();
+//                break;
+//            case STORE_MINIMUM_ORDER_AMOUNT:
+//                this.storeMinimumOrderAmount = Integer.parseInt(updateStoreRequestDto.value());
+//                break;
+//            case STORE_INTRODUCTION:
+//                this.storeIntroduction = updateStoreRequestDto.value();
+//                break;
+//            case STORE_CATEGORY:
+//                this.storeCategory = StoreCategory.stringToCategory(updateStoreRequestDto.value());
+//                break;
+//        }
+//    }
+
+    public void updateStoreInfo(StoreUpdateRequest dto) {
+        if (!dto.storeName().equals(this.storeName)) this.storeName = dto.storeName();
+        if (!dto.storeAddress().equals(this.storeAddress)) this.storeAddress = dto.storeAddress();
+        if (!dto.storeOpenAt().equals(this.storeOpenAt)) this.storeOpenAt = dto.storeOpenAt();
+        if (!dto.storeCloseAt().equals(this.storeCloseAt)) this.storeCloseAt = dto.storeCloseAt();
+        if (!dto.storePhone().equals(this.storePhone)) this.storePhone = dto.storePhone();
+        if (!(dto.storeMinimumOrderAmount() == this.storeMinimumOrderAmount)) this.storeMinimumOrderAmount = dto.storeMinimumOrderAmount();
+        if (!(dto.storeIntroduction().equals(this.storeIntroduction))) this.storeIntroduction = dto.storeIntroduction();
+        if (!dto.storeCategory().equals(this.storeCategory)) this.storeCategory = dto.storeCategory();
+        if (!(dto.storeLongitude() == this.storeLongitude)) this.storeLongitude = dto.storeLongitude();
+        if (!(dto.storeLatitude() == this.storeLatitude)) this.storeLatitude = dto.storeLatitude();
     }
 
     public void setStoreIsDeleted() {

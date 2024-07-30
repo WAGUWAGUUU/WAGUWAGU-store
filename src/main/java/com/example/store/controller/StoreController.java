@@ -1,8 +1,8 @@
 package com.example.store.controller;
 import com.example.store.dto.request.StoreRequestDto;
+import com.example.store.dto.request.StoreUpdateRequest;
 import com.example.store.dto.request.UpdateStoreRequestDto;
 import com.example.store.dto.response.StoreResponse;
-import com.example.store.global.entity.Store;
 import com.example.store.global.type.UpdateStoreType;
 import com.example.store.service.StoreService;
 import lombok.RequiredArgsConstructor;
@@ -36,9 +36,14 @@ public class StoreController {
         return storeService.getAllStore();
     }
 
+//    @PutMapping("/{storeId}")
+//    public void updateStoreName(@PathVariable(name = "storeId") Long storeId, @RequestParam(name = "type")String type, @RequestBody UpdateStoreRequestDto updateStoreRequestDto) {
+//        storeService.updateStore(storeId, UpdateStoreType.stringToStoreType(type), updateStoreRequestDto);
+//    }
+
     @PutMapping("/{storeId}")
-    public void updateStoreName(@PathVariable(name = "storeId") Long storeId, @RequestParam(name = "type")String type, @RequestBody UpdateStoreRequestDto updateStoreRequestDto) {
-        storeService.updateStore(storeId, UpdateStoreType.stringToStoreType(type), updateStoreRequestDto);
+    public void updateStoreInfo(@PathVariable(name = "storeId") Long storeId, @RequestBody StoreUpdateRequest req) {
+        storeService.updateStoreInfo(storeId, req);
     }
 
     @DeleteMapping("/{storeId}")

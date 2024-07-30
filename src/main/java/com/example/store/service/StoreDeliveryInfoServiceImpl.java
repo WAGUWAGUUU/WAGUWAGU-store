@@ -40,10 +40,19 @@ public class StoreDeliveryInfoServiceImpl implements StoreDeliveryInfoService {
         return allByStoreStoreId.stream().map(StoreDeliveryInfoResponse::from).toList();
     }
 
+//    @Override
+//    @Transactional
+//    public void updateStoreDeliveryInfoByStoreIdAndState(Long storeId, int storeDeliveryInfoState, UpdateStoreDeliveryInfoType updateStoreDeliveryInfoType, UpdateStoreDeliveryInfoRequestDto updateStoreDeliveryInfoRequestDto) {
+//        StoreDeliveryInfo storeDeliveryInfo = storeDeliveryInfoRepository.findByStore_StoreIdAndStoreDeliveryInfoState(storeId, storeDeliveryInfoState).orElseThrow(StoreDeliveryInfoNotFoundException::new);
+//        storeDeliveryInfo.update(updateStoreDeliveryInfoType, updateStoreDeliveryInfoRequestDto);
+//    }
+
+
     @Override
     @Transactional
-    public void updateStoreDeliveryInfoByStoreIdAndState(Long storeId, int storeDeliveryInfoState, UpdateStoreDeliveryInfoType updateStoreDeliveryInfoType, UpdateStoreDeliveryInfoRequestDto updateStoreDeliveryInfoRequestDto) {
-        StoreDeliveryInfo storeDeliveryInfo = storeDeliveryInfoRepository.findByStore_StoreIdAndStoreDeliveryInfoState(storeId, storeDeliveryInfoState).orElseThrow(StoreDeliveryInfoNotFoundException::new);
-        storeDeliveryInfo.update(updateStoreDeliveryInfoType, updateStoreDeliveryInfoRequestDto);
+    public void updateStoreDeliveryInfo(Long storeId, StoreDeliveryInfoRequestDto req) {
+        StoreDeliveryInfo storeDeliveryInfo = storeDeliveryInfoRepository
+                .findByStore_StoreIdAndStoreDeliveryInfoState(storeId, req.storeDeliveryInfoState()).orElseThrow(StoreNotFoundException::new);
+        storeDeliveryInfo.updateDeliveryInfo(req.storeDeliveryInfoFee(), req.storeDeliveryInfoDistanceEnd());
     }
 }

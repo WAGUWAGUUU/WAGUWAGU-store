@@ -13,6 +13,5 @@ public record StoreDeliveryInfoRequestDto(
                 .storeDeliveryInfoDistanceEnd(storeDeliveryInfoDistanceEnd)
                 .store(store)
                 .build();
-
     }
 }

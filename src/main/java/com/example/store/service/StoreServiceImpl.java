@@ -1,5 +1,6 @@
 package com.example.store.service;
 import com.example.store.dto.request.StoreRequestDto;
+import com.example.store.dto.request.StoreUpdateRequest;
 import com.example.store.dto.request.UpdateStoreRequestDto;
 import com.example.store.dto.response.StoreResponse;
 import com.example.store.global.entity.Store;
@@ -32,11 +33,10 @@ public class StoreServiceImpl implements StoreService {
     @Override
     @Transactional
     public StoreResponse getStoreByStoreId(Long storeId) {
-
         Store store = storeRepository.findByStoreIdAndStoreIsDeletedFalse(storeId).orElseThrow(StoreNotFoundException::new);
-
         return StoreResponse.from(store);
     }
+
     @Override
     @Transactional
     public List<StoreResponse> getAllStore() {
@@ -44,11 +44,18 @@ public class StoreServiceImpl implements StoreService {
         return allByStoreIsDeletedFalse.stream().map(StoreResponse::from).toList();
     }
 
+//    @Override
+//    @Transactional
+//    public void updateStore(Long storeId, UpdateStoreType updateStoreType, UpdateStoreRequestDto updateStoreRequestDto) {
+//        Store store = storeRepository.findByStoreIdAndStoreIsDeletedFalse(storeId).orElseThrow(StoreNotFoundException::new);
+//        store.update(updateStoreType,updateStoreRequestDto);
+//    }
+
     @Override
     @Transactional
-    public void updateStore(Long storeId, UpdateStoreType updateStoreType, UpdateStoreRequestDto updateStoreRequestDto) {
+    public void updateStoreInfo(Long storeId, StoreUpdateRequest req) {
         Store store = storeRepository.findByStoreIdAndStoreIsDeletedFalse(storeId).orElseThrow(StoreNotFoundException::new);
-        store.update(updateStoreType,updateStoreRequestDto);
+        store.updateStoreInfo(req);
     }
 
     @Override
@@ -60,7 +67,7 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public StoreResponse getStoreByOwnerId(Long ownerId) {
-        Store store = storeRepository.findByOwner_OwnerId(ownerId).orElseThrow(StoreNotFoundException::new);
+        Store store = storeRepository.findByOwner_OwnerIdAndStoreIsDeletedFalse(ownerId).orElseThrow(StoreNotFoundException::new);
         return StoreResponse.from(store);
     }
 }
