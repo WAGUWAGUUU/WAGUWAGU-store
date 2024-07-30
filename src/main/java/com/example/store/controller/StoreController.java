@@ -18,6 +18,8 @@ import java.util.List;
 public class StoreController {
     private final StoreService storeService;
 
+
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createStore(@RequestBody StoreRequestDto storeRequestDto) {

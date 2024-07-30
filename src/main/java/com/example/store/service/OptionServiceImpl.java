@@ -21,6 +21,17 @@ public class OptionServiceImpl implements OptionService {
 
     private final OptionDAO optionDAO;
 
+
+    @Override
+    public Option getOptionById(long optionId) {
+        return null;
+    }
+// graphql prac
+    @Override
+    public Option getById(Long id) {
+        return optionDAO.getById(id);
+    }
+
     @Override
     public OptionResponse getOptionById(Long id) {
 

@@ -9,6 +9,7 @@ import com.example.store.global.exception.OptionListNotFoundException;
 import com.example.store.global.exception.OptionNotFoundException;
 import com.example.store.global.repository.OptionListRepository;
 import com.example.store.global.repository.OptionRepository;
+import graphql.kickstart.tools.GraphQLQueryResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +18,16 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class OptionDAOImpl implements OptionDAO {
+public class OptionDAOImpl implements OptionDAO, GraphQLQueryResolver {
 
      private final OptionRepository optionRepository;
      private final OptionListRepository optionListRepository;
+
+// GRAPHQL PRAC
+     @Override
+     public Option getById(long id) {
+         return optionRepository.findById(id).orElse(null);
+     }
 
     @Override
     public Option getOptionById(Long id) {
