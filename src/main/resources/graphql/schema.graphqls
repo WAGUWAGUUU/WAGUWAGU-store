@@ -1,0 +1,21 @@
+scalar Long
+
+type Option {
+    optionId: Long
+    optionTitle: String
+    optionPrice: Int
+
+}
+
+type OptionList {
+    listId: Long
+    listName: String
+    options: [Option]
+
+}
+type Query {
+    getById(optionId: Long): Option
+    getListById(listId: Long): OptionList
+    getOptionById(optionId: Long): Option
+}
+

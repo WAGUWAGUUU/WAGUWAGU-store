@@ -3,20 +3,34 @@ package com.example.store.controller;
 import com.example.store.dto.request.OptionRequestDTO;
 import com.example.store.dto.request.UpdateOptionRequestDTO;
 import com.example.store.dto.response.OptionResponse;
+import com.example.store.global.entity.Option;
+import com.example.store.global.repository.OptionRepository;
 import com.example.store.service.OptionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.graphql.data.GraphQlRepository;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/api/v1/options")
 @RequiredArgsConstructor
+
 //@CrossOrigin(origins = "*")
 public class OptionController {
 
     private final OptionService optionService;
+    private final OptionRepository optionRepository;
+
+// graphql  prac
+    @QueryMapping
+    public Option getById(@Argument Long optionId) {
+        return optionService.getById(optionId);
+    }
 
 
     @GetMapping("/{id}")
