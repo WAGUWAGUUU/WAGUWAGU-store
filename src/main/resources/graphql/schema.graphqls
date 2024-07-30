@@ -1,21 +1,19 @@
-scalar Long
-
 type Option {
-    optionId: Long
+    optionId: ID
     optionTitle: String
     optionPrice: Int
 
 }
 
 type OptionList {
-    listId: Long
+    listId: ID
     listName: String
     options: [Option]
 
 }
-type Query {
-    getById(optionId: Long): Option
-    getListById(listId: Long): OptionList
-    getOptionById(optionId: Long): Option
+type Query{
+    getById(optionId: ID): Option
+    getListById(listId: ID): OptionList
+    getOptionById(optionId: ID): Option
 }
 

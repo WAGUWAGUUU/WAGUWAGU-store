@@ -20,9 +20,9 @@ public class StoreApplication {
 		return new JsonMessageConverter();
 	}
 
-	@Bean
-	public graphql.schema.GraphQLScalarType extendedScalarLong() {
-		return graphql.scalars.ExtendedScalars.GraphQLLong;
-	}
+//	@Bean
+//	public graphql.schema.GraphQLScalarType extendedScalarLong() {
+//		return graphql.scalars.ExtendedScalars.GraphQLLong;
+//	}
 
 }

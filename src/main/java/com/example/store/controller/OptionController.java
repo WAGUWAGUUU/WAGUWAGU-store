@@ -28,7 +28,7 @@ public class OptionController {
 
 // graphql  prac
     @QueryMapping
-    public Option getById(@Argument Long optionId) {
+    public Option getById(@Argument(name = "optionId") Long optionId) {
         return optionService.getById(optionId);
     }
 
