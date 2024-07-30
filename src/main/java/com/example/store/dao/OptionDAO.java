@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface OptionDAO {
 
+    Option getById(long optionId);
     Option getOptionById(Long id);
     List<Option> getAllOptionsByListId(Long listId);
     void addOption(Long listId, OptionRequestDTO optionRequestDTO);

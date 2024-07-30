@@ -24,6 +24,11 @@ repositories {
 }
 
 dependencies {
+	implementation 'com.graphql-java-kickstart:graphql-spring-boot-starter:13.0.0' // Ensure this is the latest compatible version
+	implementation 'com.graphql-java-kickstart:playground-spring-boot-starter:11.0.0'
+	implementation 'com.graphql-java-kickstart:graphql-spring-boot-starter:13.0.0'
+	implementation 'com.graphql-java:graphql-java-extended-scalars:22.0'
+	implementation 'org.springframework.boot:spring-boot-starter-graphql'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 //	implementation 'org.springframework.boot:spring-boot-starter-security'

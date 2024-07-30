@@ -19,4 +19,10 @@ public class StoreApplication {
 	public RecordMessageConverter converter(){
 		return new JsonMessageConverter();
 	}
+
+	@Bean
+	public graphql.schema.GraphQLScalarType extendedScalarLong() {
+		return graphql.scalars.ExtendedScalars.GraphQLLong;
+	}
+
 }
