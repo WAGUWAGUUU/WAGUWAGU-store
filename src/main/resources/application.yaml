@@ -26,3 +26,5 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       group-id: store-group2
       auto-offset-reset: earliest
+server:
+  port: 8090
