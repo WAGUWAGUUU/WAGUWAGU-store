@@ -27,9 +27,14 @@ public class OptionList {
     @Setter
     private List<Option> options=new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY )
-    @JoinColumn(name = "MENU_ID")
-    private Menu menu;
+    @Builder.Default
+    @OneToMany(mappedBy = "optionList"  ,cascade = CascadeType.ALL, orphanRemoval = true)
+    @Setter
+    private List<MenuOptionListBridge> bridges=new ArrayList<>();
+//
+//    @ManyToOne(fetch = FetchType.LAZY )
+//    @JoinColumn(name = "MENU_ID")
+//    private Menu menu;
 
     public void addOption(Option option) {
 
