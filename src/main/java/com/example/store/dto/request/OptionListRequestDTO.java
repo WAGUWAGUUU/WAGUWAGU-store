@@ -11,6 +11,7 @@ public record OptionListRequestDTO(
 ) {
     public OptionList toEntity(Menu menu){
         OptionList optionList = OptionList.builder()
+                .listId(listId)
                 .listName(listName)
 //                .menu(menu)
                 .build();

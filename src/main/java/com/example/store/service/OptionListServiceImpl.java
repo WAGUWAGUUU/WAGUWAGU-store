@@ -10,8 +10,10 @@ import com.example.store.dto.request.UpdateOptionListRequestDTO;
 import com.example.store.dto.response.OptionListResponse;
 import com.example.store.dto.response.OptionListResponseRevised;
 import com.example.store.global.entity.Menu;
+import com.example.store.global.entity.MenuOptionListBridge;
 import com.example.store.global.entity.OptionList;
 import com.example.store.global.exception.OptionListNotFoundException;
+import com.example.store.global.repository.MenuOptionListBridgeRepository;
 import jakarta.transaction.Transactional;
 import com.example.store.global.exception.MenuNotFoundException;
 import com.example.store.global.repository.MenuRepository;
@@ -29,6 +31,8 @@ public class OptionListServiceImpl implements OptionListService {
 
     private final OptionListDAOImpl optionListDAO;
     private final MenuRepository menuRepository;
+    private final MenuOptionListBridgeRepository optionListBridgeRepository;
+    private final MenuOptionListBridgeRepository menuOptionListBridgeRepository;
 
     @Override
     public List<OptionListResponse> getOptionListsByMenuId(Long menuId) {
@@ -69,7 +73,11 @@ public class OptionListServiceImpl implements OptionListService {
         }
         System.out.println(optionList.options());
         optionListDAO.save(optionList);
-
+        MenuOptionListBridge bridge = MenuOptionListBridge.builder()
+                        .menu(menuById)
+                .optionList(OptionList.builder().listId(optionList.listId()).build())
+                        .build();
+        menuOptionListBridgeRepository.save(bridge);
     }
 
     @Override
