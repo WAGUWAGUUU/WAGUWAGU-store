@@ -71,4 +71,17 @@ public class StoreServiceImpl implements StoreService {
         return StoreResponse.from(store);
 
     }
+
+    @Override
+    @Transactional
+    public void blockStoreIsOpened(Long storeId) {
+        Store store = storeRepository.findByStoreIdAndStoreIsDeletedFalse(storeId).orElseThrow(StoreNotFoundException::new);
+        store.setStoreBlockIsOpened();
+    }
+
+    @Override
+    public boolean checkBlockStoreIsOpened(Long storeId) {
+        Store store = storeRepository.findByStoreIdAndStoreIsDeletedFalse(storeId).orElseThrow(StoreNotFoundException::new);
+        return store.getStoreBlockIsOpened();
+    }
 }

@@ -122,5 +122,9 @@ public class Store {
         return storeBlockIsOpened;
     }
 
+    public void setStoreBlockIsOpened() {
+        this.storeBlockIsOpened = !(this.storeBlockIsOpened);
+    }
+
 
 }

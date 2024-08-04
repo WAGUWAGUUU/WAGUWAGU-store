@@ -24,4 +24,8 @@ public interface StoreService {
 
     // ownerId 기준으로 storeId 가져오기
     StoreResponse getStoreByOwnerId(Long ownerId);
+
+    void blockStoreIsOpened(Long storeId);
+
+    boolean checkBlockStoreIsOpened(Long storeId);
 }

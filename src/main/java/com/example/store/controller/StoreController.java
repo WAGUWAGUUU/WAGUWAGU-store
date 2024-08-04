@@ -58,4 +58,14 @@ public class StoreController {
     public StoreResponse getStoreByOwnerId(@Argument(name = "ownerId") Long ownerId) {
         return storeService.getStoreByOwnerId(ownerId);
     }
+
+    @MutationMapping
+    public void blockStoreIsOpened(@Argument(name = "storeId") Long storeId) {
+        storeService.blockStoreIsOpened(storeId);
+    }
+
+    @QueryMapping
+    public boolean checkBlockStoreIsOpened(@Argument(name = "storeId") Long storeId) {
+        return storeService.checkBlockStoreIsOpened(storeId);
+    }
 }

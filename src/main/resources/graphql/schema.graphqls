@@ -31,6 +31,7 @@ type Query {
     getStoreByStoreId(storeId: ID): Store
     getAllStore: [Store]
     getStoreByOwnerId(ownerId: ID): Store
+    checkBlockStoreIsOpened(storeId: ID) : Boolean
 # menucategory
     getMenuCategoryById(menuCategoryId: ID) : MenuCategory
     getMenuCategoryByStoreId(storeId: ID) :[MenuCategory]
@@ -53,6 +54,7 @@ type Mutation {
     createStore(input: StoreRequestDto): Void
     updateStoreInfo(storeId: ID, input: StoreUpdateRequest): Void
     deleteStore(storeId: ID): Void
+    blockStoreIsOpened(storeId: ID) : Void
 # menucategory
     createMenuCategory(input: MenuCategoryRequestDto) : Void
     updateMenuCategoryName(menuCategoryId:ID, input: UpdateMenuCategoryRequestDto) : Void
