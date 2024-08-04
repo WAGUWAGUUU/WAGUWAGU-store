@@ -54,9 +54,9 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     @Transactional
-    public void update(Long menuId, UpdateMenuType updateMenuType, UpdateMenuRequestDto updateMenuRequestDto) {
+    public void update(Long menuId, UpdateMenuType updateMenuType, String value) {
         Menu menu = menuRepository.findByMenuIdAndMenuIsDeletedFalse(menuId).orElseThrow(MenuNotFoundException::new);
-        menu.update(updateMenuType, updateMenuRequestDto);
+        menu.update(updateMenuType, value);
     }
 
     @Override

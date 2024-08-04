@@ -5,51 +5,54 @@ import com.example.store.dto.response.MenuResponse;
 import com.example.store.global.type.UpdateMenuType;
 import com.example.store.service.MenuService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/menu")
+//@RequestMapping("api/v1/menu")
 @RequiredArgsConstructor
 //@CrossOrigin(origins = "*")
 public class MenuController {
     private final MenuService menuService;
-    @PostMapping
+    @MutationMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createMenu(@RequestBody MenuRequestDto menuRequestDto) {
-        menuService.createMenu(menuRequestDto);
+    public void createMenu(@Argument(name = "input") MenuRequestDto input) {
+        menuService.createMenu(input);
     }
 
-    @GetMapping("/menu-category/{menuCategoryId}")
-    public List<MenuResponse> getAllMenuByMenuCategory(@PathVariable(name = "menuCategoryId") Long menuCategoryId) {
+    @QueryMapping
+    public List<MenuResponse> getAllMenuByMenuCategory(@Argument(name = "menuCategoryId") Long menuCategoryId) {
         return menuService.getAllMenuByMenuCategory(menuCategoryId);
     }
 
-    @GetMapping("/{menuId}")
-    public MenuResponse getMenuById(@PathVariable(name = "menuId") Long menuId) {
+    @QueryMapping
+    public MenuResponse getMenuById(@Argument(name = "menuId") Long menuId) {
         return menuService.getMenuById(menuId);
     }
 
 
-    @GetMapping
+    @QueryMapping
     public List<MenuResponse> getAllMenu() {
         return menuService.getAllMenu();
     }
 
-    @PutMapping("/{menuId}")
-    public void updateMenu(@PathVariable("menuId") Long menuId, @RequestParam(name = "type")String type, @RequestBody UpdateMenuRequestDto updateMenuRequestDto) {
-        menuService.update(menuId, UpdateMenuType.stringToMenuType(type), updateMenuRequestDto);
+    @MutationMapping
+    public void updateMenu(@Argument("menuId") Long menuId, @Argument(name = "input") UpdateMenuRequestDto input) {
+        menuService.update(menuId, UpdateMenuType.stringToMenuType(input.type()), input.value());
     }
 
-    @GetMapping("/{menuId}/menu-possible")
-    public void changeMenuPossible(@PathVariable("menuId") Long menuId) {
+    @QueryMapping
+    public void changeMenuPossible(@Argument("menuId") Long menuId) {
         menuService.changeMenuPossible(menuId);
     }
 
-    @DeleteMapping("/{menuId}")
-    public void deleteMenu(@PathVariable(name = "menuId") Long menuId) {
+    @MutationMapping
+    public void deleteMenu(@Argument(name = "menuId") Long menuId) {
         menuService.deleteMenu(menuId);
     }
 }

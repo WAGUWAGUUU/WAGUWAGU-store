@@ -80,13 +80,13 @@ public class DistanceCalServiceImpl implements DistanceCalService{
 
     @Override
     @Transactional
-    public List<StoreListResponse> userNearStore(StoreNearUserRequest storeNearUserRequest) {
-        List<StoreNearUserResponse> storeAllNearUser = storeRepository.findStoreAllNearUser(storeNearUserRequest.longitude(), storeNearUserRequest.latitude(), storeNearUserRequest.category());
+    public List<StoreListResponse> userNearStore(String category,UserLocationRequest request) {
+        List<StoreNearUserResponse> storeAllNearUser = storeRepository.findStoreAllNearUser(request.longitude(), request.latitude(), category);
         if(storeAllNearUser.isEmpty()) throw new StoreNotFoundException();
 
         return storeAllNearUser.stream().map(storeNearUserResponse -> {
 
-            StoreListDeliveryResponse storeListDeliveryResponse = showStoreList(storeNearUserResponse.getStoreId(), storeNearUserRequest.longitude(), storeNearUserRequest.latitude());
+            StoreListDeliveryResponse storeListDeliveryResponse = showStoreList(storeNearUserResponse.getStoreId(), request.longitude(), request.latitude());
             return new StoreListResponse(storeNearUserResponse.getOwnerId(), storeNearUserResponse.getStoreId(), storeNearUserResponse.getStoreName(), storeNearUserResponse.getStoreAddress(),storeNearUserResponse.getStoreLongitude(), storeNearUserResponse.getStoreLatitude(), storeNearUserResponse.getStoreMinimumOrderAmount(), storeNearUserResponse.getStoreIntroduction(), storeListDeliveryResponse.distanceFromStoreToCustomer(), storeListDeliveryResponse.deliveryFee());
 
         }).collect(Collectors.toList());

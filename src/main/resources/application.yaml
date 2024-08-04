@@ -2,13 +2,11 @@ spring:
   application:
     name: store
   graphql:
-    servlet:
-      path: /graphql
-    tools:
-      schema-location-pattern: classpath:graphql/**/*.graphqls
-  graphiql:
-    endpoint: /graphql
-    enabled: true
+    path: /graphql
+    graphiql:
+      enable: true
+      printer:
+        enable: true
   datasource:
     url: jdbc:mysql://localhost:3306/store?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
     username: root
@@ -24,5 +22,6 @@ spring:
     consumer:
       value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      group-id: store-group2
+      group-id: store-group7941
+#      group id 제거
       auto-offset-reset: earliest

@@ -15,7 +15,7 @@ public interface MenuService {
 
     List<MenuResponse> getAllMenu();
 
-    void update(Long menuId, UpdateMenuType updateMenuType, UpdateMenuRequestDto updateMenuRequestDto);
+    void update(Long menuId, UpdateMenuType updateMenuType, String value);
 
     void changeMenuPossible(Long menuId);
 

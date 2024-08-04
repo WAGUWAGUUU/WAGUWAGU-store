@@ -23,7 +23,7 @@ public class OwnerServiceImpl implements OwnerService {
     private final OwnerRepository ownerRepository;
 
     // 삭제 된 거는 조회가 안 되게끔
-    @KafkaListener(topics = "owner-info-request-to-store-topic",groupId="store-group2")
+    @KafkaListener(topics = "owner-info-request-to-store-topic")
     @Override
     @Transactional
     public void createOwner(KafkaStatus<KafkaOwnerDto> kafkaStatus) {
@@ -38,7 +38,6 @@ public class OwnerServiceImpl implements OwnerService {
     public OwnerResponse getOwnerByOwnerId(Long ownerId) {
 
         Owner owner = ownerRepository.findByOwnerIsDeletedFalseAndOwnerId(ownerId).orElseThrow(OwnerNotFoundException::new);
-
         return OwnerResponse.from(owner);
     }
 
@@ -50,9 +49,9 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     @Transactional
-    public void updateOwner(Long ownerId, UpdateOwnerType updateOwnerType, UpdateOwnerRequestDto updateOwnerRequestDto) {
+    public void updateOwner(Long ownerId, UpdateOwnerType updateOwnerType, String value) {
         Owner owner = ownerRepository.findByOwnerIsDeletedFalseAndOwnerId(ownerId).orElseThrow(OwnerNotFoundException::new);
-        owner.update(updateOwnerType, updateOwnerRequestDto);
+        owner.update(updateOwnerType, value);
     }
 
     @Override

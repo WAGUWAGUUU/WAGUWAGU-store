@@ -3,35 +3,38 @@ import com.example.store.dto.request.StoreRequestDto;
 import com.example.store.dto.request.StoreUpdateRequest;
 import com.example.store.dto.request.UpdateStoreRequestDto;
 import com.example.store.dto.response.StoreResponse;
+import com.example.store.global.entity.Store;
 import com.example.store.global.type.UpdateStoreType;
 import com.example.store.service.StoreService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/store")
+//@RequestMapping("api/v1/store")
 @RequiredArgsConstructor
 //@CrossOrigin(origins = "*")
 public class StoreController {
     private final StoreService storeService;
 
-
-
-    @PostMapping
+    @MutationMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createStore(@RequestBody StoreRequestDto storeRequestDto) {
-        storeService.createStore(storeRequestDto);
+    public void createStore(@Argument(name ="input") StoreRequestDto input) {
+        storeService.createStore(input);
     }
 
-    @GetMapping("/{storeId}")
-    public StoreResponse getStoreByStoreId(@PathVariable(name = "storeId") Long storeId) {
+    @QueryMapping
+    public StoreResponse getStoreByStoreId(@Argument(name = "storeId") Long storeId) {
         return storeService.getStoreByStoreId(storeId);
     }
 
-    @GetMapping
+    @QueryMapping
     public List<StoreResponse> getAllStore() {
         return storeService.getAllStore();
     }
@@ -41,18 +44,18 @@ public class StoreController {
 //        storeService.updateStore(storeId, UpdateStoreType.stringToStoreType(type), updateStoreRequestDto);
 //    }
 
-    @PutMapping("/{storeId}")
-    public void updateStoreInfo(@PathVariable(name = "storeId") Long storeId, @RequestBody StoreUpdateRequest req) {
-        storeService.updateStoreInfo(storeId, req);
+    @MutationMapping
+    public void updateStoreInfo(@Argument(name = "storeId") Long storeId, @Argument(name = "input") StoreUpdateRequest input) {
+        storeService.updateStoreInfo(storeId, input);
     }
 
-    @DeleteMapping("/{storeId}")
-    public void deleteStore(@PathVariable(name = "storeId") Long storeId) {
+    @MutationMapping
+    public void deleteStore(@Argument(name = "storeId") Long storeId) {
         storeService.deleteStore(storeId);
     }
 
-    @GetMapping("/owner/{ownerId}")
-    public StoreResponse getStoreByOwnerId(@PathVariable(name="ownerId") Long ownerId) {
+    @QueryMapping
+    public StoreResponse  getStoreByOwnerId(@Argument(name = "ownerId") Long ownerId) {
         return storeService.getStoreByOwnerId(ownerId);
     }
 }

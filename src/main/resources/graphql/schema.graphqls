@@ -1,19 +1,205 @@
+
+scalar Long
+scalar LocalTime
+scalar Void
+
+
 type Option {
     optionId: ID
     optionTitle: String
     optionPrice: Int
-
 }
 
 type OptionList {
     listId: ID
     listName: String
     options: [Option]
-
 }
-type Query{
+
+
+
+type Query {
     getById(optionId: ID): Option
     getListById(listId: ID): OptionList
     getOptionById(optionId: ID): Option
+# customer
+    getCustomerByCustomerId(customerId: ID): Customer
+# owner
+    getOwnerByOwnerId(ownerId: ID): Owner
+    getAllOwner: [Owner]
+# store
+    getStoreByStoreId(storeId: ID): Store
+    getAllStore: [Store]
+    getStoreByOwnerId(ownerId: ID): Store
+# menucategory
+    getMenuCategoryById(menuCategoryId: ID) : MenuCategory
+    getMenuCategoryByStoreId(storeId: ID) :[MenuCategory]
+    getAllMenuCategory : [MenuCategory]
+# menu
+    getAllMenuByMenuCategory(menuCategoryId: ID) : [Menu]
+    getMenuById(menuId: ID): Menu
+    getAllMenu : [Menu]
+    changeMenuPossible(menuId : ID) : Void
+# storeDeliveryInfo
+    getStoreDeliveryInfoAllByStoreId(storeId: ID) : [StoreDeliveryInfo]
+
 }
+
+type Mutation {
+# owner
+    updateOwner(input: UpdateOwnerInput): Void
+    deleteOwner(ownerId: ID): Void
+# store
+    createStore(input: StoreRequestDto): Void
+    updateStoreInfo(storeId: ID, input: StoreUpdateRequest): Void
+    deleteStore(storeId: ID): Void
+# menucategory
+    createMenuCategory(input: MenuCategoryRequestDto) : Void
+    updateMenuCategoryName(menuCategoryId:ID, input: UpdateMenuCategoryRequestDto) : Void
+    deleteMenuCategory(menuCategoryId : ID) : Void
+# menu
+    createMenu(input : MenuRequestDto) : Void
+    updateMenu(menuId : ID, input : UpdateMenuRequestDto) : Void
+    deleteMenu(menuId : ID) : Void
+# storeDeliveryInfo
+    createStoreDeliveryInfo(storeId:ID, input: StoreDeliveryInfoRequestDto) : Void
+    updateStoreDeliveryInfo(storeId: ID, input : StoreDeliveryInfoRequestDto) : Void
+# distanceCal
+    storeInfoDetail(storeId:ID, input: UserLocationRequest) : StoreListResponse
+    userNearStore(category:String, input: UserLocationRequest) : [StoreListResponse]
+}
+
+type Customer {
+    customerId: ID
+    customerLongitude: Float
+    customerLatitude: Float
+}
+
+type Owner {
+    ownerId: ID
+    ownerName: String
+    ownerBusinessNumber: String
+    ownerIsDeleted: Boolean
+}
+
+type Store {
+    storeId: ID
+    storeName: String
+    storeAddress: String
+    storeLongitude: Float
+    storeLatitude: Float
+    storeOpenAt: LocalTime
+    storeCloseAt: LocalTime
+    storePhone: String
+    storeMinimumOrderAmount: Int
+    storeIntroduction: String
+    storeCategory: String
+    storeIsDeleted: Boolean
+    owner: Owner
+}
+
+type MenuCategory {
+    menuCategoryId : ID
+    menuCategoryName : String
+    menuCategoryIsDeleted : Boolean
+    store : Store
+}
+
+type Menu {
+    menuId : ID
+    menuName : String
+    menuIntroduction : String
+    menuPrice : Int
+    menuPossible : Boolean
+    menuIsDeleted : Boolean
+    menuCategory : MenuCategory
+}
+
+type StoreDeliveryInfo {
+    storeDeliveryInfoId : ID
+    storeDeliveryInfoState : Int
+    storeDeliveryInfoFee : Int
+    storeDeliveryInfoDistanceEnd : Float
+    store : Store
+}
+
+type StoreListResponse {
+    ownerId : ID
+    storeId : ID
+    storeName: String
+    storeAddress: String
+    storeLongitude : Float
+    storeLatitude : Float
+    storeMinimumOrderAmount : Int
+    storeIntroduction: String
+    distanceFromStoreToCustomer: Float
+    deliveryFee: Int
+}
+
+input UpdateOwnerInput {
+    ownerId: ID
+    type: String
+    value: String
+}
+
+
+input StoreRequestDto {
+    storeName: String
+    storeAddress: String
+    storeLongitude: Float
+    storeLatitude: Float
+    storeOpenAt: LocalTime
+    storeCloseAt: LocalTime
+    storePhone: String
+    storeMinimumOrderAmount: Int
+    storeIntroduction: String
+    storeCategory: String
+    ownerId: ID
+}
+
+input StoreUpdateRequest {
+    storeName: String
+    storeAddress: String
+    storeOpenAt: LocalTime
+    storeCloseAt: LocalTime
+    storePhone: String
+    storeMinimumOrderAmount: Int
+    storeIntroduction: String
+    storeCategory: String
+    storeLongitude: Float
+    storeLatitude: Float
+}
+
+input MenuCategoryRequestDto {
+    menuCategoryName : String
+    storeId : ID
+}
+
+input UpdateMenuCategoryRequestDto {
+    value : String
+}
+
+input UpdateMenuRequestDto {
+    type: String
+    value: String
+}
+
+input MenuRequestDto {
+    menuName : String
+    menuIntroduction : String
+    menuPrice : Int
+    menuCategoryId : ID
+}
+
+input StoreDeliveryInfoRequestDto {
+    storeDeliveryInfoState : Int
+    storeDeliveryInfoFee : Int
+    storeDeliveryInfoDistanceEnd : Float
+}
+
+input UserLocationRequest {
+    longitude : Float
+    latitude : Float
+}
+
 
