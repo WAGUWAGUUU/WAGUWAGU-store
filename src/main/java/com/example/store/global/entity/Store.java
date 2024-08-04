@@ -59,6 +59,9 @@ public class Store {
     @Column(name = "STORE_IS_DELETED")
     private boolean storeIsDeleted;
 
+    @Column(name = "STORE_BLOCK_IS_OPENED")
+    private boolean storeBlockIsOpened;
+
     @JoinColumn (name = "OWNER_ID")
     @ManyToOne
     private Owner owner;
@@ -114,4 +117,10 @@ public class Store {
     public void setStoreIsDeleted() {
         this.storeIsDeleted = true;
     }
+
+    public boolean getStoreBlockIsOpened() {
+        return storeBlockIsOpened;
+    }
+
+
 }

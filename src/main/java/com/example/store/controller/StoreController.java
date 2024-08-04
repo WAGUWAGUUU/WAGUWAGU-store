@@ -55,7 +55,7 @@ public class StoreController {
     }
 
     @QueryMapping
-    public StoreResponse  getStoreByOwnerId(@Argument(name = "ownerId") Long ownerId) {
+    public StoreResponse getStoreByOwnerId(@Argument(name = "ownerId") Long ownerId) {
         return storeService.getStoreByOwnerId(ownerId);
     }
 }

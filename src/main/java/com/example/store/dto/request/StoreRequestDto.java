@@ -24,6 +24,7 @@ public record StoreRequestDto(
                 .storeIntroduction(storeIntroduction)
                 .storeCategory(StoreCategory.stringToCategory(storeCategory))
                 .owner(owner)
+                .storeBlockIsOpened(false)
                 .build();
     }
 }

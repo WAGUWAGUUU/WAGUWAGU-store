@@ -1,5 +1,7 @@
 package com.example.store.dto.response;
 
+import java.time.LocalTime;
+
 public interface StoreNearUserResponse {
     Long getOwnerId();
     Long getStoreId();
@@ -9,4 +11,7 @@ public interface StoreNearUserResponse {
     double getStoreLatitude();
     int getStoreMinimumOrderAmount();
     String getStoreIntroduction();
+
+    Boolean getStoreBlockIsOpened();
+
 }
