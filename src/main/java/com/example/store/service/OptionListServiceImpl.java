@@ -11,6 +11,7 @@ import com.example.store.dto.response.OptionListResponse;
 import com.example.store.dto.response.OptionListResponseRevised;
 import com.example.store.global.entity.Menu;
 import com.example.store.global.entity.MenuOptionListBridge;
+import com.example.store.global.entity.Option;
 import com.example.store.global.entity.OptionList;
 import com.example.store.global.exception.OptionListNotFoundException;
 import com.example.store.global.repository.MenuOptionListBridgeRepository;
@@ -50,40 +51,68 @@ public class OptionListServiceImpl implements OptionListService {
                 .collect(Collectors.toList());
     }
 
+//    @Override
+//    public OptionListResponse getOptionListById(Long id) {
+//
+//
+//        OptionList list  = optionListDAO.findById(id);
+//        if (list == null) {
+//
+//
+//
+//            throw  new OptionListNotFoundException();
+//        }
+//
+//        return OptionListResponse.from(list);
+//    }
     @Override
     public OptionListResponse getOptionListById(Long id) {
-
-
-        OptionList list  = optionListDAO.findById(id);
-        if (list == null) {
-
-       
-
-            throw  new OptionListNotFoundException();
-        }
-
-        return OptionListResponse.from(list);
+        OptionList optionList = optionListDAO.findById(id)
+                .orElseThrow(OptionListNotFoundException::new);
+        return OptionListResponse.from(optionList);
     }
 
     @Override
-    public void createOptionList(OptionListRequestDTO optionList) {
-        Menu menuById = optionListDAO.findMenuById(optionList.menuId());
-        if (menuById == null) {
-            throw  new MenuNotFoundException();
+    public void createOptionList(OptionListRequestDTO optionListDTO) {
+        Menu menu = menuRepository.findById(optionListDTO.menuId())
+                .orElseThrow(MenuNotFoundException::new);
+
+        // Create or update OptionList entity
+        OptionList optionList = optionListDAO.findById(optionListDTO.listId())
+                .orElse(OptionList.builder()
+                        .listId(optionListDTO.listId())
+                        .listName(optionListDTO.listName())
+                        .build());
+
+        // Clear existing options and add new ones
+        optionList.getOptions().clear();
+        for (var optionDTO : optionListDTO.options()) {
+            Option option = Option.builder()
+                    .optionTitle(optionDTO.getOptionTitle())
+                    .optionPrice(optionDTO.getOptionPrice())
+                    .optionList(optionList)
+                    .build();
+            optionList.addOption(option);
         }
-        System.out.println(optionList.options());
+
+        // Save or update OptionList
         optionListDAO.save(optionList);
+
+        // Create or update MenuOptionListBridge
         MenuOptionListBridge bridge = MenuOptionListBridge.builder()
-                        .menu(menuById)
-                .optionList(OptionList.builder().listId(optionList.listId()).build())
-                        .build();
+                .menu(menu)
+                .optionList(optionList)
+                .build();
         menuOptionListBridgeRepository.save(bridge);
     }
+
+
 
     @Override
     public void deleteOptionList(Long id) {
 
-        OptionList byId = optionListDAO.findById(id);
+        OptionList byId = optionListDAO.findById(id)
+                .orElseThrow(OptionListNotFoundException::new);
 
         if (byId == null) {
             throw  new OptionListNotFoundException();

@@ -14,7 +14,7 @@ import java.util.List;
 @Builder
 public class OptionList {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "OPTION_LIST_ID")
     private Long listId;
 
