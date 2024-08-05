@@ -1,5 +1,6 @@
 package com.example.store.global.entity;
 
+import com.example.store.dto.request.PhotoRequest;
 import com.example.store.dto.request.StoreUpdateRequest;
 import com.example.store.dto.request.UpdateOwnerRequestDto;
 import com.example.store.dto.request.UpdateStoreRequestDto;
@@ -62,6 +63,12 @@ public class Store {
 //    1 -> 영업 수동 막기, 0 -> 정상 영업
     @Column(name = "STORE_BLOCK_IS_OPENED")
     private boolean storeBlockIsOpened;
+
+    @Column(name = "STORE_IMAGE_NICKNAME")
+    private String storeImageNickname;
+
+    @Column(name = "STORE_IMAGE")
+    private String storeImage;
 
     @JoinColumn (name = "OWNER_ID")
     @ManyToOne
@@ -127,5 +134,8 @@ public class Store {
         this.storeBlockIsOpened = !(this.storeBlockIsOpened);
     }
 
-
+    public void updateImageInfo(PhotoRequest dto, String imageUrl) {
+        this.storeImageNickname = dto.getNickname();
+        this.storeImage = imageUrl;
+    }
 }

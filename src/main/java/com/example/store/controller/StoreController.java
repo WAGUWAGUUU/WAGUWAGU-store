@@ -1,4 +1,5 @@
 package com.example.store.controller;
+import com.example.store.dto.request.PhotoRequest;
 import com.example.store.dto.request.StoreRequestDto;
 import com.example.store.dto.request.StoreUpdateRequest;
 import com.example.store.dto.request.UpdateStoreRequestDto;
@@ -14,10 +15,11 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
-//@RequestMapping("api/v1/store")
+@RequestMapping("api/v1/store")
 @RequiredArgsConstructor
 //@CrossOrigin(origins = "*")
 public class StoreController {
@@ -74,5 +76,11 @@ public class StoreController {
     @QueryMapping
     public boolean checkStoreIsOpened(@Argument(name = "storeId") Long storeId) {
         return storeService.checkStoreIsOpened(storeId);
+    }
+
+//    @PutMapping("{storeId}/photo")
+    @PatchMapping("/{storeId}/photo")
+    public void updateStorePhotoInfo(@PathVariable(name = "storeId") Long storeId, PhotoRequest input) throws IOException {
+        storeService.updateStorePhotoInfo(storeId, input);
     }
 }
