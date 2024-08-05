@@ -21,5 +21,6 @@ public interface MenuService {
 
     void deleteMenu(Long menuId);
 
+    List<MenuResponse> getAllMenuByStoreId(Long storeId);
 
 }

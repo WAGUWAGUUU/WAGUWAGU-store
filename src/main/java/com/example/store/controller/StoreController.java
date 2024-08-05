@@ -64,8 +64,15 @@ public class StoreController {
         storeService.blockStoreIsOpened(storeId);
     }
 
+    // 수동적으로 가게 영업을 막았는지만 체크
     @QueryMapping
     public boolean checkBlockStoreIsOpened(@Argument(name = "storeId") Long storeId) {
         return storeService.checkBlockStoreIsOpened(storeId);
+    }
+
+    // 가게가 영업중인지 체크(가게 영업을 막은 경우도 포함)
+    @QueryMapping
+    public boolean checkStoreIsOpened(@Argument(name = "storeId") Long storeId) {
+        return storeService.checkStoreIsOpened(storeId);
     }
 }

@@ -59,6 +59,7 @@ public class Store {
     @Column(name = "STORE_IS_DELETED")
     private boolean storeIsDeleted;
 
+//    1 -> 영업 수동 막기, 0 -> 정상 영업
     @Column(name = "STORE_BLOCK_IS_OPENED")
     private boolean storeBlockIsOpened;
 

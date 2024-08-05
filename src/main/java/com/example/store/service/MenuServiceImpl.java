@@ -1,23 +1,33 @@
 package com.example.store.service;
 import com.example.store.dto.request.MenuRequestDto;
 import com.example.store.dto.request.UpdateMenuRequestDto;
+import com.example.store.dto.response.MenuCategoryResponse;
 import com.example.store.dto.response.MenuResponse;
 import com.example.store.dto.response.MenuResponseByStoreId;
 import com.example.store.global.entity.Menu;
+import com.example.store.global.entity.Store;
 import com.example.store.global.exception.MenuAlreadyExistsException;
 import com.example.store.global.exception.MenuNotFoundException;
+import com.example.store.global.exception.StoreNotFoundException;
+import com.example.store.global.repository.MenuCategoryRepository;
 import com.example.store.global.repository.MenuRepository;
+import com.example.store.global.repository.StoreRepository;
 import com.example.store.global.type.UpdateMenuType;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class MenuServiceImpl implements MenuService {
+    private final StoreRepository storeRepository;
+    private final MenuCategoryRepository menuCategoryRepository;
     private final MenuRepository menuRepository;
     private final MenuCategoryService menuCategoryService;
     @Override
@@ -73,4 +83,18 @@ public class MenuServiceImpl implements MenuService {
         menu.setMenuIsDeleted();
     }
 
+    @Override
+    @Transactional
+    public List<MenuResponse> getAllMenuByStoreId(Long storeId) {
+        List<MenuResponse> allMenuResponses  = new ArrayList<>();
+        Store store = storeRepository.findByStoreIdAndStoreIsDeletedFalse(storeId).orElseThrow(StoreNotFoundException::new);
+        List<MenuCategoryResponse> allMenuCategoryByStoreId = menuCategoryService.getAllMenuCategoryByStoreId(store.getStoreId());
+        allMenuCategoryByStoreId.forEach(menuCategoryResponse -> {
+            List<MenuResponse> allMenuByMenuCategory = getAllMenuByMenuCategory(menuCategoryResponse.menuCategoryId());
+            allMenuByMenuCategory.forEach(menuResponse -> {
+                allMenuResponses.add(menuResponse);
+            });
+        });
+        return allMenuResponses;
+    }
 }

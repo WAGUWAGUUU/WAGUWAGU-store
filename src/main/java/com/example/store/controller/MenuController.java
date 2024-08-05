@@ -55,4 +55,9 @@ public class MenuController {
     public void deleteMenu(@Argument(name = "menuId") Long menuId) {
         menuService.deleteMenu(menuId);
     }
+
+    @QueryMapping
+    public List<MenuResponse> getAllMenuByStoreId(@Argument("storeId") Long storeId) {
+        return menuService.getAllMenuByStoreId(storeId);
+    }
 }

@@ -28,4 +28,6 @@ public interface StoreService {
     void blockStoreIsOpened(Long storeId);
 
     boolean checkBlockStoreIsOpened(Long storeId);
+
+    boolean checkStoreIsOpened(Long storeId);
 }

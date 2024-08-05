@@ -32,6 +32,7 @@ type Query {
     getAllStore: [Store]
     getStoreByOwnerId(ownerId: ID): Store
     checkBlockStoreIsOpened(storeId: ID) : Boolean
+    checkStoreIsOpened(storeId: ID) : Boolean
 # menucategory
     getMenuCategoryById(menuCategoryId: ID) : MenuCategory
     getMenuCategoryByStoreId(storeId: ID) :[MenuCategory]
@@ -41,6 +42,7 @@ type Query {
     getMenuById(menuId: ID): Menu
     getAllMenu : [Menu]
     changeMenuPossible(menuId : ID) : Void
+    getAllMenuByStoreId(storeId: ID) : [Menu]
 # storeDeliveryInfo
     getStoreDeliveryInfoAllByStoreId(storeId: ID) : [StoreDeliveryInfo]
 

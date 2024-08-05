@@ -12,6 +12,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -83,5 +84,12 @@ public class StoreServiceImpl implements StoreService {
     public boolean checkBlockStoreIsOpened(Long storeId) {
         Store store = storeRepository.findByStoreIdAndStoreIsDeletedFalse(storeId).orElseThrow(StoreNotFoundException::new);
         return store.getStoreBlockIsOpened();
+    }
+
+    @Override
+    public boolean checkStoreIsOpened(Long storeId) {
+        Store store = storeRepository.findByStoreIdAndStoreIsDeletedFalse(storeId).orElseThrow(StoreNotFoundException::new);
+        LocalTime now = LocalTime.now();
+        return store.getStoreOpenAt().isAfter(now) && store.getStoreCloseAt().isBefore(now)  && !store.getStoreBlockIsOpened();
     }
 }
