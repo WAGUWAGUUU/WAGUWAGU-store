@@ -19,7 +19,7 @@ public interface OptionListDAO {
 //    void save(OptionListRequestDTO optionList);
     void save(OptionList optionList);
     void deleteById(Long id);
-    Optional<OptionList> findById(Long id);
+    OptionList findById(Long id);
 
     Menu findMenuById(Long id);
     void updateOptionList(Long listId, UpdateOptionListRequestDTO requestDTO);
