@@ -92,22 +92,33 @@ public class OptionListServiceImpl implements OptionListService {
 //    }
     @Override
     public OptionListResponse getOptionListById(Long id) {
-        OptionList optionList = optionListDAO.findById(id)
-                .orElseThrow(OptionListNotFoundException::new);
+        // OptionList를 가져올 때 null을 체크
+        OptionList optionList = optionListDAO.findById(id);
+        if (optionList == null) {
+            throw new OptionListNotFoundException();
+        }
         return OptionListResponse.from(optionList);
     }
 
     @Override
     public void createOptionList(OptionListRequestDTO optionListDTO) {
+        // Menu를 가져올 때 null을 체크
         Menu menu = menuRepository.findById(optionListDTO.menuId())
                 .orElseThrow(MenuNotFoundException::new);
+        if (menu == null) {
+            throw new MenuNotFoundException();
+        }
 
-        // Create or update OptionList entity
-        OptionList optionList = optionListDAO.findById(optionListDTO.listId())
-                .orElse(OptionList.builder()
-                        .listId(optionListDTO.listId())
-                        .listName(optionListDTO.listName())
-                        .build());
+        // OptionList를 가져올 때 null을 체크
+        OptionList optionList = optionListDAO.findById(optionListDTO.listId());
+        if (optionList == null) {
+            optionList = OptionList.builder()
+                    .listId(optionListDTO.listId())
+                    .listName(optionListDTO.listName())
+                    .build();
+        } else {
+            optionList.setListName(optionListDTO.listName());
+        }
 
         // Clear existing options and add new ones
         optionList.getOptions().clear();
@@ -135,16 +146,11 @@ public class OptionListServiceImpl implements OptionListService {
 
     @Override
     public void deleteOptionList(Long id) {
-
-        OptionList byId = optionListDAO.findById(id)
-                .orElseThrow(OptionListNotFoundException::new);
-
-        if (byId == null) {
-            throw  new OptionListNotFoundException();
+        OptionList optionList = optionListDAO.findById(id);
+        if (optionList == null) {
+            throw new OptionListNotFoundException();
         }
-
         optionListDAO.deleteById(id);
-
     }
 
     @Override

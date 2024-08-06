@@ -2,13 +2,15 @@ spring:
   application:
     name: store
   graphql:
-    path: /graphql
-    graphiql:
-      enable: true
-      printer:
-        enable: true
+    servlet:
+      path: /graphql
+    tools:
+      schema-location-pattern: classpath:graphql/**/*.graphqls
+  graphiql:
+    endpoint: /graphql
+    enabled: true
   datasource:
-    url: jdbc:mysql://localhost:3306/store?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/wgwg_store?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
     username: root
     password: 1234
   jpa:
@@ -22,6 +24,7 @@ spring:
     consumer:
       value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      group-id: store-group7941
-      #      group id 제거
+      group-id: store-group2
       auto-offset-reset: earliest
+server:
+  port: 8090
