@@ -23,4 +23,5 @@ public interface OptionListService {
 
      void createOptionListV2(OptionListRequestDTORevised req);
      List<OptionListResponseRevised> getOptionListsByMenuIdV2(Long menuId);
+     List<OptionListResponse> getOptionListsByStoreId(Long storeId);
 }

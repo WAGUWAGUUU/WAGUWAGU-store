@@ -9,12 +9,12 @@ import com.example.store.dto.request.UpdateOptionListRequestDTO;
 
 import com.example.store.dto.response.OptionListResponse;
 import com.example.store.dto.response.OptionListResponseRevised;
-import com.example.store.global.entity.Menu;
-import com.example.store.global.entity.MenuOptionListBridge;
-import com.example.store.global.entity.Option;
-import com.example.store.global.entity.OptionList;
+import com.example.store.global.entity.*;
 import com.example.store.global.exception.OptionListNotFoundException;
+import com.example.store.global.exception.StoreNotFoundException;
 import com.example.store.global.repository.MenuOptionListBridgeRepository;
+import com.example.store.global.repository.OptionListRepository;
+import com.example.store.global.repository.StoreRepository;
 import jakarta.transaction.Transactional;
 import com.example.store.global.exception.MenuNotFoundException;
 import com.example.store.global.repository.MenuRepository;
@@ -34,6 +34,8 @@ public class OptionListServiceImpl implements OptionListService {
     private final MenuRepository menuRepository;
     private final MenuOptionListBridgeRepository optionListBridgeRepository;
     private final MenuOptionListBridgeRepository menuOptionListBridgeRepository;
+    private final StoreRepository storeRepository;
+    private final OptionListRepository optionListRepository;
 
     @Override
     public List<OptionListResponse> getOptionListsByMenuId(Long menuId) {
@@ -146,6 +148,25 @@ public class OptionListServiceImpl implements OptionListService {
         if (byId.isEmpty()) throw new OptionListNotFoundException();
         return byId.stream()
                 .map(OptionListResponseRevised::from)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OptionListResponse> getOptionListsByStoreId(Long storeId) {
+        Store store = storeRepository.findById(storeId)
+                .orElseThrow(StoreNotFoundException::new);
+
+        List<OptionList> optionLists = store.getMenuCategories().stream()
+                .flatMap(menuCategory -> menuCategory.getMenus().stream())
+                .flatMap(menu -> optionListRepository.findByMenuId(menu.getMenuId()).stream())
+                .collect(Collectors.toList());
+
+        if (optionLists.isEmpty()) {
+            throw new OptionListNotFoundException();
+        }
+
+        return optionLists.stream()
+                .map(OptionListResponse::from)
                 .collect(Collectors.toList());
     }
 }
