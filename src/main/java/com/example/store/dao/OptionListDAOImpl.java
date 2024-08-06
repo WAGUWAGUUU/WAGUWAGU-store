@@ -59,23 +59,20 @@ public class OptionListDAOImpl implements OptionListDAO {
     }
 
 
-//    @Override
-//
-//    public OptionList findById(Long id) {
-//
-//
-//        Optional<OptionList> byId = optionListRepository.findById(id);
-//        if (byId.isEmpty()) {
-//              throw new OptionListNotFoundException();
-//        }
-//
-//        return byId.get();
-//
-//    }
     @Override
-    public Optional<OptionList> findById(Long id) {
-        return optionListRepository.findById(id); // 수정: Optional로 반환
+
+    public OptionList findById(Long id) {
+
+
+        Optional<OptionList> byId = optionListRepository.findById(id);
+        if (byId.isEmpty()) {
+              throw new OptionListNotFoundException();
+        }
+
+        return byId.get();
+
     }
+
 
     @Override
     public Menu findMenuById(Long id) {
