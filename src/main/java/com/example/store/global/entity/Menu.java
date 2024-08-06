@@ -41,8 +41,11 @@ public class Menu {
     @ManyToOne
     private MenuCategory menuCategory;
 
+//    @OneToMany(mappedBy = "menu",cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<OptionList> optionLists;
+
     @OneToMany(mappedBy = "menu",cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OptionList> optionLists;
+    private List<MenuOptionListBridge> bridges;
 
     public void update(UpdateMenuType updateMenuType, UpdateMenuRequestDto updateMenuRequestDto) {
         switch (updateMenuType) {

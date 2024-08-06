@@ -7,7 +7,6 @@ import com.example.store.dto.request.UpdateOptionListNameRequest;
 import com.example.store.dto.request.OptionListRequestDTORevised;
 import com.example.store.dto.request.UpdateOptionListRequestDTO;
 
-import com.example.store.dto.request.UpdateOptionRequestDTO;
 import com.example.store.dto.response.OptionListResponse;
 import com.example.store.dto.response.OptionListResponseRevised;
 import com.example.store.global.entity.OptionList;
@@ -90,5 +89,11 @@ public class OptionListController {
     public List<OptionListResponseRevised> getOptionListsByMenuIdV2(@PathVariable("menuId") Long menuId) {
         List<OptionListResponseRevised> optionLists = optionListService.getOptionListsByMenuIdV2(menuId);
         return optionLists;
+    }
+
+    @GetMapping("/store/{storeId}")
+    public ResponseEntity<List<OptionListResponse>> getOptionListsByStoreId(@PathVariable("storeId") Long storeId) {
+        List<OptionListResponse> optionLists = optionListService.getOptionListsByStoreId(storeId);
+        return new ResponseEntity<>(optionLists, HttpStatus.OK);
     }
 }

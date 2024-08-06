@@ -13,11 +13,12 @@ import java.util.List;
 public interface OptionListDAO {
 
 
-
+//    List<OptionList> findByMenuId(Long menuId);
     List<OptionList> findByMenuId(Long menuId);
-    void save(OptionListRequestDTO optionList);
+//    void save(OptionListRequestDTO optionList);
+    void save(OptionList optionList);
     void deleteById(Long id);
-    OptionList findById(Long id);
+    Optional<OptionList> findById(Long id);
 
     Menu findMenuById(Long id);
     void updateOptionList(Long listId, UpdateOptionListRequestDTO requestDTO);

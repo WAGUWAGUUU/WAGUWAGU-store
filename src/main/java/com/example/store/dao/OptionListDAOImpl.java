@@ -40,33 +40,41 @@ public class OptionListDAOImpl implements OptionListDAO {
     };
 
 
-    public void save(OptionListRequestDTO optionList) {
-        Menu menu = menuRepository.findById(optionList.menuId()).orElseThrow(MenuNotFoundException::new);
+//    public void save(OptionListRequestDTO optionList) {
+//        Menu menu = menuRepository.findById(optionList.menuId()).orElseThrow(MenuNotFoundException::new);
+//
+//        OptionList optionList1 = optionList.toEntity(menu);
+//
+//        System.out.println(optionList1.getOptions().get(0).toString());
+//        optionListRepository.save(optionList1);
+//    }
 
-        OptionList optionList1 = optionList.toEntity(menu);
-
-        System.out.println(optionList1.getOptions().get(0).toString());
-        optionListRepository.save(optionList1);
+    @Override
+    public void save(OptionList optionList) {
+        optionListRepository.save(optionList);
     }
-
 
     public void deleteById(Long id) {
         optionListRepository.deleteById(id);
     }
 
 
+//    @Override
+//
+//    public OptionList findById(Long id) {
+//
+//
+//        Optional<OptionList> byId = optionListRepository.findById(id);
+//        if (byId.isEmpty()) {
+//              throw new OptionListNotFoundException();
+//        }
+//
+//        return byId.get();
+//
+//    }
     @Override
-
-    public OptionList findById(Long id) {
-
-    
-        Optional<OptionList> byId = optionListRepository.findById(id);
-        if (byId.isEmpty()) {
-              throw new OptionListNotFoundException();
-        }
-
-        return byId.get();
-
+    public Optional<OptionList> findById(Long id) {
+        return optionListRepository.findById(id); // 수정: Optional로 반환
     }
 
     @Override

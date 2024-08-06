@@ -63,8 +63,8 @@ public class Store {
     @ManyToOne
     private Owner owner;
 
-//    @OneToMany(mappedBy = "store")
-//    private List<MenuCategory> menuCategories;
+    @OneToMany(mappedBy = "store")
+    private List<MenuCategory> menuCategories;
 //
 //    @OneToMany(mappedBy = "store")
 //    private List<StoreDeliveryInfo> storeDeliveryInfos;
