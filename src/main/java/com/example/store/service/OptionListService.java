@@ -8,11 +8,15 @@ import com.example.store.dto.request.UpdateOptionListRequestDTO;
 
 import com.example.store.dto.response.OptionListResponse;
 import com.example.store.dto.response.OptionListResponseRevised;
+import com.example.store.global.entity.OptionList;
 
 import java.util.List;
 
 
+
 public interface OptionListService {
+     OptionList getListById(Long id);
+     List<OptionList> OptionLists(Long menuId);
      List<OptionListResponse> getOptionListsByMenuId(Long menuId);
      OptionListResponse getOptionListById(Long id);
      void createOptionList(OptionListRequestDTO optionList);

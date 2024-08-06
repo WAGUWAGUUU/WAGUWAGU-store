@@ -8,15 +8,13 @@ import com.example.store.global.entity.Option;
 import com.example.store.global.entity.OptionList;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-public record OptionListResponse(
-
-        Long listId, String listName,  List<OptionDTO> options
-
-){
+public record OptionListResponse(Long listId, String listName, List<OptionResponse> options) {
     public static OptionListResponse from(OptionList optionList) {
-        List<OptionDTO> optionDTOS = optionList.getOptions().stream().map(OptionDTO::from).toList();
-        return new OptionListResponse(optionList.getListId(), optionList.getListName(), optionDTOS);
-
+        List<OptionResponse> optionResponses = optionList.getOptions().stream()
+                .map(OptionResponse::from)
+                .collect(Collectors.toList());
+        return new OptionListResponse(optionList.getListId(), optionList.getListName(), optionResponses);
     }
 }

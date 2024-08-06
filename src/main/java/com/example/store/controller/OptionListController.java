@@ -9,8 +9,11 @@ import com.example.store.dto.request.UpdateOptionListRequestDTO;
 
 import com.example.store.dto.response.OptionListResponse;
 import com.example.store.dto.response.OptionListResponseRevised;
+import com.example.store.global.entity.OptionList;
 import com.example.store.service.OptionListServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +28,16 @@ public class OptionListController {
 
     private final OptionListServiceImpl optionListService;
 
+    @QueryMapping
+    public OptionList getListById(@Argument Long listId) {
+        return optionListService.getListById(listId) ;
+    }
+    @QueryMapping
+    public List<OptionListResponse> optionLists(@Argument Long menuId) {
+        List<OptionListResponse> optionLists = optionListService.getOptionListsByMenuId(menuId);
+        System.out.println("Fetched OptionLists: " + optionLists);
+        return optionLists;
+    }
 
 
     @GetMapping("/menu/{menuId}")
