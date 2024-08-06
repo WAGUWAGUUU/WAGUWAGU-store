@@ -13,9 +13,32 @@ type OptionList {
     options: [Option]
 
 }
+
+input OptionInput{
+    optionTitle: String!
+    optionPrice: Int!
+
+}
+
+input UpdateOptionInput {
+    optionId: Long!
+    optionTitle: String
+    optionPrice: Int
+
+}
 type Query {
     getById(optionId: Long): Option
     getListById(listId: Long): OptionList
     getOptionById(optionId: Long): Option
+    optionLists(menuId: Long): [OptionList]
+    options(listId: Long): [Option]
+
 }
 
+
+type Mutation{
+    addOption(listId: Long!, option: OptionInput!): Option
+    updateOption(optionId: Long!, option:UpdateOptionInput!):Option
+    deleteOption(optionId:Long!):Option
+
+}

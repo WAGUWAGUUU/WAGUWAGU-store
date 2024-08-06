@@ -30,22 +30,39 @@ public class OptionListServiceImpl implements OptionListService {
     private final OptionListDAOImpl optionListDAO;
     private final MenuRepository menuRepository;
 
+
+    @Override
+    public OptionList getListById(Long id) {
+
+        return optionListDAO.findById(id);
+    }
+
+    @Override
+    public List<OptionList> OptionLists(Long menuId) {
+        return optionListDAO.findByMenuId(menuId);
+    }
+
+//    @Override
+//    public List<OptionListResponse> getOptionListsByMenuId(Long menuId) {
+//
+//        List<OptionList> optionLists = optionListDAO.findByMenuId(menuId);
+//        System.out.println("Fetched option lists: " + optionLists);
+//        return optionLists.stream()
+//                .map(OptionListResponse::from)
+//                .collect(Collectors.toList());
+//    }
+
+
     @Override
     public List<OptionListResponse> getOptionListsByMenuId(Long menuId) {
-
-        List<OptionList> byId = optionListDAO.findByMenuId(menuId);
-
-      
-        if (byId.isEmpty()) {
-            throw  new OptionListNotFoundException();
-
+        List<OptionList> optionLists = optionListDAO.findByMenuId(menuId);
+        if (optionLists.isEmpty()) {
+            throw new OptionListNotFoundException();
         }
-
-          return byId.stream()
+        return optionLists.stream()
                 .map(OptionListResponse::from)
                 .collect(Collectors.toList());
     }
-
     @Override
     public OptionListResponse getOptionListById(Long id) {
 
@@ -109,6 +126,6 @@ public class OptionListServiceImpl implements OptionListService {
         if (byId.isEmpty()) throw new OptionListNotFoundException();
         return byId.stream()
                 .map(OptionListResponseRevised::from)
-                .collect(Collectors.toList());
-    }
+                .collect(Collectors.toList());}
+
 }
