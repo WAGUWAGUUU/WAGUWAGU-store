@@ -37,6 +37,29 @@ public class OptionListServiceImpl implements OptionListService {
     private final StoreRepository storeRepository;
     private final OptionListRepository optionListRepository;
 
+
+    @Override
+    public OptionList getListById(Long id) {
+
+        return optionListDAO.findById(id);
+    }
+
+    @Override
+    public List<OptionList> OptionLists(Long menuId) {
+        return optionListDAO.findByMenuId(menuId);
+    }
+
+//    @Override
+//    public List<OptionListResponse> getOptionListsByMenuId(Long menuId) {
+//
+//        List<OptionList> optionLists = optionListDAO.findByMenuId(menuId);
+//        System.out.println("Fetched option lists: " + optionLists);
+//        return optionLists.stream()
+//                .map(OptionListResponse::from)
+//                .collect(Collectors.toList());
+//    }
+
+
     @Override
     public List<OptionListResponse> getOptionListsByMenuId(Long menuId) {
 
