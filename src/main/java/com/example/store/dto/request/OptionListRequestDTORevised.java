@@ -10,7 +10,7 @@ public record OptionListRequestDTORevised(
     public OptionList toEntity(Menu menu){
         OptionList optionList = OptionList.builder()
                 .listName(listName)
-                .menu(menu)
+//                .menu(menu)
                 .build();
         return optionList;
     }
