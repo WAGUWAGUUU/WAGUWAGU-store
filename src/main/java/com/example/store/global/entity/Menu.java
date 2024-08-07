@@ -1,6 +1,7 @@
 package com.example.store.global.entity;
 
 import com.example.store.dto.request.UpdateMenuRequestDto;
+import com.example.store.global.exception.MenuInputException;
 import com.example.store.global.type.UpdateMenuType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -55,7 +56,7 @@ public class Menu {
                 try {
                     this.menuPrice = Integer.parseInt(value);
                 } catch (NumberFormatException e) {
-                    throw new IllegalArgumentException();
+                    throw new MenuInputException();
                 }
             }
             case MENU_IMAGE -> {

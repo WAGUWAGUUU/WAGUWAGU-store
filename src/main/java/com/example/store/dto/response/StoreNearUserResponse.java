@@ -14,4 +14,6 @@ public interface StoreNearUserResponse {
 
     Boolean getStoreBlockIsOpened();
 
+    String getStoreImage();
+
 }

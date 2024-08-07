@@ -87,7 +87,7 @@ public class DistanceCalServiceImpl implements DistanceCalService{
         return storeAllNearUser.stream().map(storeNearUserResponse -> {
 
             StoreListDeliveryResponse storeListDeliveryResponse = showStoreList(storeNearUserResponse.getStoreId(), request.longitude(), request.latitude());
-            return new StoreListResponse(storeNearUserResponse.getOwnerId(), storeNearUserResponse.getStoreId(), storeNearUserResponse.getStoreName(), storeNearUserResponse.getStoreAddress(),storeNearUserResponse.getStoreLongitude(), storeNearUserResponse.getStoreLatitude(), storeNearUserResponse.getStoreMinimumOrderAmount(), storeNearUserResponse.getStoreIntroduction(), storeNearUserResponse.getStoreBlockIsOpened(), storeListDeliveryResponse.distanceFromStoreToCustomer(), storeListDeliveryResponse.deliveryFee());
+            return new StoreListResponse(storeNearUserResponse.getOwnerId(), storeNearUserResponse.getStoreId(), storeNearUserResponse.getStoreName(), storeNearUserResponse.getStoreAddress(),storeNearUserResponse.getStoreLongitude(), storeNearUserResponse.getStoreLatitude(), storeNearUserResponse.getStoreMinimumOrderAmount(), storeNearUserResponse.getStoreIntroduction(), storeNearUserResponse.getStoreBlockIsOpened(),storeNearUserResponse.getStoreImage() ,storeListDeliveryResponse.distanceFromStoreToCustomer(), storeListDeliveryResponse.deliveryFee());
 
         }).collect(Collectors.toList());
     }
@@ -96,6 +96,6 @@ public class DistanceCalServiceImpl implements DistanceCalService{
     public StoreListResponse storeInfoDetail(Long storeId, UserLocationRequest request) {
         Store store = storeRepository.findById(storeId).orElseThrow(StoreNotFoundException::new);
         StoreListDeliveryResponse storeListDeliveryResponse = showStoreList(storeId, request.longitude(), request.latitude());
-        return new StoreListResponse(store.getOwner().getOwnerId(), store.getStoreId(),store.getStoreName(),store.getStoreAddress(), store.getStoreLongitude(), store.getStoreLatitude(), store.getStoreMinimumOrderAmount(),store.getStoreIntroduction(), store.getStoreBlockIsOpened(),storeListDeliveryResponse.distanceFromStoreToCustomer(), storeListDeliveryResponse.deliveryFee());
+        return new StoreListResponse(store.getOwner().getOwnerId(), store.getStoreId(),store.getStoreName(),store.getStoreAddress(), store.getStoreLongitude(), store.getStoreLatitude(), store.getStoreMinimumOrderAmount(),store.getStoreIntroduction(), store.getStoreBlockIsOpened(),store.getStoreImage(),storeListDeliveryResponse.distanceFromStoreToCustomer(), storeListDeliveryResponse.deliveryFee());
     }
 }

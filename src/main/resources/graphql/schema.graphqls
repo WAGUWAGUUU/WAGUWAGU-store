@@ -138,6 +138,7 @@ type StoreListResponse {
     storeLatitude : Float
     storeMinimumOrderAmount : Int
     storeIntroduction: String
+    storeImage : String
     distanceFromStoreToCustomer: Float
     deliveryFee: Int
 }
