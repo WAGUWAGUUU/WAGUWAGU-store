@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-//@RequestMapping("api/v1/menu")
+@RequestMapping("api/v1/menu")
 @RequiredArgsConstructor
 //@CrossOrigin(origins = "*")
 public class MenuController {
@@ -59,6 +59,11 @@ public class MenuController {
     @QueryMapping
     public List<MenuResponse> getAllMenuByStoreId(@Argument("storeId") Long storeId) {
         return menuService.getAllMenuByStoreId(storeId);
+    }
+
+    @GetMapping("/{menuId}/photo")
+    public String getMenuPhotoInfo(@PathVariable(name = "menuId") Long menuId) {
+        return menuService.getMenuPhotoInfo(menuId);
     }
 
 

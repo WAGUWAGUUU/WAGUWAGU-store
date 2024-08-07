@@ -97,4 +97,11 @@ public class MenuServiceImpl implements MenuService {
         });
         return allMenuResponses;
     }
+
+    @Override
+    public String getMenuPhotoInfo(Long menuId) {
+        Menu menu = menuRepository.findByMenuIdAndMenuIsDeletedFalse(menuId).orElseThrow(MenuNotFoundException::new);
+        return menu.getMenuImage();
+    }
+
 }

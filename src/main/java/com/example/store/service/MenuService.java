@@ -23,4 +23,6 @@ public interface MenuService {
 
     List<MenuResponse> getAllMenuByStoreId(Long storeId);
 
+    String getMenuPhotoInfo(Long menuId);
+
 }
