@@ -15,5 +15,5 @@ public interface OptionListRepository extends JpaRepository<OptionList, Long> {
             "JOIN MenuOptionListBridge molb ON ol.listId = molb.optionList.listId " +
             "WHERE molb.menu.menuId = :menuId")
     List<OptionList> findByMenuId(@Param("menuId") Long menuId);
-
+    List<OptionList> findByListName(String listName);
 }

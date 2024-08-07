@@ -72,6 +72,11 @@ public class OptionListDAOImpl implements OptionListDAO {
         return byId.get();
 
     }
+
+    @Override
+    public List<OptionList> findByListName(String listName) {
+        return optionListRepository.findByListName(listName);
+    }
 //    @Override
 //    public OptionList findById(Long id) {
 //        return optionListRepository.findById(id);

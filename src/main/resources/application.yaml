@@ -25,3 +25,5 @@ spring:
       group-id: store-group7941
       #      group id 제거
       auto-offset-reset: earliest
+  profiles:
+    active: prod
