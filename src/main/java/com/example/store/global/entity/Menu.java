@@ -45,8 +45,9 @@ public class Menu {
     @Column(name = "MENU_IMAGE")
     private String menuImage;
 
+
     @OneToMany(mappedBy = "menu",cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OptionList> optionLists;
+    private List<MenuOptionListBridge> bridges;
 
     public void update(UpdateMenuType updateMenuType, String value) {
         switch (updateMenuType) {

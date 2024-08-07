@@ -52,19 +52,22 @@ public class OptionServiceImpl implements OptionService {
     }
 
     @Override
-    public void addOption(Long listId, OptionRequestDTO option) {
+    public Option addOption(Long listId, OptionRequestDTO option) {
        optionDAO.addOption(listId, option);
+        return null;
     }
 
     @Override
-    public void deleteOptionById(Long id) {
+    public Option deleteOptionById(Long id) {
        optionDAO.deleteOptionById(id);
 
+        return null;
     }
 
     @Override
-    public void updateOptionById(Long id, UpdateOptionRequestDTO optionRequestDTO) {
+    public Option updateOptionById(Long id, UpdateOptionRequestDTO optionRequestDTO) {
        optionDAO.updateOption(id,optionRequestDTO);
 
+        return null;
     }
 }

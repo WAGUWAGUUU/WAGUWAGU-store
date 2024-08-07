@@ -31,8 +31,8 @@ public class MenuCategory {
     @ManyToOne
     private Store store;
 
-//    @OneToMany(mappedBy = "menuCategory")
-//    private List<Menu> menus;
+    @OneToMany(mappedBy = "menuCategory")
+    private List<Menu> menus;
 
     public void updateMenuCategoryName(UpdateMenuCategoryRequestDto updateMenuCategoryRequestDto) {
         this.menuCategoryName = updateMenuCategoryRequestDto.value();

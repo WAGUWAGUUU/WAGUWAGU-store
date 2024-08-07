@@ -10,12 +10,13 @@ import java.util.List;
 
 public interface OptionService {
 
+
      Option getOptionById(long optionId);
      Option getById(Long id);
      OptionResponse getOptionById(Long id);
      List<OptionResponse> getAllOptionsbyListID(Long id);
-     void addOption(Long listId, OptionRequestDTO option);
-     void deleteOptionById(Long id);
-     void  updateOptionById(Long id, UpdateOptionRequestDTO optionRequestDTO);
+     Option addOption(Long listId, OptionRequestDTO option);
+     Option deleteOptionById(Long id);
+     Option updateOptionById(Long id, UpdateOptionRequestDTO optionRequestDTO);
 
 }

@@ -40,15 +40,19 @@ public class OptionListDAOImpl implements OptionListDAO {
     };
 
 
-    public void save(OptionListRequestDTO optionList) {
-        Menu menu = menuRepository.findById(optionList.menuId()).orElseThrow(MenuNotFoundException::new);
+//    public void save(OptionListRequestDTO optionList) {
+//        Menu menu = menuRepository.findById(optionList.menuId()).orElseThrow(MenuNotFoundException::new);
+//
+//        OptionList optionList1 = optionList.toEntity(menu);
+//
+//        System.out.println(optionList1.getOptions().get(0).toString());
+//        optionListRepository.save(optionList1);
+//    }
 
-        OptionList optionList1 = optionList.toEntity(menu);
-
-        System.out.println(optionList1.getOptions().get(0).toString());
-        optionListRepository.save(optionList1);
+    @Override
+    public void save(OptionList optionList) {
+        optionListRepository.save(optionList);
     }
-
 
     public void deleteById(Long id) {
         optionListRepository.deleteById(id);
@@ -59,7 +63,7 @@ public class OptionListDAOImpl implements OptionListDAO {
 
     public OptionList findById(Long id) {
 
-    
+
         Optional<OptionList> byId = optionListRepository.findById(id);
         if (byId.isEmpty()) {
               throw new OptionListNotFoundException();
@@ -68,6 +72,16 @@ public class OptionListDAOImpl implements OptionListDAO {
         return byId.get();
 
     }
+
+    @Override
+    public List<OptionList> findByListName(String listName) {
+        return optionListRepository.findByListName(listName);
+    }
+//    @Override
+//    public OptionList findById(Long id) {
+//        return optionListRepository.findById(id);
+//    }
+
 
     @Override
     public Menu findMenuById(Long id) {

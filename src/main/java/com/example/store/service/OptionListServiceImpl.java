@@ -9,9 +9,13 @@ import com.example.store.dto.request.UpdateOptionListRequestDTO;
 
 import com.example.store.dto.response.OptionListResponse;
 import com.example.store.dto.response.OptionListResponseRevised;
-import com.example.store.global.entity.Menu;
-import com.example.store.global.entity.OptionList;
+import com.example.store.global.entity.*;
+import com.example.store.global.exception.OptionListNameAlreadyExistsException;
 import com.example.store.global.exception.OptionListNotFoundException;
+import com.example.store.global.exception.StoreNotFoundException;
+import com.example.store.global.repository.MenuOptionListBridgeRepository;
+import com.example.store.global.repository.OptionListRepository;
+import com.example.store.global.repository.StoreRepository;
 import jakarta.transaction.Transactional;
 import com.example.store.global.exception.MenuNotFoundException;
 import com.example.store.global.repository.MenuRepository;
@@ -29,6 +33,32 @@ public class OptionListServiceImpl implements OptionListService {
 
     private final OptionListDAOImpl optionListDAO;
     private final MenuRepository menuRepository;
+    private final MenuOptionListBridgeRepository menuOptionListBridgeRepository;
+    private final StoreRepository storeRepository;
+    private final OptionListRepository optionListRepository;
+
+
+    @Override
+    public OptionList getListById(Long id) {
+
+        return optionListDAO.findById(id);
+    }
+
+    @Override
+    public List<OptionList> OptionLists(Long menuId) {
+        return optionListDAO.findByMenuId(menuId);
+    }
+
+//    @Override
+//    public List<OptionListResponse> getOptionListsByMenuId(Long menuId) {
+//
+//        List<OptionList> optionLists = optionListDAO.findByMenuId(menuId);
+//        System.out.println("Fetched option lists: " + optionLists);
+//        return optionLists.stream()
+//                .map(OptionListResponse::from)
+//                .collect(Collectors.toList());
+//    }
+
 
     @Override
     public List<OptionListResponse> getOptionListsByMenuId(Long menuId) {
@@ -46,43 +76,91 @@ public class OptionListServiceImpl implements OptionListService {
                 .collect(Collectors.toList());
     }
 
+//    @Override
+//    public OptionListResponse getOptionListById(Long id) {
+//
+//
+//        OptionList list  = optionListDAO.findById(id);
+//        if (list == null) {
+//
+//
+//
+//            throw  new OptionListNotFoundException();
+//        }
+//
+//        return OptionListResponse.from(list);
+//    }
     @Override
     public OptionListResponse getOptionListById(Long id) {
-
-
-        OptionList list  = optionListDAO.findById(id);
-        if (list == null) {
-
-       
-
-            throw  new OptionListNotFoundException();
+        // OptionList를 가져올 때 null을 체크
+        OptionList optionList = optionListDAO.findById(id);
+        if (optionList == null) {
+            throw new OptionListNotFoundException();
         }
-
-        return OptionListResponse.from(list);
+        return OptionListResponse.from(optionList);
     }
 
     @Override
-    public void createOptionList(OptionListRequestDTO optionList) {
-        Menu menuById = optionListDAO.findMenuById(optionList.menuId());
-        if (menuById == null) {
-            throw  new MenuNotFoundException();
-        }
-        System.out.println(optionList.options());
-        optionListDAO.save(optionList);
+    public void createOptionList(OptionListRequestDTO optionListDTO) {
+        // Menu를 가져올 때 null을 체크
+        Menu menu = menuRepository.findById(optionListDTO.menuId())
+                .orElseThrow(MenuNotFoundException::new);
 
+        OptionList optionList = null;
+
+        // listId가 null이거나 이미 저장된 값이 아닌 경우 새로운 OptionList 객체를 생성
+        if (optionListDTO.listId() == null || optionListDAO.findById(optionListDTO.listId()) == null) {
+            optionList = OptionList.builder()
+                    .listId(optionListDTO.listId())
+                    .listName(optionListDTO.listName())
+                    .build();
+            optionListDAO.save(optionList);
+        } else {
+            // 기존 OptionList를 찾거나 새로 생성
+            optionList = optionListDAO.findById(optionListDTO.listId());
+            if (optionList != null) {
+                // 기존 OptionList의 이름을 업데이트
+                optionList.setListName(optionListDTO.listName());
+            }
+        }
+
+        if (optionList != null) {
+            // Add new options without clearing existing ones
+            for (var optionDTO : optionListDTO.options()) {
+                boolean exists = optionList.getOptions().stream()
+                        .anyMatch(option -> option.getOptionTitle().equals(optionDTO.getOptionTitle())
+                                && option.getOptionPrice() == optionDTO.getOptionPrice()); // 수정된 부분
+
+                if (!exists) {
+                    Option option = Option.builder()
+                            .optionTitle(optionDTO.getOptionTitle())
+                            .optionPrice(optionDTO.getOptionPrice())
+                            .optionList(optionList)
+                            .build();
+                    optionList.addOption(option);
+                }
+            }
+
+            // Save or update OptionList
+            optionListDAO.save(optionList);
+
+            // Create or update MenuOptionListBridge
+            MenuOptionListBridge bridge = MenuOptionListBridge.builder()
+                    .menu(menu)
+                    .optionList(optionList)
+                    .build();
+            menuOptionListBridgeRepository.save(bridge);
+        }
     }
+
 
     @Override
     public void deleteOptionList(Long id) {
-
-        OptionList byId = optionListDAO.findById(id);
-
-        if (byId == null) {
-            throw  new OptionListNotFoundException();
+        OptionList optionList = optionListDAO.findById(id);
+        if (optionList == null) {
+            throw new OptionListNotFoundException();
         }
-
         optionListDAO.deleteById(id);
-
     }
 
     @Override
@@ -109,6 +187,25 @@ public class OptionListServiceImpl implements OptionListService {
         if (byId.isEmpty()) throw new OptionListNotFoundException();
         return byId.stream()
                 .map(OptionListResponseRevised::from)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OptionListResponse> getOptionListsByStoreId(Long storeId) {
+        Store store = storeRepository.findById(storeId)
+                .orElseThrow(StoreNotFoundException::new);
+
+        List<OptionList> optionLists = store.getMenuCategories().stream()
+                .flatMap(menuCategory -> menuCategory.getMenus().stream())
+                .flatMap(menu -> optionListRepository.findByMenuId(menu.getMenuId()).stream())
+                .collect(Collectors.toList());
+
+        if (optionLists.isEmpty()) {
+            throw new OptionListNotFoundException();
+        }
+
+        return optionLists.stream()
+                .map(OptionListResponse::from)
                 .collect(Collectors.toList());
     }
 }

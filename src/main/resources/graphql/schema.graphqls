@@ -19,9 +19,12 @@ type OptionList {
 
 
 type Query {
-    getById(optionId: ID): Option
-    getListById(listId: ID): OptionList
-    getOptionById(optionId: ID): Option
+    getById(optionId: Long): Option
+    getListById(listId: Long): OptionList
+    getOptionById(optionId: Long): Option
+    optionLists(menuId: Long): [OptionList]
+    options(listId: Long): [Option]
+
 # customer
     getCustomerByCustomerId(customerId: ID): Customer
 # owner
@@ -49,6 +52,9 @@ type Query {
 }
 
 type Mutation {
+    addOption(listId: Long!, option: OptionInput!): Option
+    updateOption(optionId: Long!, option:UpdateOptionInput!):Option
+    deleteOption(optionId:Long!):Option
 # owner
     updateOwner(input: UpdateOwnerInput): Void
     deleteOwner(ownerId: ID): Void
@@ -212,6 +218,15 @@ input UserLocationRequest {
     latitude : Float
 }
 
+input OptionInput{
+    optionTitle: String!
+    optionPrice: Int!
 
+}
 
+input UpdateOptionInput {
+    optionId: Long!
+    optionTitle: String
+    optionPrice: Int
 
+}
