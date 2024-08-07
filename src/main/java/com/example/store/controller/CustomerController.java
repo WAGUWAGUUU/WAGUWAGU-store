@@ -12,12 +12,14 @@ import com.example.store.global.exception.OwnerNotFoundException;
 import com.example.store.service.CustomerService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/v1/customer")
+//@RequestMapping("api/v1/customer")
 @RequiredArgsConstructor
 public class CustomerController {
     private final CustomerService customerService;
@@ -28,8 +30,8 @@ public class CustomerController {
 //        customerService.createCustomer();
 //    }
 
-    @GetMapping("/{customerId}")
-    public Customer getCustomerByCustomerId(@PathVariable(name = "customerId")Long customerId) {
+    @QueryMapping
+    public Customer getCustomerByCustomerId(@Argument(name = "customerId") Long customerId) {
         return customerService.getCustomerByCustomerId(customerId);
     }
 

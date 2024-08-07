@@ -4,47 +4,51 @@ import com.example.store.dto.request.UpdateMenuCategoryRequestDto;
 import com.example.store.dto.response.MenuCategoryResponse;
 import com.example.store.service.MenuCategoryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/menu-category")
+//@RequestMapping("api/v1/menu-category")
 @RequiredArgsConstructor
 //@CrossOrigin(origins = "*")
 public class MenuCategoryController {
     private final MenuCategoryService menuCategoryService;
 
 
-    @PostMapping
+    @MutationMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createMenuCategory(@RequestBody MenuCategoryRequestDto menuCategoryRequestDto) {
-        menuCategoryService.createMenuCategory(menuCategoryRequestDto);
+    public void createMenuCategory(@Argument(name = "input") MenuCategoryRequestDto input) {
+        menuCategoryService.createMenuCategory(input);
     }
 
-    @GetMapping("/{menuCategoryId}")
-    public MenuCategoryResponse getMenuCategoryById(@PathVariable(name = "menuCategoryId") Long menuCategoryId) {
+    @QueryMapping
+    public MenuCategoryResponse getMenuCategoryById(@Argument(name = "menuCategoryId") Long menuCategoryId) {
         return menuCategoryService.getMenuCategoryById(menuCategoryId);
     }
 
-    @GetMapping("store/{storeId}")
-    public List<MenuCategoryResponse> getMenuCategoryByStoreId(@PathVariable(name = "storeId") Long storeId) {
+    @QueryMapping
+    public List<MenuCategoryResponse> getMenuCategoryByStoreId(@Argument(name = "storeId") Long storeId) {
         return menuCategoryService.getAllMenuCategoryByStoreId(storeId);
     }
 
-    @GetMapping
+    @QueryMapping
     public List<MenuCategoryResponse> getAllMenuCategory() {
         return menuCategoryService.getAllMenuCategory();
     }
 
-    @PutMapping("/{menuCategoryId}/name")
-    public void updateMenuCategoryName(@PathVariable(name = "menuCategoryId") Long menuCategoryId, @RequestBody UpdateMenuCategoryRequestDto updateMenuCategoryRequestDto) {
-        menuCategoryService.updateMenuCategoryName(menuCategoryId, updateMenuCategoryRequestDto);
+    @MutationMapping
+    public void updateMenuCategoryName(@Argument(name = "menuCategoryId") Long menuCategoryId, @Argument(name="input") UpdateMenuCategoryRequestDto input) {
+        menuCategoryService.updateMenuCategoryName(menuCategoryId, input);
     }
 
-    @DeleteMapping("/{menuCategoryId}")
-    public void deleteMenuCategory(@PathVariable(name = "menuCategoryId") Long menuCategoryId) {
+    @MutationMapping
+    public void deleteMenuCategory(@Argument(name = "menuCategoryId") Long menuCategoryId) {
         menuCategoryService.deleteMenuCategory(menuCategoryId);
     }
 }

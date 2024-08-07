@@ -1,17 +1,221 @@
+
 scalar Long
+scalar LocalTime
+scalar Void
+
 
 type Option {
-    optionId: Long
+    optionId: ID
     optionTitle: String
     optionPrice: Int
-
 }
 
 type OptionList {
-    listId: Long
+    listId: ID
     listName: String
     options: [Option]
+}
 
+
+
+type Query {
+    getById(optionId: Long): Option
+    getListById(listId: Long): OptionList
+    getOptionById(optionId: Long): Option
+    optionLists(menuId: Long): [OptionList]
+    options(listId: Long): [Option]
+
+# customer
+    getCustomerByCustomerId(customerId: ID): Customer
+# owner
+    getOwnerByOwnerId(ownerId: ID): Owner
+    getAllOwner: [Owner]
+# store
+    getStoreByStoreId(storeId: ID): Store
+    getAllStore: [Store]
+    getStoreByOwnerId(ownerId: ID): Store
+    checkBlockStoreIsOpened(storeId: ID) : Boolean
+    checkStoreIsOpened(storeId: ID) : Boolean
+# menucategory
+    getMenuCategoryById(menuCategoryId: ID) : MenuCategory
+    getMenuCategoryByStoreId(storeId: ID) :[MenuCategory]
+    getAllMenuCategory : [MenuCategory]
+# menu
+    getAllMenuByMenuCategory(menuCategoryId: ID) : [Menu]
+    getMenuById(menuId: ID): Menu
+    getAllMenu : [Menu]
+    changeMenuPossible(menuId : ID) : Void
+    getAllMenuByStoreId(storeId: ID) : [Menu]
+# storeDeliveryInfo
+    getStoreDeliveryInfoAllByStoreId(storeId: ID) : [StoreDeliveryInfo]
+
+}
+
+type Mutation {
+    addOption(listId: Long!, option: OptionInput!): Option
+    updateOption(optionId: Long!, option:UpdateOptionInput!):Option
+    deleteOption(optionId:Long!):Option
+# owner
+    updateOwner(input: UpdateOwnerInput): Void
+    deleteOwner(ownerId: ID): Void
+# store
+    createStore(input: StoreRequestDto): Void
+    updateStoreInfo(storeId: ID, input: StoreUpdateRequest): Void
+    deleteStore(storeId: ID): Void
+    blockStoreIsOpened(storeId: ID) : Void
+# menucategory
+    createMenuCategory(input: MenuCategoryRequestDto) : Void
+    updateMenuCategoryName(menuCategoryId:ID, input: UpdateMenuCategoryRequestDto) : Void
+    deleteMenuCategory(menuCategoryId : ID) : Void
+# menu
+    createMenu(input : MenuRequestDto) : Void
+    updateMenu(menuId : ID, input : UpdateMenuRequestDto) : Void
+    deleteMenu(menuId : ID) : Void
+# storeDeliveryInfo
+    createStoreDeliveryInfo(storeId:ID, input: StoreDeliveryInfoRequestDto) : Void
+    updateStoreDeliveryInfo(storeId: ID, input : StoreDeliveryInfoRequestDto) : Void
+# distanceCal
+    storeInfoDetail(storeId:ID, input: UserLocationRequest) : StoreListResponse
+    userNearStore(category:String, input: UserLocationRequest) : [StoreListResponse]
+}
+
+type Customer {
+    customerId: ID
+    customerLongitude: Float
+    customerLatitude: Float
+}
+
+type Owner {
+    ownerId: ID
+    ownerName: String
+    ownerBusinessNumber: String
+    ownerIsDeleted: Boolean
+}
+
+type Store {
+    storeId: ID
+    storeName: String
+    storeAddress: String
+    storeLongitude: Float
+    storeLatitude: Float
+    storeOpenAt: LocalTime
+    storeCloseAt: LocalTime
+    storePhone: String
+    storeMinimumOrderAmount: Int
+    storeIntroduction: String
+    storeCategory: String
+    storeIsDeleted: Boolean
+    owner: Owner
+    storeImage : String
+}
+
+type MenuCategory {
+    menuCategoryId : ID
+    menuCategoryName : String
+    menuCategoryIsDeleted : Boolean
+    store : Store
+}
+
+type Menu {
+    menuId : ID
+    menuName : String
+    menuIntroduction : String
+    menuPrice : Int
+    menuPossible : Boolean
+    menuIsDeleted : Boolean
+    menuCategory : MenuCategory
+    menuImage : String
+}
+
+type StoreDeliveryInfo {
+    storeDeliveryInfoId : ID
+    storeDeliveryInfoState : Int
+    storeDeliveryInfoFee : Int
+    storeDeliveryInfoDistanceEnd : Float
+    store : Store
+}
+
+type StoreListResponse {
+    ownerId : ID
+    storeId : ID
+    storeName: String
+    storeAddress: String
+    storeLongitude : Float
+    storeLatitude : Float
+    storeMinimumOrderAmount : Int
+    storeIntroduction: String
+    storeImage : String
+    distanceFromStoreToCustomer: Float
+    deliveryFee: Int
+}
+
+input UpdateOwnerInput {
+    ownerId: ID
+    type: String
+    value: String
+}
+
+
+input StoreRequestDto {
+    storeName: String
+    storeAddress: String
+    storeLongitude: Float
+    storeLatitude: Float
+    storeOpenAt: LocalTime
+    storeCloseAt: LocalTime
+    storePhone: String
+    storeMinimumOrderAmount: Int
+    storeIntroduction: String
+    storeCategory: String
+    ownerId: ID
+    storeImage : String
+}
+
+input StoreUpdateRequest {
+    storeName: String
+    storeAddress: String
+    storeOpenAt: LocalTime
+    storeCloseAt: LocalTime
+    storePhone: String
+    storeMinimumOrderAmount: Int
+    storeIntroduction: String
+    storeCategory: String
+    storeLongitude: Float
+    storeLatitude: Float
+    storeImage : String
+}
+
+input MenuCategoryRequestDto {
+    menuCategoryName : String
+    storeId : ID
+}
+
+input UpdateMenuCategoryRequestDto {
+    value : String
+}
+
+input UpdateMenuRequestDto {
+    type: String
+    value: String
+}
+
+input MenuRequestDto {
+    menuName : String
+    menuIntroduction : String
+    menuPrice : Int
+    menuCategoryId : ID
+    menuImage : String
+}
+
+input StoreDeliveryInfoRequestDto {
+    storeDeliveryInfoState : Int
+    storeDeliveryInfoFee : Int
+    storeDeliveryInfoDistanceEnd : Float
+}
+
+input UserLocationRequest {
+    longitude : Float
+    latitude : Float
 }
 
 input OptionInput{
@@ -24,21 +228,5 @@ input UpdateOptionInput {
     optionId: Long!
     optionTitle: String
     optionPrice: Int
-
-}
-type Query {
-    getById(optionId: Long): Option
-    getListById(listId: Long): OptionList
-    getOptionById(optionId: Long): Option
-    optionLists(menuId: Long): [OptionList]
-    options(listId: Long): [Option]
-
-}
-
-
-type Mutation{
-    addOption(listId: Long!, option: OptionInput!): Option
-    updateOption(optionId: Long!, option:UpdateOptionInput!):Option
-    deleteOption(optionId:Long!):Option
 
 }

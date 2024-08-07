@@ -34,13 +34,13 @@ public class Owner {
 
 
 
-    public void update(UpdateOwnerType updateOwnerType, UpdateOwnerRequestDto updateOwnerRequestDto) {
+    public void update(UpdateOwnerType updateOwnerType, String value) {
         switch (updateOwnerType) {
             case OWNER_NAME:
-                this.ownerName = updateOwnerRequestDto.value();
+                this.ownerName = value;
                 break;
             case OWNER_BUSINESS_NUMBER:
-                this.ownerBusinessNumber = updateOwnerRequestDto.value();
+                this.ownerBusinessNumber = value;
                 break;
         }
     }

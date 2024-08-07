@@ -9,28 +9,32 @@ import com.example.store.dto.response.StoreNearUserResponse;
 import com.example.store.dto.response.UserLocationResponse;
 import com.example.store.service.DistanceCalService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/distance-cal")
+//@RequestMapping("api/v1/distance-cal")
 @RequiredArgsConstructor
 public class DistanceCalController {
     private final DistanceCalService distanceCalService;
-    @PostMapping("/store/{storeId}/accept-order")
-    public UserLocationResponse acceptOrder(@PathVariable(name = "storeId")Long storeId, @RequestBody UserLocationAndMinute userLocation) {
-        DistanceTimeRequestDto distanceTimeRequestDto = new DistanceTimeRequestDto(userLocation.minute());
-        return distanceCalService.acceptOrder(storeId, userLocation, distanceTimeRequestDto);
+//    @PostMapping("/store/{storeId}/accept-order")
+//    public UserLocationResponse acceptOrder(@PathVariable(name = "storeId")Long storeId, @RequestBody UserLocationAndMinute userLocation) {
+//        DistanceTimeRequestDto distanceTimeRequestDto = new DistanceTimeRequestDto(userLocation.minute());
+//        return distanceCalService.acceptOrder(storeId, userLocation, distanceTimeRequestDto);
+//    }
+
+    @MutationMapping
+    public StoreListResponse storeInfoDetail(@Argument(name = "storeId")Long storeId, @Argument(name = "input") UserLocationRequest input) {
+        return distanceCalService.storeInfoDetail(storeId, input);
     }
 
-    @PostMapping("/store/{storeId}")
-    public StoreListResponse storeInfoDetail(@PathVariable(name = "storeId")Long storeId, @RequestBody UserLocationRequest request) {
-        return distanceCalService.storeInfoDetail(storeId, request);
+    @MutationMapping
+    public List<StoreListResponse> userNearStore(@Argument(name = "category")String category, @Argument(name = "input") UserLocationRequest input) {
+        return distanceCalService.userNearStore(category, input);
     }
 
-    @PostMapping("user-near-store")
-    public List<StoreListResponse> userNearStore(@RequestBody StoreNearUserRequest storeNearUserRequest) {
-        return distanceCalService.userNearStore(storeNearUserRequest);
-    }
+
 }

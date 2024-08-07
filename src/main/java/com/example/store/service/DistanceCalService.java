@@ -17,7 +17,7 @@ public interface DistanceCalService {
     StoreListDeliveryResponse showStoreList(Long storeId, double longitude, double latitude);
 
 
-    List<StoreListResponse>  userNearStore(StoreNearUserRequest storeNearUserRequest);
+    List<StoreListResponse>  userNearStore(String category,UserLocationRequest request);
 
     StoreListResponse storeInfoDetail(Long storeId, UserLocationRequest request);
 }

@@ -26,5 +26,10 @@ public class MenuExceptionController {
         return e.getMessage();
     }
 
+    @ExceptionHandler(MenuInputException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String menuInputExceptionHandler(MenuInputException e){
+        return e.getMessage();
+    }
 
 }

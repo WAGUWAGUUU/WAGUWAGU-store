@@ -3,12 +3,17 @@ import com.example.store.dto.kafka.KafkaCustomerDto;
 import com.example.store.dto.kafka.KafkaOwnerDto;
 import com.example.store.dto.kafka.KafkaStatus;
 import com.example.store.dto.request.OwnerRequestDto;
+import com.example.store.dto.request.UpdateOwnerInput;
 import com.example.store.dto.request.UpdateOwnerRequestDto;
 import com.example.store.dto.response.OwnerResponse;
+import com.example.store.global.entity.Owner;
 import com.example.store.global.type.UpdateOwnerType;
 import com.example.store.global.type.UpdateStoreType;
 import com.example.store.service.OwnerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.web.bind.annotation.*;
@@ -21,30 +26,24 @@ import java.util.List;
 public class OwnerController {
     private final OwnerService ownerService;
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public void createOwner() {
-        ownerService.createOwner(new KafkaStatus<>(new KafkaOwnerDto(1L,"gf","333"),"FFF"));
-    }
-
-    @GetMapping("/{ownerId}")
-    public OwnerResponse getOwnerByOwnerId(@PathVariable(name = "ownerId") Long ownerId) {
+    @QueryMapping
+    public OwnerResponse getOwnerByOwnerId(@Argument(name = "ownerId") Long ownerId) {
         return ownerService.getOwnerByOwnerId(ownerId);
     }
 
-    @GetMapping
+    @QueryMapping
     public List<OwnerResponse> getAllOwner() {
         return ownerService.getAllOwner();
     }
 
 
-    @PutMapping("/{ownerId}")
-    public void updateOwner(@PathVariable(name = "ownerId") Long ownerId,@RequestParam(name = "type")String type, @RequestBody UpdateOwnerRequestDto updateOwnerRequestDto) {
-        ownerService.updateOwner(ownerId,  UpdateOwnerType.stringToOwnerType(type), updateOwnerRequestDto);
+    @MutationMapping
+    public void updateOwner(@Argument(name = "input") UpdateOwnerInput input) {
+        ownerService.updateOwner(input.ownerId(),  UpdateOwnerType.stringToOwnerType(input.type()), input.value());
     }
 
-    @DeleteMapping("/{ownerId}")
-    public void deleteOwner(@PathVariable(name = "ownerId") Long ownerId) {
+    @MutationMapping
+    public void deleteOwner(@Argument(name = "ownerId") Long ownerId) {
         ownerService.deleteOwner(ownerId);
     }
 

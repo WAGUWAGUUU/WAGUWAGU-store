@@ -23,7 +23,6 @@ spring:
       value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       group-id: store-group7941
-      #      group id 제거
       auto-offset-reset: earliest
-  profiles:
-    active: prod
+#  profiles:
+#    active: prod

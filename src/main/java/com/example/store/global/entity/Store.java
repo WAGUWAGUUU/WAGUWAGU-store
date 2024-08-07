@@ -1,5 +1,6 @@
 package com.example.store.global.entity;
 
+import com.example.store.dto.request.PhotoRequest;
 import com.example.store.dto.request.StoreUpdateRequest;
 import com.example.store.dto.request.UpdateOwnerRequestDto;
 import com.example.store.dto.request.UpdateStoreRequestDto;
@@ -10,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -18,7 +20,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name ="STORES")
+@Table(name ="stores")
 @Builder
 public class Store {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,6 +60,16 @@ public class Store {
 
     @Column(name = "STORE_IS_DELETED")
     private boolean storeIsDeleted;
+
+//    1 -> 영업 수동 막기, 0 -> 정상 영업
+    @Column(name = "STORE_BLOCK_IS_OPENED")
+    private boolean storeBlockIsOpened;
+//
+//    @Column(name = "STORE_IMAGE_NICKNAME")
+//    private String storeImageNickname;
+
+    @Column(name = "STORE_IMAGE")
+    private String storeImage;
 
     @JoinColumn (name = "OWNER_ID")
     @ManyToOne
@@ -109,9 +121,23 @@ public class Store {
         if (!dto.storeCategory().equals(this.storeCategory)) this.storeCategory = dto.storeCategory();
         if (!(dto.storeLongitude() == this.storeLongitude)) this.storeLongitude = dto.storeLongitude();
         if (!(dto.storeLatitude() == this.storeLatitude)) this.storeLatitude = dto.storeLatitude();
+        if (!dto.storeImage().equals(this.storeImage)) this.storeImage = dto.storeImage();
     }
 
     public void setStoreIsDeleted() {
         this.storeIsDeleted = true;
     }
+
+    public boolean getStoreBlockIsOpened() {
+        return storeBlockIsOpened;
+    }
+
+    public void setStoreBlockIsOpened() {
+        this.storeBlockIsOpened = !(this.storeBlockIsOpened);
+    }
+
+//    public void updateImageInfo(String input) {
+////        this.storeImageNickname = dto.getNickname();
+//        this.storeImage = input;
+//    }
 }

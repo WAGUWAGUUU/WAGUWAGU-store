@@ -29,7 +29,7 @@ public class OptionController {
 
 // graphql  prac
     @QueryMapping
-    public Option getById(@Argument Long optionId) {
+    public Option getById(@Argument(name = "optionId") Long optionId) {
         return optionService.getById(optionId);
     }
 
@@ -57,13 +57,13 @@ public class OptionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OptionResponse> getOptionById(@PathVariable Long id) {
+    public ResponseEntity<OptionResponse> getOptionById(@PathVariable(name = "id") Long id) {
         OptionResponse option = optionService.getOptionById(id);
         return ResponseEntity.ok(option);
     }
 
     @GetMapping("/list/{listId}")
-    public ResponseEntity<List<OptionResponse>> getAllOptionsByListId(@PathVariable Long listId) {
+    public ResponseEntity<List<OptionResponse>> getAllOptionsByListId(@PathVariable(name = "listId") Long listId) {
         List<OptionResponse> options = optionService.getAllOptionsbyListID(listId);
         return ResponseEntity.ok(options);
     }

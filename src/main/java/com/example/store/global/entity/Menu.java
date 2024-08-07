@@ -1,6 +1,7 @@
 package com.example.store.global.entity;
 
 import com.example.store.dto.request.UpdateMenuRequestDto;
+import com.example.store.global.exception.MenuInputException;
 import com.example.store.global.type.UpdateMenuType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -41,22 +42,26 @@ public class Menu {
     @ManyToOne
     private MenuCategory menuCategory;
 
-//    @OneToMany(mappedBy = "menu",cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<OptionList> optionLists;
+    @Column(name = "MENU_IMAGE")
+    private String menuImage;
+
 
     @OneToMany(mappedBy = "menu",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MenuOptionListBridge> bridges;
 
-    public void update(UpdateMenuType updateMenuType, UpdateMenuRequestDto updateMenuRequestDto) {
+    public void update(UpdateMenuType updateMenuType, String value) {
         switch (updateMenuType) {
-            case MENU_NAME -> this.menuName = updateMenuRequestDto.value();
-            case MENU_INTRODUCTION -> this.menuIntroduction = updateMenuRequestDto.value();
+            case MENU_NAME -> this.menuName = value;
+            case MENU_INTRODUCTION -> this.menuIntroduction = value;
             case MENU_PRICE -> {
                 try {
-                    this.menuPrice = Integer.parseInt(updateMenuRequestDto.value());
+                    this.menuPrice = Integer.parseInt(value);
                 } catch (NumberFormatException e) {
-                    throw new IllegalArgumentException();
+                    throw new MenuInputException();
                 }
+            }
+            case MENU_IMAGE -> {
+                this.menuImage = value;
             }
         }
     }

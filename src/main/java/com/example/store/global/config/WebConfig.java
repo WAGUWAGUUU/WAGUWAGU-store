@@ -13,7 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedOrigins("*")
                 .allowedMethods("*")
                 .allowedHeaders("*")
-                .exposedHeaders("Custom-Header")
+//                .exposedHeaders("Custom-Header")
                 .maxAge(3600);
     }
 }
