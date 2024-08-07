@@ -25,11 +25,3 @@ spring:
       group-id: store-group7941
 #      group id 제거
       auto-offset-reset: earliest
-  cloud:
-    gcp:
-      storage:
-        credentials:
-          location:
-            classpath: waguwagu-storage-8e6730b8a270.json
-        project-id: waguwagu-storage
-        bucket: waguwagu-bucket

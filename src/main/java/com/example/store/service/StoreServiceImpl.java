@@ -8,18 +8,13 @@ import com.example.store.global.entity.Store;
 import com.example.store.global.exception.StoreAlreadyExistsException;
 import com.example.store.global.exception.StoreNotFoundException;
 import com.example.store.global.repository.StoreRepository;
-import com.example.store.global.type.UpdateStoreType;
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.WriteChannel;
-import com.google.cloud.storage.BlobId;
-import com.google.cloud.storage.BlobInfo;
-import com.google.cloud.storage.Storage;
-import com.google.cloud.storage.StorageOptions;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,11 +29,6 @@ import java.util.UUID;
 public class StoreServiceImpl implements StoreService {
     private final StoreRepository storeRepository;
 
-    @Value("${spring.cloud.gcp.storage.bucket}") // application.yml에 써둔 bucket 이름
-    private String bucketName;
-
-    @Value("${spring.cloud.gcp.storage.credentials.location.classpath}")
-    private String keyFileName;
 
     // 삭제 된 거는 조회가 안 되게끔 했음
     @Override
@@ -112,30 +102,30 @@ public class StoreServiceImpl implements StoreService {
         return store.getStoreOpenAt().isAfter(now) && store.getStoreCloseAt().isBefore(now)  && !store.getStoreBlockIsOpened();
     }
 
+//    @Override
+//    @Transactional
+//    public void updateStorePhotoInfo(Long storeId, MultipartFile input) throws IOException {
+//        Store store = storeRepository.findByStoreIdAndStoreIsDeletedFalse(storeId).orElseThrow(StoreNotFoundException::new);
+//        String originalName = input.getOriginalFilename();
+//        String uuid = UUID.randomUUID().toString();
+//        String ext = input.getContentType();
+//        String fileName = uuid;
+//
+//        BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, fileName)
+//                .setContentType(ext)
+//                .build();
+//
+//        try {
+//            storage.create(blobInfo, input.getInputStream());
+//            store.updateImageInfo(fileName);
+//        } catch (IOException e) {
+//            throw new RuntimeException("Failed to upload file", e);
+//        }
+//    }
+
     @Override
-    public void updateStorePhotoInfo(Long storeId, PhotoRequest input) throws IOException {
+    public String getStorePhotoInfo(Long storeId) {
         Store store = storeRepository.findByStoreIdAndStoreIsDeletedFalse(storeId).orElseThrow(StoreNotFoundException::new);
-        String uuid = UUID.randomUUID().toString();
-        String ext = input.getImage().getContentType();
-        InputStream keyFile = ResourceUtils.getURL(keyFileName).openStream();
-
-        Storage storage = StorageOptions.newBuilder()
-                .setCredentials(GoogleCredentials.fromStream(keyFile))
-                .build()
-                .getService();
-
-
-        BlobId blobId = BlobId.of(bucketName, uuid);
-        BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
-                .setContentType(ext)
-                .build();
-        try (WriteChannel writer = storage.writer(blobInfo)) {
-            byte[] imageData = input.getImage().getBytes(); // 이미지 데이터를 byte 배열로 읽어옵니다.
-            writer.write(ByteBuffer.wrap(imageData));
-        } catch (Exception ex) {
-            // 예외 처리 코드
-            ex.printStackTrace();
-        }
-        store.updateImageInfo(input, uuid);
+        return store.getStoreImage();
     }
 }

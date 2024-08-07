@@ -7,6 +7,7 @@ import com.example.store.dto.request.UpdateStoreRequestDto;
 import com.example.store.dto.response.StoreResponse;
 import com.example.store.global.entity.Store;
 import com.example.store.global.type.UpdateStoreType;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -33,5 +34,7 @@ public interface StoreService {
 
     boolean checkStoreIsOpened(Long storeId);
 
-    void updateStorePhotoInfo(Long storeId, PhotoRequest input) throws IOException;
+//    void updateStorePhotoInfo(Long storeId, MultipartFile input) throws IOException;
+
+    String getStorePhotoInfo(Long storeId);
 }

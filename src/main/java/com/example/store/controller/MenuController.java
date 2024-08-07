@@ -60,4 +60,6 @@ public class MenuController {
     public List<MenuResponse> getAllMenuByStoreId(@Argument("storeId") Long storeId) {
         return menuService.getAllMenuByStoreId(storeId);
     }
+
+
 }

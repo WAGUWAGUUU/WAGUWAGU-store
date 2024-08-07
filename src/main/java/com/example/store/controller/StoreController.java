@@ -12,8 +12,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -78,9 +82,11 @@ public class StoreController {
         return storeService.checkStoreIsOpened(storeId);
     }
 
-//    @PutMapping("{storeId}/photo")
-    @PatchMapping("/{storeId}/photo")
-    public void updateStorePhotoInfo(@PathVariable(name = "storeId") Long storeId, PhotoRequest input) throws IOException {
-        storeService.updateStorePhotoInfo(storeId, input);
+
+    @GetMapping("/{storeId}/photo")
+    public String getStorePhotoInfo(@PathVariable(name = "storeId") Long storeId) {
+        return storeService.getStorePhotoInfo(storeId);
     }
+
+
 }

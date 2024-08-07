@@ -14,6 +14,8 @@ public record StoreUpdateRequest(
         String storeIntroduction,
         StoreCategory storeCategory,
         double storeLongitude,
-        double storeLatitude
+        double storeLatitude,
+
+        String storeImage
 ) {
 }

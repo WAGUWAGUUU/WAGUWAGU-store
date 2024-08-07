@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -63,9 +64,9 @@ public class Store {
 //    1 -> 영업 수동 막기, 0 -> 정상 영업
     @Column(name = "STORE_BLOCK_IS_OPENED")
     private boolean storeBlockIsOpened;
-
-    @Column(name = "STORE_IMAGE_NICKNAME")
-    private String storeImageNickname;
+//
+//    @Column(name = "STORE_IMAGE_NICKNAME")
+//    private String storeImageNickname;
 
     @Column(name = "STORE_IMAGE")
     private String storeImage;
@@ -120,6 +121,7 @@ public class Store {
         if (!dto.storeCategory().equals(this.storeCategory)) this.storeCategory = dto.storeCategory();
         if (!(dto.storeLongitude() == this.storeLongitude)) this.storeLongitude = dto.storeLongitude();
         if (!(dto.storeLatitude() == this.storeLatitude)) this.storeLatitude = dto.storeLatitude();
+        if (!dto.storeImage().equals(this.storeImage)) this.storeImage = dto.storeImage();
     }
 
     public void setStoreIsDeleted() {
@@ -134,8 +136,8 @@ public class Store {
         this.storeBlockIsOpened = !(this.storeBlockIsOpened);
     }
 
-    public void updateImageInfo(PhotoRequest dto, String imageUrl) {
-        this.storeImageNickname = dto.getNickname();
-        this.storeImage = imageUrl;
-    }
+//    public void updateImageInfo(String input) {
+////        this.storeImageNickname = dto.getNickname();
+//        this.storeImage = input;
+//    }
 }

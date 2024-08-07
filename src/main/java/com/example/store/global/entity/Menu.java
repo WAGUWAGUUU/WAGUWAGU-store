@@ -41,6 +41,9 @@ public class Menu {
     @ManyToOne
     private MenuCategory menuCategory;
 
+    @Column(name = "MENU_IMAGE")
+    private String menuImage;
+
     @OneToMany(mappedBy = "menu",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OptionList> optionLists;
 
@@ -54,6 +57,9 @@ public class Menu {
                 } catch (NumberFormatException e) {
                     throw new IllegalArgumentException();
                 }
+            }
+            case MENU_IMAGE -> {
+                this.menuImage = value;
             }
         }
     }

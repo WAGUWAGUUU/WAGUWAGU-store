@@ -100,6 +100,7 @@ type Store {
     storeCategory: String
     storeIsDeleted: Boolean
     owner: Owner
+    storeImage : String
 }
 
 type MenuCategory {
@@ -117,6 +118,7 @@ type Menu {
     menuPossible : Boolean
     menuIsDeleted : Boolean
     menuCategory : MenuCategory
+    menuImage : String
 }
 
 type StoreDeliveryInfo {
@@ -159,6 +161,7 @@ input StoreRequestDto {
     storeIntroduction: String
     storeCategory: String
     ownerId: ID
+    storeImage : String
 }
 
 input StoreUpdateRequest {
@@ -172,6 +175,7 @@ input StoreUpdateRequest {
     storeCategory: String
     storeLongitude: Float
     storeLatitude: Float
+    storeImage : String
 }
 
 input MenuCategoryRequestDto {
@@ -193,6 +197,7 @@ input MenuRequestDto {
     menuIntroduction : String
     menuPrice : Int
     menuCategoryId : ID
+    menuImage : String
 }
 
 input StoreDeliveryInfoRequestDto {
