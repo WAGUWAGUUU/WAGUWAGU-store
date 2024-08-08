@@ -36,6 +36,7 @@ type Query {
     getStoreByOwnerId(ownerId: ID): Store
     checkBlockStoreIsOpened(storeId: ID) : Boolean
     checkStoreIsOpened(storeId: ID) : Boolean
+    getStorePhotoInfo(storeId: ID) : String
 # menucategory
     getMenuCategoryById(menuCategoryId: ID) : MenuCategory
     getMenuCategoryByStoreId(storeId: ID) :[MenuCategory]

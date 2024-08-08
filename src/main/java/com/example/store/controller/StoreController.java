@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/store")
+//@RequestMapping("api/v1/store")
 @RequiredArgsConstructor
 //@CrossOrigin(origins = "*")
 public class StoreController {
@@ -83,10 +83,15 @@ public class StoreController {
     }
 
 
-    @GetMapping("/{storeId}/photo")
-    public String getStorePhotoInfo(@PathVariable(name = "storeId") Long storeId) {
+    @QueryMapping
+    public String getStorePhotoInfo(@Argument(name = "storeId") Long storeId) {
         return storeService.getStorePhotoInfo(storeId);
     }
+
+//    @GetMapping("/{storeId}/photo")
+//    public String getStorePhotoInfo(@PathVariable(name = "storeId") Long storeId) {
+//        return storeService.getStorePhotoInfo(storeId);
+//    }
 
 
 }
