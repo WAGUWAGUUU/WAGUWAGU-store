@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class MenuExceptionController {
     @ExceptionHandler(MenuAlreadyExistsException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.CONFLICT)
     public String menuAlreadyExistsExceptionHandler(MenuAlreadyExistsException e){
         return e.getMessage();
     }

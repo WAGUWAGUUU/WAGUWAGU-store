@@ -73,6 +73,19 @@ generateJava {
 	packageName = 'com.example.store.codegen'
 	generateClient = true
 }
+//configurations.all {
+//	resolutionStrategy {
+//		force 'com.graphql-java:graphql-java-extended-scalars:22.0'
+//	}
+//}
+
+configurations.all {
+	resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+		if (details.requested.group == 'com.graphql-java' && details.requested.name == 'graphql-java-extended-scalars') {
+			details.useVersion '18.1' // 호환 가능한 버전을 사용합니다
+		}
+	}
+}
 
 tasks.named('test') {
 	useJUnitPlatform()
