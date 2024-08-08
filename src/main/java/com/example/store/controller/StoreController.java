@@ -83,15 +83,15 @@ public class StoreController {
     }
 
 
-    @QueryMapping
-    public String getStorePhotoInfo(@Argument(name = "storeId") Long storeId) {
-        return storeService.getStorePhotoInfo(storeId);
-    }
-
-//    @GetMapping("/{storeId}/photo")
-//    public String getStorePhotoInfo(@PathVariable(name = "storeId") Long storeId) {
+//    @QueryMapping
+//    public String getStorePhotoInfo(@Argument(name = "storeId") Long storeId) {
 //        return storeService.getStorePhotoInfo(storeId);
 //    }
+
+    @GetMapping("/{storeId}/photo")
+    public String getStorePhotoInfo(@PathVariable(name = "storeId") Long storeId) {
+        return storeService.getStorePhotoInfo(storeId);
+    }
 
 
 }
