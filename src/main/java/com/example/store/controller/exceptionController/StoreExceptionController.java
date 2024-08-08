@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class StoreExceptionController {
     @ExceptionHandler(StoreAlreadyExistsException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.CONFLICT)
     public String storeAlreadyExistsExceptionHandler(StoreAlreadyExistsException e){
         return e.getMessage();
     }
