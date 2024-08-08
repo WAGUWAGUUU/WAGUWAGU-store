@@ -61,10 +61,10 @@ public class MenuController {
         return menuService.getAllMenuByStoreId(storeId);
     }
 
-    @GetMapping("/{menuId}/photo")
-    public String getMenuPhotoInfo(@PathVariable(name = "menuId") Long menuId) {
-        return menuService.getMenuPhotoInfo(menuId);
-    }
+//    @GetMapping("/{menuId}/photo")
+//    public String getMenuPhotoInfo(@PathVariable(name = "menuId") Long menuId) {
+//        return menuService.getMenuPhotoInfo(menuId);
+//    }
 
 
 }
