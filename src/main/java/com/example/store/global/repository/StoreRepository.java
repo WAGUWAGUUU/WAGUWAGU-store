@@ -33,7 +33,11 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
             "  FROM stores S" +
             "  WHERE S.store_is_deleted = 0 AND S.store_category = :category"+
             ") AS temp " +
-            "WHERE distance <= 5000 AND storeBlockIsOpened = 0 And NOW() >= storeOpenAt And NOW()<= storeCloseAt" +
+            "WHERE distance <= 5000 AND storeBlockIsOpened = 0 " +
+            "AND (" +
+            " (storeOpenAt <= storeCloseAt AND NOW() BETWEEN storeOpenAt AND storeCloseAt)" +  // 일반적인 경우
+            " OR (storeOpenAt > storeCloseAt AND (NOW() >= storeOpenAt OR NOW() <= storeCloseAt))" +  // 자정 전후 운영하는 경우
+            ") " +
             " ORDER BY distance",
             nativeQuery = true)
     List<StoreNearUserResponse> findStoreAllNearUser(@Param("userLongitude") double userLongitude, @Param("userLatitude") double userLatitude, @Param("category") String category);
