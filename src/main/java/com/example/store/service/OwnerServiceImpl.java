@@ -28,7 +28,7 @@ public class OwnerServiceImpl implements OwnerService {
     @Transactional
     public void createOwner(KafkaStatus<KafkaOwnerDto> kafkaStatus) {
         if(kafkaStatus.status().equals("owner_info_to_store")) {
-            Owner entity = new OwnerRequestDto(kafkaStatus.data().ownerId(), kafkaStatus.data().ownerName(), kafkaStatus.data().ownerBusinessNumber()).toEntity();
+            Owner entity = new OwnerRequestDto(kafkaStatus.data().ownerId(),kafkaStatus.data().ownerEmail(), kafkaStatus.data().ownerName(), kafkaStatus.data().ownerBusinessNumber()).toEntity();
             ownerRepository.save(entity);
         }
     }

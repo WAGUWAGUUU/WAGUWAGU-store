@@ -35,8 +35,8 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
             ") AS temp " +
             "WHERE distance <= 5000 AND storeBlockIsOpened = 0 " +
             "AND (" +
-            " (storeOpenAt <= storeCloseAt AND NOW() BETWEEN storeOpenAt AND storeCloseAt)" +  // 일반적인 경우
-            " OR (storeOpenAt > storeCloseAt AND (NOW() >= storeOpenAt OR NOW() <= storeCloseAt))" +  // 자정 전후 운영하는 경우
+            " (storeOpenAt <= storeCloseAt AND (date_add(NOW(), interval 9 hour) BETWEEN storeOpenAt AND storeCloseAt)" +  // 일반적인 경우
+            " OR (storeOpenAt > storeCloseAt AND ((date_add(NOW(), interval 9 hour) >= storeOpenAt OR (date_add(NOW(), interval 9 hour) <= storeCloseAt))" +  // 자정 전후 운영하는 경우
             ") " +
             " ORDER BY distance",
             nativeQuery = true)

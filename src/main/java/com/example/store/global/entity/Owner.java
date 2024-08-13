@@ -20,6 +20,9 @@ public class Owner {
     @Column(name = "OWNER_ID")
     private Long ownerId;
 
+    @Column(name = "OWNER_EMAIL")
+    private String ownerEmail;
+
     @Column(name = "OWNER_NAME")
     private String ownerName;
 

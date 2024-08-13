@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-//@RequestMapping("api/v1/store")
+@RequestMapping("api/v1/store")
 @RequiredArgsConstructor
 //@CrossOrigin(origins = "*")
 public class StoreController {
