@@ -98,4 +98,17 @@ public class DistanceCalServiceImpl implements DistanceCalService{
         StoreListDeliveryResponse storeListDeliveryResponse = showStoreList(storeId, request.longitude(), request.latitude());
         return new StoreListResponse(store.getOwner().getOwnerId(), store.getStoreId(),store.getStoreName(),store.getStoreAddress(), store.getStoreLongitude(), store.getStoreLatitude(), store.getStoreMinimumOrderAmount(),store.getStoreIntroduction(), store.getStoreBlockIsOpened(),store.getStoreImage(),storeListDeliveryResponse.distanceFromStoreToCustomer(), storeListDeliveryResponse.deliveryFee());
     }
+
+    @Override
+    @Transactional
+    public List<StoreListResponse> userNearStoreAll(UserLocationRequest request) {
+        List<StoreNearUserResponse> storeAllNearUser = storeRepository.findStoreAllNearUserAll(request.longitude(), request.latitude());
+        if(storeAllNearUser.isEmpty()) throw new StoreNotFoundException();
+
+        return storeAllNearUser.stream().map(storeNearUserResponse -> {
+            StoreListDeliveryResponse storeListDeliveryResponse = showStoreList(storeNearUserResponse.getStoreId(), request.longitude(), request.latitude());
+            return new StoreListResponse(storeNearUserResponse.getOwnerId(), storeNearUserResponse.getStoreId(), storeNearUserResponse.getStoreName(), storeNearUserResponse.getStoreAddress(),storeNearUserResponse.getStoreLongitude(), storeNearUserResponse.getStoreLatitude(), storeNearUserResponse.getStoreMinimumOrderAmount(), storeNearUserResponse.getStoreIntroduction(), storeNearUserResponse.getStoreBlockIsOpened(),storeNearUserResponse.getStoreImage() ,storeListDeliveryResponse.distanceFromStoreToCustomer(), storeListDeliveryResponse.deliveryFee());
+
+        }).collect(Collectors.toList());
+    }
 }

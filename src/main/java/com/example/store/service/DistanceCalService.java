@@ -20,4 +20,6 @@ public interface DistanceCalService {
     List<StoreListResponse>  userNearStore(String category,UserLocationRequest request);
 
     StoreListResponse storeInfoDetail(Long storeId, UserLocationRequest request);
+
+    List<StoreListResponse> userNearStoreAll(UserLocationRequest request);
 }

@@ -37,4 +37,6 @@ public interface StoreService {
 //    void updateStorePhotoInfo(Long storeId, MultipartFile input) throws IOException;
 
     String getStorePhotoInfo(Long storeId);
+
+
 }

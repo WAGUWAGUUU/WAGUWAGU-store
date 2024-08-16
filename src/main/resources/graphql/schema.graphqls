@@ -78,6 +78,7 @@ type Mutation {
 # distanceCal
     storeInfoDetail(storeId:ID, input: UserLocationRequest) : StoreListResponse
     userNearStore(category:String, input: UserLocationRequest) : [StoreListResponse]
+    userNearStoreAll(input: UserLocationRequest) : [StoreListResponse]
 }
 
 type Customer {

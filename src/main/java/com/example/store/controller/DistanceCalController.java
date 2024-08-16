@@ -36,5 +36,10 @@ public class DistanceCalController {
         return distanceCalService.userNearStore(category, input);
     }
 
+    @MutationMapping
+    public List<StoreListResponse> userNearStoreAll(@Argument(name = "input") UserLocationRequest input) {
+        return distanceCalService.userNearStoreAll(input);
+    }
+
 
 }
